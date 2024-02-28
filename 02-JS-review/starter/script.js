@@ -168,7 +168,19 @@ const newGenres = [...genres, 'epic fantasy'];
 const updateBook = { ...book, publicationDate: '02-28-24' };
 updateBook.pages = 1210;
 
+// Template Literals
+const summary = `${title} is a book about ${genres.join(
+  ', '
+)} written by ${author}, and it has ${
+  hasMovieAdaptation ? '' : 'not'
+} been adopted as a movie.`;
+
+// Ternary Operator
+const pagesOverview = pages > 1000 ? 'pages over 1000' : 'pages less than 1000';
+
 console.log(genres);
 console.log(otherGenres);
 console.log(newGenres);
 console.log(updateBook);
+console.log(summary);
+console.log(pagesOverview);
