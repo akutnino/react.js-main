@@ -218,3 +218,20 @@ function totalReviewCount(book) {
  *
  * const output = array.filter((a, b) => {return a - b});
  **/
+
+// Promises
+const url = 'https://jsonplaceholder.typicode.com/todos/1';
+fetch(url)
+  .then((data) => data.json())
+  .then((data) => console.log(data));
+
+// Async / Await
+async function getTodos() {
+  const url = 'https://jsonplaceholder.typicode.com/todos/1';
+  const response = await fetch(url);
+  const data = await response.json();
+
+  console.log(data);
+}
+
+getTodos();
