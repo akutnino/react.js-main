@@ -144,7 +144,7 @@ function getBook(id) {
 }
 
 // Destructuring
-const book = getBook(1);
+const book = getBook(3);
 const bookTitle = book.title;
 const bookAuthor = book.author;
 
@@ -183,14 +183,22 @@ function getYear(string) {
 
 const getMonth = (string) => Number(string.split('-')[1]);
 
-console.log(getMonth(publicationDate));
+// console.log(getMonth(publicationDate));
 
-// Short-Circuiting and Logical Operators
-console.log(true && 'some string');
-console.log(false && 'some string');
-console.log(hasMovieAdaptation && 'This book has a movie adaptaion');
+// Short-Circuiting and Logical Operators ==================
+// console.log(true && 'some string');
+// console.log(false && 'some string');
+// console.log(hasMovieAdaptation && 'This book has a movie adaptaion');
 
-console.log(true || 'some string');
-console.log(false || 'some string');
-const englishTranslation = book.translations.english || 'NOT TRASLATED';
-console.log(englishTranslation);
+// console.log(true || 'some string');
+// console.log(false || 'some string');
+// const englishTranslation = book.translations.english || 'NOT TRASLATED';
+// console.log(englishTranslation);
+
+// Optional Chaining and Nullish Coalescing Operator ==================
+function totalReviewCount(book) {
+  const goodreads = book.reviews.goodreads.reviewsCount;
+  const librarything = book.reviews.librarything?.reviewsCount ?? 0;
+  return goodreads + librarything;
+}
+console.log(totalReviewCount(book));
