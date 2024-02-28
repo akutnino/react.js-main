@@ -165,22 +165,32 @@ const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
 
 // Spread Operator
 const newGenres = [...genres, 'epic fantasy'];
-const updateBook = { ...book, publicationDate: '02-28-24' };
+const updateBook = { ...book, publicationDate: '1954-07-29' };
 updateBook.pages = 1210;
 
 // Template Literals
-const summary = `${title} is a book about ${genres.join(
-  ', '
-)} written by ${author}, and it has ${
-  hasMovieAdaptation ? '' : 'not'
-} been adopted as a movie.`;
+const summary = `${title} is a book about ${genres.join(', ')} 
+written by ${author}, and it has ${hasMovieAdaptation ? '' : 'not'} 
+been adopted as a movie.`;
 
 // Ternary Operator
 const pagesOverview = pages > 1000 ? 'pages over 1000' : 'pages less than 1000';
 
-console.log(genres);
-console.log(otherGenres);
-console.log(newGenres);
-console.log(updateBook);
-console.log(summary);
-console.log(pagesOverview);
+// Functions
+function getYear(string) {
+  return Number(string.split('-')[0]);
+}
+
+const getMonth = (string) => Number(string.split('-')[1]);
+
+console.log(getMonth(publicationDate));
+
+// Short-Circuiting and Logical Operators
+console.log(true && 'some string');
+console.log(false && 'some string');
+console.log(hasMovieAdaptation && 'This book has a movie adaptaion');
+
+console.log(true || 'some string');
+console.log(false || 'some string');
+const englishTranslation = book.translations.english || 'NOT TRASLATED';
+console.log(englishTranslation);
