@@ -201,4 +201,20 @@ function totalReviewCount(book) {
   const librarything = book.reviews.librarything?.reviewsCount ?? 0;
   return goodreads + librarything;
 }
-console.log(totalReviewCount(book));
+// console.log(totalReviewCount(book));
+
+// Array Methods
+/**
+ * 1.) map() method.
+ * const output = array.map((element, index, arr) => {return});
+ *
+ * 2.) filter() method.
+ * const output = array.filter((element, index, arr) => {return});
+ *
+ * 3.) reduce() method.
+ * const output = array.filter((acc, element, index, arr) => {return acc});
+ *
+ * 4.) sort() method.
+ *
+ * const output = array.filter((a, b) => {return a - b});
+ **/
