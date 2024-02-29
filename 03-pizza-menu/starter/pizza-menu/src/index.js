@@ -49,7 +49,21 @@ const pizzaData = [
 function App() {
   return (
     <div>
-      <h1>Hello React!</h1>
+      <Header />
+      <Menu />
+      <Footer />
+    </div>
+  );
+}
+
+function Header() {
+  return <h1>Fast React Pizza Co.</h1>;
+}
+
+function Menu() {
+  return (
+    <div>
+      <h2>Our Menu!</h2>
       <Pizza />
       <Pizza />
       <Pizza />
@@ -57,12 +71,18 @@ function App() {
   );
 }
 
+function Footer() {
+  return (
+    <footer>{new Date().toLocaleTimeString()} We're Currently Open</footer>
+  );
+}
+
 function Pizza() {
   return (
     <div>
+      <img src="/pizzas/spinaci.jpg" alt="spinaci-pizza.jpg" />
       <h2>Pizza Spinaci</h2>
       <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-      <img src="/pizzas/spinaci.jpg" alt="spinaci-pizza.jpg" />
     </div>
   );
 }
