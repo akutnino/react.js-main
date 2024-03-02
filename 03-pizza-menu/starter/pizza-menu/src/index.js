@@ -93,12 +93,14 @@ function Menu() {
 }
 
 function Pizza(props = {}) {
+  const pizzaIsAvailable = props.pizzaPropObj.soldOut === false;
+  const pizzaClassName = pizzaIsAvailable ? 'pizza' : 'pizza sold-out';
   console.log(props);
 
-  if (props.pizzaPropObj.soldOut === true) return null;
+  // if (props.pizzaPropObj.soldOut === true) return null;
 
   return (
-    <li className="pizza">
+    <li className={pizzaClassName}>
       <img
         src={props.pizzaPropObj.photoName}
         alt={props.pizzaPropObj.photoName}
@@ -106,7 +108,9 @@ function Pizza(props = {}) {
       <div>
         <h3>{props.pizzaPropObj.name}</h3>
         <p>{props.pizzaPropObj.ingredients}</p>
-        <span>${props.pizzaPropObj.price}</span>
+        <span>
+          {pizzaIsAvailable ? `$ ${props.pizzaPropObj.price}` : 'SOLD OUT'}
+        </span>
       </div>
     </li>
   );
