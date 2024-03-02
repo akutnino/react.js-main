@@ -73,12 +73,14 @@ function Menu() {
   return (
     <main className="menu">
       <h2>Our Menu!</h2>
-      {numPizzas > 0 && (
+      {numPizzas > 0 ? (
         <ul className="pizzas">
           {pizzas.map((element, index) => {
             return <Pizza pizzaPropObj={element} key={index} />;
           })}
         </ul>
+      ) : (
+        <p>We're Currently working on our menu</p>
       )}
     </main>
   );
