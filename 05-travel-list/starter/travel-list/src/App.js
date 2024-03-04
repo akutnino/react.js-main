@@ -20,10 +20,23 @@ function Logo(props = {}) {
 }
 
 function Form(props = {}) {
+  const handleSumbit = function (event) {
+    event.preventDefault();
+  };
+
   return (
-    <div className="add-form">
+    <form className="add-form" onSubmit={handleSumbit}>
       <h3>What do you need for your trip?</h3>
-    </div>
+      <select>
+        {Array.from({ length: 10 }, (ele, index) => index + 1).map((num) => (
+          <option value={num} key={num}>
+            {num}
+          </option>
+        ))}
+      </select>
+      <input type="text" placeholder="Item..." />
+      <button>Add</button>
+    </form>
   );
 }
 
@@ -32,7 +45,7 @@ function PackingList(props = {}) {
     <div className="list">
       <ul>
         {initialItems.map((element) => (
-          <Item item={element} />
+          <Item item={element} key={element.id} />
         ))}
       </ul>
     </div>
