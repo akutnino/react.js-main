@@ -8,6 +8,15 @@ const messages = [
 ];
 
 export default function App(props = {}) {
+  return (
+    <div>
+      <Steps></Steps>
+      <Steps></Steps>
+    </div>
+  );
+}
+
+function Steps(props = {}) {
   const [step, setStep] = useState(1);
   const [isOpen, setIsOpen] = useState(true);
 
@@ -28,7 +37,7 @@ export default function App(props = {}) {
   };
 
   return (
-    <React.Fragment>
+    <div>
       <button className="close" onClick={handleCloseBtn}>
         &times;
       </button>
@@ -58,6 +67,6 @@ export default function App(props = {}) {
           </div>
         </div>
       )}
-    </React.Fragment>
+    </div>
   );
 }
