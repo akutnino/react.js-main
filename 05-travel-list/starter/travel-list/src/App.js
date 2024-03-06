@@ -1,11 +1,5 @@
 import { useState } from 'react';
 
-const initialItems = [
-  { id: 1, description: 'Passports', quantity: 2, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: false },
-  { id: 3, description: 'Jeans', quantity: 4, packed: true },
-];
-
 export default function App(props = {}) {
   const [items, setItems] = useState([]);
 
@@ -13,11 +7,21 @@ export default function App(props = {}) {
     setItems((currentState) => [...currentState, item]);
   };
 
+  const handleDeleteItem = function (id) {
+    return (event) => {
+      setItems((currentState) =>
+        currentState.filter((item) => {
+          return item.id === id ? false : true;
+        })
+      );
+    };
+  };
+
   return (
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} />
+      <PackingList items={items} onDeleteItem={handleDeleteItem} />
       <Stats />
     </div>
   );
@@ -82,13 +86,17 @@ function Form(props = {}) {
 }
 
 function PackingList(props = {}) {
-  const { items } = props;
+  const { items, onDeleteItem } = props;
 
   return (
     <div className="list">
       <ul>
         {items.map((element) => (
-          <Item item={element} key={element.id} />
+          <Item
+            item={element}
+            key={element.id}
+            handleDeleteItem={onDeleteItem}
+          />
         ))}
       </ul>
     </div>
@@ -96,12 +104,14 @@ function PackingList(props = {}) {
 }
 
 function Item(props = {}) {
+  const { item, handleDeleteItem } = props;
+
   return (
     <li>
-      <span style={props.item.packed ? { textDecoration: 'line-through' } : {}}>
-        {props.item.quantity} {props.item.description}
+      <span style={item.packed ? { textDecoration: 'line-through' } : {}}>
+        {item.quantity} {item.description}
       </span>
-      <button>❌</button>
+      <button onClick={handleDeleteItem(item.id)}>❌</button>
     </li>
   );
 }
