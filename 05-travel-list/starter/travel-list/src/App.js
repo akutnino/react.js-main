@@ -10,9 +10,17 @@ export default function App(props = {}) {
   const handleDeleteItem = function (id) {
     return (event) => {
       setItems((currentState) =>
-        currentState.filter((item) => {
-          return item.id === id ? false : true;
-        })
+        currentState.filter((item) => (item.id === id ? false : true))
+      );
+    };
+  };
+
+  const handleToggleItem = function (id) {
+    return (event) => {
+      setItems((currentState) =>
+        currentState.map((item) =>
+          item.id === id ? { ...item, package: !item.package } : item
+        )
       );
     };
   };
@@ -21,7 +29,11 @@ export default function App(props = {}) {
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} onDeleteItem={handleDeleteItem} />
+      <PackingList
+        items={items}
+        onDeleteItem={handleDeleteItem}
+        onToggleItem={handleToggleItem}
+      />
       <Stats />
     </div>
   );
@@ -86,7 +98,7 @@ function Form(props = {}) {
 }
 
 function PackingList(props = {}) {
-  const { items, onDeleteItem } = props;
+  const { items, onDeleteItem, onToggleItem } = props;
 
   return (
     <div className="list">
@@ -96,6 +108,7 @@ function PackingList(props = {}) {
             item={element}
             key={element.id}
             handleDeleteItem={onDeleteItem}
+            handleToggleItem={onToggleItem}
           />
         ))}
       </ul>
@@ -104,11 +117,16 @@ function PackingList(props = {}) {
 }
 
 function Item(props = {}) {
-  const { item, handleDeleteItem } = props;
+  const { item, handleDeleteItem, handleToggleItem } = props;
 
   return (
     <li>
-      <span style={item.packed ? { textDecoration: 'line-through' } : {}}>
+      <input
+        type="checkbox"
+        value={item.package}
+        onChange={handleToggleItem(item.id)}
+      />
+      <span style={item.package ? { textDecoration: 'line-through' } : {}}>
         {item.quantity} {item.description}
       </span>
       <button onClick={handleDeleteItem(item.id)}>❌</button>
