@@ -1,4 +1,4 @@
-export default function Item(props = {}) {
+export default function Item(props) {
   const { item, handleDeleteItem, handleToggleItem } = props;
 
   return (

@@ -1,4 +1,4 @@
-export default function Stats(props = {}) {
+export default function Stats(props) {
   const { items } = props;
   const listIsEmpty = items.length === 0;
 

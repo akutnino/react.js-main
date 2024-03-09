@@ -1,15 +1,13 @@
 import { useState } from 'react';
 
-export default function Form(props = {}) {
+export default function Form(props) {
   const { onAddItems } = props;
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState(1);
 
   const handleSumbit = function (event) {
     event.preventDefault();
-
     if (description === '') return;
-
     const newItem = {
       description,
       quantity,

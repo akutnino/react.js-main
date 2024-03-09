@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Item from './App';
+import Item from './Item';
 
-export default function PackingList(props = {}) {
+export default function PackingList(props) {
   const { items, onDeleteItem, onToggleItem, onClearList } = props;
   const [sortBy, setSortBy] = useState('input');
   let sortedItems;
@@ -33,7 +33,6 @@ export default function PackingList(props = {}) {
           />
         ))}
       </ul>
-
       <div className="actions">
         <select value={sortBy} onChange={handleSelectChange}>
           <option value="input">Sort by input order</option>
