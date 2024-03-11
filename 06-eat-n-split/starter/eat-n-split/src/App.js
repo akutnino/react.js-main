@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const initialFriends = [
   {
     id: 118836,
@@ -20,36 +22,66 @@ const initialFriends = [
 ];
 
 export default function App(prop) {
+  const [friendsList, setFriendsList] = useState(initialFriends);
+  const [formAddFriendVisibility, setFormAddFriendVisibility] = useState(true);
+  const [selectedFriend, setSelectedFriend] = useState(null);
+
+  const handleAddFriendBtn = () => {
+    setFormAddFriendVisibility((currentState) => !currentState);
+  };
+
+  const handleSelectedFriend = (friendObject) => {
+    return (event) => {
+      setSelectedFriend((currentState) =>
+        currentState?.id === friendObject.id ? null : friendObject
+      );
+    };
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList />
-        <FormAddFriend />
-        <Button>Add Friend</Button>
+        <FriendsList
+          friendsList={friendsList}
+          onSelectedFriend={handleSelectedFriend}
+          selectedFriend={selectedFriend}
+        />
+
+        {formAddFriendVisibility && <FormAddFriend />}
+
+        <Button onClick={handleAddFriendBtn}>
+          {formAddFriendVisibility ? 'Close' : 'Add Friend'}
+        </Button>
       </div>
 
-      <FormSplitBill />
+      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} />}
     </div>
   );
 }
 
 function FriendsList(prop) {
-  const friends = initialFriends;
+  const { friendsList, onSelectedFriend, selectedFriend } = prop;
 
   return (
     <ul>
-      {friends.map((friend) => (
-        <Friend friend={friend} key={friend.id} />
+      {friendsList.map((friend) => (
+        <Friend
+          friend={friend}
+          key={friend.id}
+          onSelectedFriend={onSelectedFriend}
+          selectedFriend={selectedFriend}
+        />
       ))}
     </ul>
   );
 }
 
 function Friend(prop) {
-  const { friend } = prop;
+  const { friend, onSelectedFriend, selectedFriend } = prop;
+  const isSelected = friend.id === selectedFriend?.id;
 
   return (
-    <li>
+    <li className={isSelected ? 'selected' : ''}>
       <img src={friend.image} alt={friend.name} />
       <h3>{friend.name}</h3>
 
@@ -65,15 +97,21 @@ function Friend(prop) {
       )}
       {friend.balance === 0 && <p>You and {friend.name} are even</p>}
 
-      <Button>Select</Button>
+      <Button onClick={onSelectedFriend(friend)}>
+        {isSelected ? 'Close' : 'Select'}
+      </Button>
     </li>
   );
 }
 
 function Button(prop) {
-  const { children } = prop;
+  const { children, onClick } = prop;
 
-  return <button className="button">{children}</button>;
+  return (
+    <button className="button" onClick={onClick}>
+      {children}
+    </button>
+  );
 }
 
 function FormAddFriend(prop) {
@@ -91,9 +129,11 @@ function FormAddFriend(prop) {
 }
 
 function FormSplitBill(prop) {
+  const { selectedFriend } = prop;
+
   return (
     <form className="form-split-bill">
-      <h2>Split a bill with X</h2>
+      <h2>Split a bill with {selectedFriend.name}</h2>
 
       <label>💰 Bill Value</label>
       <input type="text" />
@@ -101,7 +141,7 @@ function FormSplitBill(prop) {
       <label>🧍‍♂️ Your expense</label>
       <input type="text" />
 
-      <label>🧑‍🤝‍👩 X's expense</label>
+      <label>🧑‍🤝‍👩 {selectedFriend.name}'s expense</label>
       <input type="text" disabled />
 
       <label>🤑 Who is paying the bill</label>
