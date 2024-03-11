@@ -27,6 +27,8 @@ export default function App(prop) {
         <FormAddFriend />
         <Button>Add Friend</Button>
       </div>
+
+      <FormSplitBill />
     </div>
   );
 }
@@ -77,13 +79,38 @@ function Button(prop) {
 function FormAddFriend(prop) {
   return (
     <form className="form-add-friend">
-      <label>🧑‍🤝‍🧑 Friend Name</label>
+      <label>🧑‍🤝‍👩 Friend Name</label>
       <input type="text" />
 
       <label>📷 Image URL</label>
       <input type="text" />
 
       <Button>Add</Button>
+    </form>
+  );
+}
+
+function FormSplitBill(prop) {
+  return (
+    <form className="form-split-bill">
+      <h2>Split a bill with X</h2>
+
+      <label>💰 Bill Value</label>
+      <input type="text" />
+
+      <label>🧍‍♂️ Your expense</label>
+      <input type="text" />
+
+      <label>🧑‍🤝‍👩 X's expense</label>
+      <input type="text" disabled />
+
+      <label>🤑 Who is paying the bill</label>
+      <select>
+        <option value="user">You</option>
+        <option value="friend">X</option>
+      </select>
+
+      <Button>Split Bill</Button>
     </form>
   );
 }
