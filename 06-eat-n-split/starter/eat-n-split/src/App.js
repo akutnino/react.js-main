@@ -57,6 +57,8 @@ export default function App(prop) {
             : friend
         )
       );
+
+      setSelectedFriend(null);
     }
 
     if (billPayor === 'friend') {
@@ -70,6 +72,8 @@ export default function App(prop) {
         )
       );
     }
+
+    setSelectedFriend(null);
   };
 
   return (
