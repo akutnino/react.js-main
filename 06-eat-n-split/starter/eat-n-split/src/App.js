@@ -71,9 +71,9 @@ export default function App(prop) {
             : friend
         )
       );
-    }
 
-    setSelectedFriend(null);
+      setSelectedFriend(null);
+    }
   };
 
   return (
