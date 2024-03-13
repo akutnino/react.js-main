@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const initialFriends = [
 	{
 		id: 118836,
@@ -20,13 +22,19 @@ const initialFriends = [
 ];
 
 export default function App(props) {
+	const [addFriendFormVisibility, setAddFriendFormVisibility] = useState(false);
+
+	const handleAddFriendClick = () => {
+		setAddFriendFormVisibility((currentState) => !currentState);
+	};
+
 	return (
 		<div className='app'>
 			<div className='sidebar'>
 				<FriendsList />
-				<AddFriendForm />
+				{addFriendFormVisibility && <AddFriendForm />}
 
-				<Button>Add Friend</Button>
+				<Button onClick={handleAddFriendClick}>Add Friend</Button>
 			</div>
 
 			<BillSplitForm />
@@ -85,9 +93,16 @@ function FriendItem(props) {
 }
 
 function Button(props) {
-	const { children } = props;
+	const { onClick, children } = props;
 
-	return <button className='button'>{children}</button>;
+	return (
+		<button
+			className='button'
+			onClick={onClick}
+		>
+			{children}
+		</button>
+	);
 }
 
 function AddFriendForm(props) {
