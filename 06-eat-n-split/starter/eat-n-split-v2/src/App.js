@@ -24,7 +24,12 @@ export default function App(props) {
 		<div className='app'>
 			<div className='sidebar'>
 				<FriendsList />
+				<AddFriendForm />
+
+				<Button>Add Friend</Button>
 			</div>
+
+			<BillSplitForm />
 		</div>
 	);
 }
@@ -47,6 +52,7 @@ function FriendsList(props) {
 function FriendItem(props) {
 	const { friend } = props;
 
+	// prettier-ignore
 	return (
 		<li>
 			<img
@@ -68,7 +74,9 @@ function FriendItem(props) {
 			)}
 
 			{friend.balance === 0 && (
-				<p className='gray'>You and {friend.name} are currently even.</p>
+				<p className='gray'>
+          You and {friend.name} are currently even.
+        </p>
 			)}
 
 			<Button>Select</Button>
@@ -80,4 +88,42 @@ function Button(props) {
 	const { children } = props;
 
 	return <button className='button'>{children}</button>;
+}
+
+function AddFriendForm(props) {
+	return (
+		<form className='form-add-friend'>
+			<label>🧍New Friend</label>
+			<input type='text' />
+
+			<label>📷 Image URL</label>
+			<input type='text' />
+
+			<Button>Add</Button>
+		</form>
+	);
+}
+
+function BillSplitForm(props) {
+	// prettier-ignore
+	return (
+		<form className='form-split-bill'>
+			<h2>Split a bill with X</h2>
+
+			<label>💰 Bill Value</label>
+			<input type='text' />
+
+			<label>🧍‍♂️ Your Expense</label>
+			<input type='text' />
+
+			<label>🧑‍🤝‍👩 X's Expense</label>
+			<input type='text' disabled/>
+
+      <label>🤑 Who is paying the bill?</label>
+      <select>
+        <option value='user'>You</option>
+        <option value='friend'>X</option>
+      </select>
+		</form>
+	);
 }
