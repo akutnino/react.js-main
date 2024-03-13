@@ -23,26 +23,40 @@ const initialFriends = [
 
 export default function App(props) {
 	const [addFriendFormVisibility, setAddFriendFormVisibility] = useState(false);
+	const [selectedFriendObject, setSelectedFriendObject] = useState(null);
 
 	const handleAddFriendClick = () => {
 		setAddFriendFormVisibility((currentState) => !currentState);
 	};
 
+	const handleSelectedFriend = (friendItemObject) => {
+		return () =>
+			setSelectedFriendObject((currentState) =>
+				currentState === friendItemObject ? null : friendItemObject
+			);
+	};
+
 	return (
 		<div className='app'>
 			<div className='sidebar'>
-				<FriendsList />
+				<FriendsList
+					onSelectedFriend={handleSelectedFriend}
+					selectedFriendObject={selectedFriendObject}
+				/>
 				{addFriendFormVisibility && <AddFriendForm />}
 
 				<Button onClick={handleAddFriendClick}>Add Friend</Button>
 			</div>
 
-			<BillSplitForm />
+			{selectedFriendObject && (
+				<BillSplitForm selectedFriendObject={selectedFriendObject} />
+			)}
 		</div>
 	);
 }
 
 function FriendsList(props) {
+	const { onSelectedFriend, selectedFriendObject } = props;
 	const friendsArray = initialFriends;
 
 	return (
@@ -51,6 +65,8 @@ function FriendsList(props) {
 				<FriendItem
 					friend={friend}
 					key={friend.id}
+					onSelectedFriend={onSelectedFriend}
+					selectedFriendObject={selectedFriendObject}
 				/>
 			))}
 		</ul>
@@ -58,7 +74,8 @@ function FriendsList(props) {
 }
 
 function FriendItem(props) {
-	const { friend } = props;
+	const { friend, onSelectedFriend, selectedFriendObject } = props;
+	const currentlySelected = friend === selectedFriendObject;
 
 	// prettier-ignore
 	return (
@@ -87,7 +104,7 @@ function FriendItem(props) {
         </p>
 			)}
 
-			<Button>Select</Button>
+			<Button onClick={onSelectedFriend(friend)}>{currentlySelected ? 'Close' : 'Select'}</Button>
 		</li>
 	);
 }
@@ -120,10 +137,12 @@ function AddFriendForm(props) {
 }
 
 function BillSplitForm(props) {
+	const { selectedFriendObject } = props;
+
 	// prettier-ignore
 	return (
 		<form className='form-split-bill'>
-			<h2>Split a bill with X</h2>
+			<h2>Split a bill with {selectedFriendObject.name}</h2>
 
 			<label>💰 Bill Value</label>
 			<input type='text' />
@@ -131,13 +150,13 @@ function BillSplitForm(props) {
 			<label>🧍‍♂️ Your Expense</label>
 			<input type='text' />
 
-			<label>🧑‍🤝‍👩 X's Expense</label>
+			<label>🧑‍🤝‍👩 {selectedFriendObject.name}'s Expense</label>
 			<input type='text' disabled/>
 
       <label>🤑 Who is paying the bill?</label>
       <select>
         <option value='user'>You</option>
-        <option value='friend'>X</option>
+        <option value='friend'>{selectedFriendObject.name}</option>
       </select>
 
       <Button>Split Bill</Button>
