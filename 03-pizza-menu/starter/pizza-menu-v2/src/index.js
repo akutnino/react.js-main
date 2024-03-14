@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './index.css';
 
 const pizzaData = [
 	{
@@ -48,7 +49,7 @@ const pizzaData = [
 
 function App(props) {
 	return (
-		<div>
+		<div className='container'>
 			<Header />
 			<Menu />
 			<Footer />
@@ -57,16 +58,49 @@ function App(props) {
 }
 
 function Header(props) {
-	return <h1>Fast React Pizza Co.</h1>;
+	const cssStyle = {};
+
+	return (
+		<header className='header'>
+			<h1 style={cssStyle}>Fast React Pizza Co.</h1>
+		</header>
+	);
 }
 
 function Menu(props) {
 	return (
-		<div>
+		<main className='menu'>
 			<h2>Our Menu</h2>
-			<Pizza />
-			<Pizza />
-			<Pizza />
+			<Pizza
+				pizzaName='Pizza Spinaci'
+				pizzaIngredients='Tomato, mozarella, spinach, and ricotta cheese'
+				pizzaImage='pizzas/spinaci.jpg'
+				pizzaPrice={10}
+			/>
+			<Pizza
+				pizzaName='Pizza Funghi'
+				pizzaIngredients='Tomato, mozarella, mushrooms, and onion'
+				pizzaImage='pizzas/funghi.jpg'
+				pizzaPrice={12}
+			/>
+		</main>
+	);
+}
+
+function Pizza(props) {
+	const { pizzaName, pizzaIngredients, pizzaImage, pizzaPrice } = props;
+
+	return (
+		<div className='pizza'>
+			<img
+				src={pizzaImage}
+				alt={pizzaImage}
+			/>
+			<div>
+				<h3>{pizzaName}</h3>
+				<p>{pizzaIngredients}</p>
+				<span>{pizzaPrice + 10}</span>
+			</div>
 		</div>
 	);
 }
@@ -81,20 +115,9 @@ function Footer(props) {
 	// else alert('We are currently closed!');
 
 	return (
-		<footer>{new Date().toLocaleTimeString()} We're currently open!</footer>
-	);
-}
-
-function Pizza(props) {
-	return (
-		<div>
-			<img
-				src='pizzas/spinaci.jpg'
-				alt='spinaci'
-			/>
-			<h2>Pizza Spinaci</h2>
-			<p>Tomato, mozarella, spinach, and ricotta cheese</p>
-		</div>
+		<footer className='footer'>
+			{new Date().toLocaleTimeString()} We're currently open!
+		</footer>
 	);
 }
 
