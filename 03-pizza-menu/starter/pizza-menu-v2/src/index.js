@@ -75,14 +75,20 @@ function Menu(props) {
 			<h2>Our Menu</h2>
 
 			{pizzaArray.length > 0 ? (
-				<ul className='pizzas'>
-					{pizzaArray.map((pizzaObject) => (
-						<Pizza
-							pizzaObject={pizzaObject}
-							key={pizzaObject.name}
-						/>
-					))}
-				</ul>
+				<React.Fragment>
+					<p>
+						Authentic Italian cuisine. 6 creative dishes to choose from. All
+						from our stone oven, all organic, all delicious.
+					</p>
+					<ul className='pizzas'>
+						{pizzaArray.map((pizzaObject) => (
+							<Pizza
+								pizzaObject={pizzaObject}
+								key={pizzaObject.name}
+							/>
+						))}
+					</ul>
+				</React.Fragment>
 			) : (
 				<p>We are still working on our menu. Please come back later.</p>
 			)}
