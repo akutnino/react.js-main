@@ -74,7 +74,7 @@ function Menu(props) {
 		<main className='menu'>
 			<h2>Our Menu</h2>
 
-			{pizzaArray.length > 0 && (
+			{pizzaArray.length > 0 ? (
 				<ul className='pizzas'>
 					{pizzaArray.map((pizzaObject) => (
 						<Pizza
@@ -83,6 +83,8 @@ function Menu(props) {
 						/>
 					))}
 				</ul>
+			) : (
+				<p>We are still working on our menu. Please come back later.</p>
 			)}
 		</main>
 	);
@@ -118,13 +120,17 @@ function Footer(props) {
 
 	return (
 		<footer className='footer'>
-			{isOpen && (
+			{isOpen ? (
 				<div className='order'>
 					<p>
 						We are open until {closeHour}:00. Come visit us or order online.
 					</p>
 					<button className='btn'>Order</button>
 				</div>
+			) : (
+				<p>
+					We are happy to welcome you between {openHour}:00 and {closeHour}:00.
+				</p>
 			)}
 		</footer>
 	);
