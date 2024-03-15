@@ -94,6 +94,7 @@ function Pizza(props) {
 	const { pizzaObject } = props;
 	const { name, ingredients, price, photoName, soldOut } = pizzaObject;
 
+	if (soldOut) return null;
 	return (
 		<li className='pizza'>
 			<img
@@ -117,6 +118,14 @@ function Footer(props) {
 
 	// if (isOpen) alert('We are currently open!');
 	// else alert('We are currently closed!');
+
+	if (!isOpen) {
+		return (
+			<p>
+				We are happy to welcome you between {openHour}:00 and {closeHour}:00.
+			</p>
+		);
+	}
 
 	return (
 		<footer className='footer'>
