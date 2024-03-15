@@ -100,9 +100,10 @@ function Pizza(props) {
 	const { pizzaObject } = props;
 	const { name, ingredients, price, photoName, soldOut } = pizzaObject;
 
-	if (soldOut) return null;
+	// if (soldOut) return null;
+
 	return (
-		<li className='pizza'>
+		<li className={soldOut ? 'pizza sold-out' : 'pizza'}>
 			<img
 				src={photoName}
 				alt={photoName}
@@ -110,7 +111,9 @@ function Pizza(props) {
 			<div>
 				<h3>{name}</h3>
 				<p>{ingredients}</p>
-				<span>{price}</span>
+
+				{/* {soldOut ? <span>SOLD OUT</span> : <span>price</span>} */}
+				<span>{soldOut ? 'SOLD OUT' : price}</span>
 			</div>
 		</li>
 	);
