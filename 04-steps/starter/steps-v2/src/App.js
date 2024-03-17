@@ -7,6 +7,15 @@ const messages = [
 ];
 
 export default function App(props) {
+	return (
+		<div>
+			<Steps />
+			<Steps />
+		</div>
+	);
+}
+
+function Steps(props) {
 	const [stepNumber, setStepNumber] = useState(1);
 	const [isOpen, setIsOpen] = useState(true);
 	const buttonStyle = { backgroundColor: '#7950f2', color: '#fff' };
@@ -28,7 +37,7 @@ export default function App(props) {
 	};
 
 	return (
-		<>
+		<div>
 			<button
 				className='close'
 				onClick={handleCloseClick}
@@ -64,6 +73,6 @@ export default function App(props) {
 					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 }
