@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const initialItems = [
 	{
 		id: 1,
@@ -29,8 +31,34 @@ function Logo(props) {
 }
 
 function Form(props) {
+	const [quantity, setQuantity] = useState(Number(1));
+	const [description, setDescription] = useState('');
+
+	const handleSelect = (event) => {
+		const targetValue = event.target.value;
+		setQuantity(Number(targetValue));
+	};
+
+	const handleInput = (event) => {
+		const targetValue = event.target.value;
+		setDescription(targetValue);
+	};
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
+
+		if (!description) return;
+
+		const newItem = {
+			id: initialItems.length + 1,
+			description,
+			quantity,
+			packed: false
+		};
+
+		console.log(newItem);
+		setQuantity(Number(1));
+		setDescription('');
 	};
 
 	return (
@@ -39,16 +67,26 @@ function Form(props) {
 			onSubmit={handleSubmit}
 		>
 			<h3>What do you need for your 😍 trip?</h3>
-			<select>
+			<select
+				onChange={handleSelect}
+				value={quantity}
+			>
 				{Array(10)
 					.fill(0)
 					.map((val, index) => (
-						<option key={index}>{index + 1}</option>
+						<option
+							value={index + 1}
+							key={index}
+						>
+							{index + 1}
+						</option>
 					))}
 			</select>
 			<input
 				type='text'
 				placeholder='Item...'
+				onChange={handleInput}
+				value={description}
 			></input>
 			<button>Add</button>
 		</form>
