@@ -29,10 +29,29 @@ function Logo(props) {
 }
 
 function Form(props) {
+	const handleSubmit = (event) => {
+		event.preventDefault();
+	};
+
 	return (
-		<div className='add-form'>
+		<form
+			className='add-form'
+			onSubmit={handleSubmit}
+		>
 			<h3>What do you need for your 😍 trip?</h3>
-		</div>
+			<select>
+				{Array(10)
+					.fill(0)
+					.map((val, index) => (
+						<option key={index}>{index + 1}</option>
+					))}
+			</select>
+			<input
+				type='text'
+				placeholder='Item...'
+			></input>
+			<button>Add</button>
+		</form>
 	);
 }
 
@@ -41,7 +60,10 @@ function PackingList(props) {
 		<div className='list'>
 			<ul>
 				{initialItems.map((item) => (
-					<PackingItem itemObject={item} />
+					<PackingItem
+						itemObject={item}
+						key={item.id}
+					/>
 				))}
 			</ul>
 		</div>
