@@ -1,19 +1,19 @@
 import { useState } from 'react';
 
-const initialItems = [
-	{
-		id: 1,
-		description: 'Passports',
-		quantity: 2,
-		packed: false
-	},
-	{
-		id: 2,
-		description: 'Socks',
-		quantity: 12,
-		packed: true
-	}
-];
+// const initialItems = [
+// 	{
+// 		id: 1,
+// 		description: 'Passports',
+// 		quantity: 2,
+// 		packed: false
+// 	},
+// 	{
+// 		id: 2,
+// 		description: 'Socks',
+// 		quantity: 12,
+// 		packed: true
+// 	}
+// ];
 
 export default function App(props) {
 	const [itemsArray, setItemsArray] = useState([]);
@@ -22,11 +22,21 @@ export default function App(props) {
 		setItemsArray((currentState) => [...currentState, newItem]);
 	};
 
+	const handleDelete = (id) => {
+		return (event) =>
+			setItemsArray((currentState) =>
+				currentState.filter((element) => (element.id === id ? false : true))
+			);
+	};
+
 	return (
 		<div className='app'>
 			<Logo />
 			<Form onAddItem={handleAddItem} />
-			<PackingList itemsArray={itemsArray} />
+			<PackingList
+				itemsArray={itemsArray}
+				onDelete={handleDelete}
+			/>
 			<Stats />
 		</div>
 	);
@@ -102,13 +112,14 @@ function Form(props) {
 }
 
 function PackingList(props) {
-	const { itemsArray } = props;
+	const { itemsArray, onDelete } = props;
 
 	return (
 		<div className='list'>
 			<ul>
 				{itemsArray.map((item) => (
 					<PackingItem
+						onClick={onDelete}
 						itemObject={item}
 						key={item.id}
 					/>
@@ -119,7 +130,7 @@ function PackingList(props) {
 }
 
 function PackingItem(props) {
-	const { itemObject } = props;
+	const { itemObject, onClick } = props;
 	const { id, description, quantity, packed } = itemObject;
 	const packedStyle = { textDecoration: 'line-through' };
 
@@ -128,7 +139,7 @@ function PackingItem(props) {
 			<span style={packed ? packedStyle : {}}>
 				{quantity} {description}
 			</span>
-			<button>❌</button>
+			<button onClick={onClick(id)}>❌</button>
 		</li>
 	);
 }
