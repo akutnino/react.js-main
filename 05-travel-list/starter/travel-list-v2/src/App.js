@@ -38,6 +38,11 @@ export default function App(props) {
 			);
 	};
 
+	const handleClearList = () => {
+		const confirmed = window.confirm('Are you sure to clear list?');
+		if (confirmed) setItemsArray([]);
+	};
+
 	return (
 		<div className='app'>
 			<Logo />
@@ -46,6 +51,7 @@ export default function App(props) {
 				itemsArray={itemsArray}
 				onDelete={handleDelete}
 				onPacked={handlePacked}
+				onClearList={handleClearList}
 			/>
 			<Stats itemsArray={itemsArray} />
 		</div>
@@ -122,7 +128,7 @@ function Form(props) {
 }
 
 function PackingList(props) {
-	const { itemsArray, onDelete, onPacked } = props;
+	const { itemsArray, onDelete, onPacked, onClearList } = props;
 	const [sortedBy, setSortedBy] = useState('input');
 	let sortedItems;
 
@@ -163,6 +169,8 @@ function PackingList(props) {
 					<option value='description'>Sort by Description</option>
 					<option value='packed'>Sort by Packed Status</option>
 				</select>
+
+				<button onClick={onClearList}>Clear List</button>
 			</div>
 		</div>
 	);
