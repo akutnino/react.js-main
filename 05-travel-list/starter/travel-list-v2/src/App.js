@@ -29,6 +29,15 @@ export default function App(props) {
 			);
 	};
 
+	const handlePacked = (id) => {
+		return (event) =>
+			setItemsArray((currentState) =>
+				currentState.map((element) =>
+					element.id === id ? { ...element, packed: !element.packed } : element
+				)
+			);
+	};
+
 	return (
 		<div className='app'>
 			<Logo />
@@ -36,6 +45,7 @@ export default function App(props) {
 			<PackingList
 				itemsArray={itemsArray}
 				onDelete={handleDelete}
+				onPacked={handlePacked}
 			/>
 			<Stats />
 		</div>
@@ -112,13 +122,14 @@ function Form(props) {
 }
 
 function PackingList(props) {
-	const { itemsArray, onDelete } = props;
+	const { itemsArray, onDelete, onPacked } = props;
 
 	return (
 		<div className='list'>
 			<ul>
 				{itemsArray.map((item) => (
 					<PackingItem
+						onPacked={onPacked}
 						onClick={onDelete}
 						itemObject={item}
 						key={item.id}
@@ -130,12 +141,17 @@ function PackingList(props) {
 }
 
 function PackingItem(props) {
-	const { itemObject, onClick } = props;
+	const { itemObject, onClick, onPacked } = props;
 	const { id, description, quantity, packed } = itemObject;
 	const packedStyle = { textDecoration: 'line-through' };
 
 	return (
 		<li>
+			<input
+				type='checkbox'
+				value={packed}
+				onChange={onPacked(id)}
+			/>
 			<span style={packed ? packedStyle : {}}>
 				{quantity} {description}
 			</span>
