@@ -10,7 +10,7 @@ export default function App(props) {
 	return (
 		<div>
 			<Steps />
-			{/* <Steps /> */}
+			<Steps />
 		</div>
 	);
 }
@@ -18,6 +18,7 @@ export default function App(props) {
 function Steps(props) {
 	const [stepNumber, setStepNumber] = useState(1);
 	const [isOpen, setIsOpen] = useState(true);
+	const buttonStyle = { backgroundColor: '#7950f2', color: '#fff' };
 
 	const handlePreviousClick = () => {
 		setStepNumber((currentState) =>
@@ -52,41 +53,26 @@ function Steps(props) {
 						<div className={stepNumber >= 3 ? 'active' : ''}>3</div>
 					</div>
 
-					<StepMessage stepNumber={stepNumber}>
-						{messages[stepNumber - 1]}
-					</StepMessage>
+					<p className='message'>
+						Step {stepNumber}: {messages[stepNumber - 1]}
+					</p>
 
 					<div className='buttons'>
-						<Button onClick={handlePreviousClick}>Previous</Button>
-						<Button onClick={handleNextClick}>Next</Button>
+						<button
+							style={buttonStyle}
+							onClick={handlePreviousClick}
+						>
+							Previous
+						</button>
+						<button
+							style={buttonStyle}
+							onClick={handleNextClick}
+						>
+							Next
+						</button>
 					</div>
 				</div>
 			)}
 		</div>
-	);
-}
-
-function StepMessage(props) {
-	const { stepNumber, children } = props;
-
-	return (
-		<div className='message'>
-			<h3>Step {stepNumber}:</h3>
-			{children}
-		</div>
-	);
-}
-
-function Button(props) {
-	const { onClick, children } = props;
-	const buttonStyle = { backgroundColor: '#7950f2', color: '#fff' };
-
-	return (
-		<button
-			style={buttonStyle}
-			onClick={onClick}
-		>
-			{children}
-		</button>
 	);
 }
