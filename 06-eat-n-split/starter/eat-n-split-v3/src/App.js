@@ -20,5 +20,57 @@ const initialFriends = [
 ];
 
 export default function App(props) {
-	return <div>Hello</div>;
+	return (
+		<div className='app'>
+			<div className='sidebar'>
+				<FriendsList />
+			</div>
+		</div>
+	);
+}
+
+function FriendsList(props) {
+	const friendsArray = initialFriends;
+
+	return (
+		<ul>
+			{friendsArray.map((friendObject) => (
+				<FriendItem
+					friendObject={friendObject}
+					key={friendObject.id}
+				/>
+			))}
+		</ul>
+	);
+}
+
+function FriendItem(props) {
+	const { friendObject } = props;
+	const { id, name, image, balance } = friendObject;
+
+	return (
+		<li>
+			<img
+				src={image}
+				alt={name}
+			/>
+			<h3>{name}</h3>
+
+			{balance === 0 && <p>You and {name} are even.</p>}
+
+			{balance > 0 && (
+				<p className='green'>
+					{name} ows you: ${balance}
+				</p>
+			)}
+
+			{balance < 0 && (
+				<p className='red'>
+					You owe {name}: ${Math.abs(balance)}
+				</p>
+			)}
+
+			<button className='button'>Select</button>
+		</li>
+	);
 }
