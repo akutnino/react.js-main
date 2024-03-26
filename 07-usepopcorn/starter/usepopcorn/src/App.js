@@ -57,6 +57,7 @@ export default function App() {
 	return (
 		<>
 			<NavBar>
+				<Logo />
 				<Search />
 				<NumResults movies={movies} />
 			</NavBar>
@@ -78,12 +79,7 @@ export default function App() {
 function NavBar(props) {
 	const { children } = props;
 
-	return (
-		<nav className='nav-bar'>
-			<Logo />
-			{children}
-		</nav>
-	);
+	return <nav className='nav-bar'>{children}</nav>;
 }
 
 function Search(props) {
@@ -143,6 +139,28 @@ function Box(props) {
 	);
 }
 
+// function WatchedBox(props) {
+// 	const [isOpen2, setIsOpen2] = useState(true);
+
+// 	return (
+// 		<div className='box'>
+// 			<button
+// 				className='btn-toggle'
+// 				onClick={() => setIsOpen2((open) => !open)}
+// 			>
+// 				{isOpen2 ? '–' : '+'}
+// 			</button>
+
+// 			{isOpen2 && (
+// 				<>
+// 					<WatchedSummary watched={watched} />
+// 					<WatchedMoviesList watched={watched} />
+// 				</>
+// 			)}
+// 		</div>
+// 	);
+// }
+
 function MovieList(props) {
 	const { movies } = props;
 
@@ -177,29 +195,6 @@ function Movie(props) {
 		</li>
 	);
 }
-
-// function WatchedBox(props) {
-
-// 	const [isOpen2, setIsOpen2] = useState(true);
-
-// 	return (
-// 		<div className='box'>
-// 			<button
-// 				className='btn-toggle'
-// 				onClick={() => setIsOpen2((open) => !open)}
-// 			>
-// 				{isOpen2 ? '–' : '+'}
-// 			</button>
-
-// 			{isOpen2 && (
-// 				<>
-// 					<WatchedSummary watched={watched} />
-// 					<WatchedMoviesList watched={watched} />
-// 				</>
-// 			)}
-// 		</div>
-// 	);
-// }
 
 function WatchedSummary(props) {
 	const { watched } = props;
