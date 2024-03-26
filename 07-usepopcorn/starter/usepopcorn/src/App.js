@@ -51,20 +51,24 @@ const average = (arr) =>
 	arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
+	const [movies, setMovies] = useState(tempMovieData);
+
 	return (
 		<>
-			<NavBar />
-			<Main />
+			<NavBar movies={movies} />
+			<Main movies={movies} />
 		</>
 	);
 }
 
 function NavBar(props) {
+	const { movies } = props;
+
 	return (
 		<nav className='nav-bar'>
 			<Logo />
 			<Search />
-			<NumResults />
+			<NumResults movies={movies} />
 		</nav>
 	);
 }
@@ -93,23 +97,28 @@ function Logo(props) {
 }
 
 function NumResults(props) {
+	const { movies } = props;
+
 	return (
 		<p className='num-results'>
-			Found <strong>X</strong> results
+			Found <strong>{movies.length}</strong> results
 		</p>
 	);
 }
 
 function Main(props) {
+	const { movies } = props;
+
 	return (
 		<main className='main'>
-			<ListBox />
+			<ListBox movies={movies} />
 			<WatchedBox />
 		</main>
 	);
 }
 
 function ListBox(props) {
+	const { movies } = props;
 	const [isOpen1, setIsOpen1] = useState(true);
 
 	return (
@@ -121,13 +130,13 @@ function ListBox(props) {
 				{isOpen1 ? '–' : '+'}
 			</button>
 
-			{isOpen1 && <MovieList />}
+			{isOpen1 && <MovieList movies={movies} />}
 		</div>
 	);
 }
 
 function MovieList(props) {
-	const [movies, setMovies] = useState(tempMovieData);
+	const { movies } = props;
 
 	return (
 		<ul className='list'>
