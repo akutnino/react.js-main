@@ -7,8 +7,7 @@ const containerStyle = {
 };
 
 const starContainerStyle = {
-	display: 'flex',
-	gap: '5px'
+	display: 'flex'
 };
 
 const textStyle = {
@@ -24,12 +23,21 @@ const starStyle = {
 };
 
 export default function StarRating(props) {
-	const { maxRating } = props;
-	const [rating, setRating] = useState(Number(1));
+	const { maxRating = 5 } = props;
+	const [rating, setRating] = useState(Number(0));
+	const [hoverRating, setHoverRating] = useState(Number(0));
 
-	function handleRating(starRating) {
-		return () => setRating(starRating);
-	}
+	const handleRating = (starRating) => {
+		return () => setRating(Number(starRating));
+	};
+
+	const handleMouseEnter = (temporaryRating) => {
+		return () => setHoverRating(Number(temporaryRating));
+	};
+
+	const handleMouseLeave = () => {
+		setHoverRating(Number(0));
+	};
 
 	return (
 		<div style={containerStyle}>
@@ -40,23 +48,29 @@ export default function StarRating(props) {
 						<Star
 							key={index}
 							onClick={handleRating(index + 1)}
-							isFilled={rating >= index + 1}
+							isFilled={
+								hoverRating ? hoverRating >= index + 1 : rating >= index + 1
+							}
+							onMouseEnter={handleMouseEnter(index + 1)}
+							onMouseLeave={handleMouseLeave}
 						/>
 					))}
 			</div>
-			<p style={textStyle}>{rating}</p>
+			<p style={textStyle}>{hoverRating || rating || ''}</p>
 		</div>
 	);
 }
 
 function Star(props) {
-	const { onClick, isFilled } = props;
+	const { onClick, isFilled, onMouseEnter, onMouseLeave } = props;
 
 	return (
 		<span
 			role='button'
 			style={starStyle}
 			onClick={onClick}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
 		>
 			{isFilled ? (
 				<svg
