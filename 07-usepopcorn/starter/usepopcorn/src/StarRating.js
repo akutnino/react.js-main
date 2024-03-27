@@ -7,7 +7,8 @@ const containerStyle = {
 };
 
 const starContainerStyle = {
-	display: 'flex'
+	display: 'flex',
+	gap: '5px'
 };
 
 const textStyle = {
@@ -23,26 +24,24 @@ const starStyle = {
 };
 
 export default function StarRating(props) {
-	const { maxRating = 5 } = props;
+	const { maxRating } = props;
 	const [rating, setRating] = useState(Number(1));
 
-	const handleStarRating = (rating) => {
-		return () => setRating(rating);
-	};
+	function handleRating(starRating) {
+		return () => setRating(starRating);
+	}
 
 	return (
 		<div style={containerStyle}>
 			<div style={starContainerStyle}>
 				{Array(maxRating)
-					.fill()
+					.fill(0)
 					.map((val, index) => (
 						<Star
 							key={index}
-							onClick={handleStarRating(index + 1)}
-							full={rating >= index + 1}
-						>
-							Star {index + 1}
-						</Star>
+							onClick={handleRating(index + 1)}
+							isFilled={rating >= index + 1}
+						/>
 					))}
 			</div>
 			<p style={textStyle}>{rating}</p>
@@ -51,7 +50,7 @@ export default function StarRating(props) {
 }
 
 function Star(props) {
-	const { onClick, full } = props;
+	const { onClick, isFilled } = props;
 
 	return (
 		<span
@@ -59,7 +58,7 @@ function Star(props) {
 			style={starStyle}
 			onClick={onClick}
 		>
-			{full ? (
+			{isFilled ? (
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					viewBox='0 0 20 20'
