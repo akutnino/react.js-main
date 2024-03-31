@@ -29,6 +29,8 @@ export default function App() {
 function Tabbed({ content }) {
 	const [activeTab, setActiveTab] = useState(0);
 
+	console.log(<Tabbed />);
+
 	return (
 		<div>
 			<div className='tabs'>
