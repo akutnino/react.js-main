@@ -55,6 +55,7 @@ export default function App(props) {
 					currentSelectedFriend={currentSelectedFriend}
 					setCurrentSelectedFriend={setCurrentSelectedFriend}
 					setFriendsListArray={setFriendsListArray}
+					key={currentSelectedFriend?.id}
 				/>
 			)}
 		</div>
@@ -223,6 +224,8 @@ function SplitBillFrom(props) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+
+		if (totalBillValue === Number(0)) return;
 
 		if (billPayor === 'user') {
 			const newFriendBalance = balance + friendTotalExpense;
