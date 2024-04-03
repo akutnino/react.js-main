@@ -81,18 +81,36 @@ function TabContent({ item }) {
 	const [showDetails, setShowDetails] = useState(true);
 	const [likes, setLikes] = useState(0);
 
-	console.log('RENDER');
+	console.log('COMPONENT RENDER');
 
 	function handleInc() {
 		setLikes(likes + 1);
 	}
 
-	function realTimeStateCallBack(currentState) {
-		return currentState + 3;
-	}
-
 	const handleTripleInc = () => {
-		setLikes(realTimeStateCallBack(likes));
+		setLikes((currentState) => {
+			const newState = currentState + 1;
+
+			console.log(newState);
+
+			return newState;
+		});
+
+		setLikes((currentState) => {
+			const newState = currentState + 1;
+
+			console.log(newState);
+
+			return newState;
+		});
+
+		setLikes((currentState) => {
+			const newState = currentState + 1;
+
+			console.log(newState);
+
+			return newState;
+		});
 	};
 
 	const handleUndo = () => {
