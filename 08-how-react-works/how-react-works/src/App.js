@@ -26,37 +26,31 @@ export default function App() {
 	);
 }
 
-function Tabbed({ content }) {
+function Tabbed(props) {
+	const { content } = props;
 	const [activeTab, setActiveTab] = useState(0);
 
 	return (
 		<div>
 			<div className='tabs'>
-				<Tab
-					num={0}
-					activeTab={activeTab}
-					onClick={setActiveTab}
-				/>
-				<Tab
-					num={1}
-					activeTab={activeTab}
-					onClick={setActiveTab}
-				/>
-				<Tab
-					num={2}
-					activeTab={activeTab}
-					onClick={setActiveTab}
-				/>
+				{content.map((element, index) => (
+					<Tab
+						activeTab={activeTab}
+						setActiveTab={setActiveTab}
+						num={index}
+						key={index}
+					/>
+				))}
 				<Tab
 					num={3}
 					activeTab={activeTab}
-					onClick={setActiveTab}
+					setActiveTab={setActiveTab}
 				/>
 			</div>
 
 			{activeTab <= 2 ? (
 				<TabContent
-					item={content.at(activeTab)}
+					contentItemObject={content.at(activeTab)}
 					key={content.at(activeTab).summary}
 				/>
 			) : (
@@ -66,24 +60,35 @@ function Tabbed({ content }) {
 	);
 }
 
-function Tab({ num, activeTab, onClick }) {
+function Tab(props) {
+	const { num, activeTab, setActiveTab } = props;
+
+	const handleTabClick = () => {
+		setActiveTab(num);
+	};
+
 	return (
 		<button
 			className={activeTab === num ? 'tab active' : 'tab'}
-			onClick={() => onClick(num)}
+			onClick={handleTabClick}
 		>
 			Tab {num + 1}
 		</button>
 	);
 }
 
-function TabContent({ item }) {
+function TabContent(props) {
+	const { contentItemObject } = props;
 	const [showDetails, setShowDetails] = useState(true);
 	const [likes, setLikes] = useState(0);
 
-	function handleInc() {
+	const handleDetailsVisibility = () => {
+		setShowDetails((currentState) => !currentState);
+	};
+
+	const handleInc = () => {
 		setLikes(likes + 1);
-	}
+	};
 
 	const handleTripleInc = () => {
 		setLikes((currentState) => currentState + 3);
@@ -100,12 +105,12 @@ function TabContent({ item }) {
 
 	return (
 		<div className='tab-content'>
-			<h4>{item.summary}</h4>
-			{showDetails && <p>{item.details}</p>}
+			<h4>{contentItemObject.summary}</h4>
+			{showDetails && <p>{contentItemObject.details}</p>}
 
 			<div className='tab-actions'>
-				<button onClick={() => setShowDetails((h) => !h)}>
-					{showDetails ? 'Hide' : 'Show'} details
+				<button onClick={handleDetailsVisibility}>
+					{showDetails ? 'Hide' : 'Show'} Details
 				</button>
 
 				<div className='hearts-counter'>
