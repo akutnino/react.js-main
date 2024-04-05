@@ -59,27 +59,29 @@ export default function App() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
 	const tempQuery = 'interstellar';
-	const URL = `http://www.omdbapi.com/?apikey=${KEY}&s=${tempQuery}`;
 
-	useEffect(() => {
-		console.log('After Initial Render');
-	}, []);
+	// useEffect(() => {
+	// 	console.log('After Initial Render');
+	// }, []);
 
-	useEffect(() => {
-		console.log('After Every Render');
-	});
+	// useEffect(() => {
+	// 	console.log('After Every Render');
+	// });
 
-	useEffect(() => {
-		console.log('Only Render If the query state changed');
-	}, [query]);
+	// useEffect(() => {
+	// 	console.log('Only Render If the query state changed');
+	// }, [query]);
 
-	console.log('Initial Render / During Render');
+	// console.log('Initial Render / During Render');
 
 	useEffect(() => {
 		async function fetchMovies() {
 			try {
 				setIsLoading(true);
-				const response = await fetch(URL);
+				setError('');
+				const response = await fetch(
+					`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+				);
 
 				if (response.ok === 'False') {
 					throw new Error('Something Went Wrong');
@@ -99,8 +101,14 @@ export default function App() {
 			}
 		}
 
+		if (query.length < 3) {
+			setMovies([]);
+			setError('');
+			return;
+		}
+
 		fetchMovies();
-	}, [URL]);
+	}, [query]);
 
 	return (
 		<>
