@@ -53,12 +53,27 @@ const average = (arr) =>
 const KEY = '3494c38';
 
 export default function App() {
+	const [query, setQuery] = useState('');
 	const [movies, setMovies] = useState([]);
 	const [watched, setWatched] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
-	const query = 'interstellar';
-	const URL = `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
+	const tempQuery = 'interstellar';
+	const URL = `http://www.omdbapi.com/?apikey=${KEY}&s=${tempQuery}`;
+
+	useEffect(() => {
+		console.log('After Initial Render');
+	}, []);
+
+	useEffect(() => {
+		console.log('After Every Render');
+	});
+
+	useEffect(() => {
+		console.log('Only Render If the query state changed');
+	}, [query]);
+
+	console.log('Initial Render / During Render');
 
 	useEffect(() => {
 		async function fetchMovies() {
@@ -91,7 +106,10 @@ export default function App() {
 		<>
 			<NavBar>
 				<Logo />
-				<Search />
+				<Search
+					query={query}
+					setQuery={setQuery}
+				/>
 				<NumResults movies={movies} />
 			</NavBar>
 
@@ -118,7 +136,12 @@ function NavBar(props) {
 }
 
 function Search(props) {
-	const [query, setQuery] = useState('');
+	const { query, setQuery } = props;
+
+	const handleInput = (event) => {
+		const targetValue = event.target.value;
+		setQuery(targetValue);
+	};
 
 	return (
 		<input
@@ -126,7 +149,7 @@ function Search(props) {
 			type='text'
 			placeholder='Search movies...'
 			value={query}
-			onChange={(e) => setQuery(e.target.value)}
+			onChange={handleInput}
 		/>
 	);
 }
