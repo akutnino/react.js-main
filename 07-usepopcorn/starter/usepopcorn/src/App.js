@@ -150,7 +150,10 @@ export default function App() {
 					) : (
 						<>
 							<WatchedSummary watched={watched} />
-							<WatchedMoviesList watched={watched} />
+							<WatchedMoviesList
+								watched={watched}
+								setWatched={setWatched}
+							/>
 						</>
 					)}
 				</Box>
@@ -472,15 +475,15 @@ function WatchedSummary(props) {
 				</p>
 				<p>
 					<span>⭐️</span>
-					<span>{avgImdbRating}</span>
+					<span>{avgImdbRating.toFixed(1)}</span>
 				</p>
 				<p>
 					<span>🌟</span>
-					<span>{avgUserRating}</span>
+					<span>{avgUserRating.toFixed(1)}</span>
 				</p>
 				<p>
 					<span>⏳</span>
-					<span>{avgRuntime} min</span>
+					<span>{avgRuntime.toFixed(1)} min</span>
 				</p>
 			</div>
 		</div>
@@ -488,13 +491,14 @@ function WatchedSummary(props) {
 }
 
 function WatchedMoviesList(props) {
-	const { watched } = props;
+	const { watched, setWatched } = props;
 
 	return (
 		<ul className='list'>
 			{watched.map((movie) => (
 				<WatchedMovie
 					movie={movie}
+					setWatched={setWatched}
 					key={movie.imdbID}
 				/>
 			))}
@@ -503,7 +507,14 @@ function WatchedMoviesList(props) {
 }
 
 function WatchedMovie(props) {
-	const { movie } = props;
+	const { movie, setWatched } = props;
+
+	const handleDeleteWatchedMovie = (movieID) => {
+		return () =>
+			setWatched((currentState) =>
+				currentState.filter((val) => (val.imdbID === movieID ? false : true))
+			);
+	};
 
 	return (
 		<li>
@@ -525,6 +536,13 @@ function WatchedMovie(props) {
 					<span>⏳</span>
 					<span>{movie.runtime} min</span>
 				</p>
+
+				<button
+					className='btn-delete'
+					onClick={handleDeleteWatchedMovie(movie.imdbID)}
+				>
+					X
+				</button>
 			</div>
 		</li>
 	);
