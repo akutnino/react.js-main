@@ -144,6 +144,7 @@ export default function App() {
 						<MovieDetails
 							selectedMovieID={selectedMovieID}
 							setSelectedMovieID={setSelectedMovieID}
+							setWatched={setWatched}
 						/>
 					) : (
 						<>
@@ -278,14 +279,16 @@ function MovieList(props) {
 }
 
 function MovieDetails(props) {
-	const { selectedMovieID, setSelectedMovieID } = props;
+	const { selectedMovieID, setSelectedMovieID, setWatched } = props;
 	const [selectedMovieObject, setSelectedMovieObject] = useState({});
 	const [error, setError] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
+	const [userMovieRating, setUserMovieRating] = useState(0);
 
 	const {
 		Title: title,
 		Poster: poster,
+		Year: year,
 		Runtime: runtime,
 		imdbRating,
 		Plot: plot,
@@ -297,6 +300,20 @@ function MovieDetails(props) {
 
 	const handleCloseMovieDetails = () => {
 		setSelectedMovieID(null);
+	};
+
+	const handleAddWatchedMovie = () => {
+		const newWatchedMovieObject = {
+			imdbID: selectedMovieID,
+			title,
+			year,
+			poster,
+			runtime: Number(runtime.split(' ').at(0)),
+			imdbRating: Number(imdbRating),
+			userRating: userMovieRating
+		};
+		setWatched((currentState) => [...currentState, newWatchedMovieObject]);
+		handleCloseMovieDetails();
 	};
 
 	useEffect(() => {
@@ -363,7 +380,14 @@ function MovieDetails(props) {
 							<StarRating
 								maxRating={10}
 								size={26}
+								onSetRating={setUserMovieRating}
 							/>
+							<button
+								className='btn-add'
+								onClick={handleAddWatchedMovie}
+							>
+								+ Add to List
+							</button>
 						</div>
 						<p>
 							<em>{plot}</em>
@@ -455,8 +479,8 @@ function WatchedMovie(props) {
 	return (
 		<li>
 			<img
-				src={movie.Poster}
-				alt={`${movie.Title} poster`}
+				src={movie.poster}
+				alt={`${movie.title} poster`}
 			/>
 			<h3>{movie.Title}</h3>
 			<div>
