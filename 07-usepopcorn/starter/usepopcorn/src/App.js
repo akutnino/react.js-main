@@ -61,25 +61,6 @@ export default function App() {
 	const [error, setError] = useState('');
 	const [selectedMovieID, setSelectedMovieID] = useState(null);
 
-	/*
-	"tt0076759"
-	const tempQuery = 'interstellar';
-
-	useEffect(() => {
-		console.log('After Initial Render');
-	}, []);
-
-	useEffect(() => {
-		console.log('After Every Render');
-	});
-
-	useEffect(() => {
-		console.log('Only Render If the query state changed');
-	}, [query]);
-
-	console.log('Initial Render / During Render');
-	*/
-
 	useEffect(() => {
 		const controller = new AbortController();
 
@@ -119,6 +100,7 @@ export default function App() {
 			return;
 		}
 
+		setSelectedMovieID(null);
 		fetchMovies();
 
 		return () => {
@@ -239,28 +221,6 @@ function Box(props) {
 		</div>
 	);
 }
-
-// function WatchedBox(props) {
-// 	const [isOpen2, setIsOpen2] = useState(true);
-
-// 	return (
-// 		<div className='box'>
-// 			<button
-// 				className='btn-toggle'
-// 				onClick={() => setIsOpen2((open) => !open)}
-// 			>
-// 				{isOpen2 ? '–' : '+'}
-// 			</button>
-
-// 			{isOpen2 && (
-// 				<>
-// 					<WatchedSummary watched={watched} />
-// 					<WatchedMoviesList watched={watched} />
-// 				</>
-// 			)}
-// 		</div>
-// 	);
-// }
 
 function Loader(props) {
 	return <p className='loader'>Loading...</p>;
