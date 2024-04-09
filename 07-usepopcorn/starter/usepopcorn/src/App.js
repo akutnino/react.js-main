@@ -368,6 +368,11 @@ function MovieDetails(props) {
 		getMovieDetails();
 	}, [selectedMovieID]);
 
+	useEffect(() => {
+		if (!title) return;
+		document.title = `Movie | ${title}`;
+	}, [title]);
+
 	return (
 		<div className='details'>
 			{isLoading && <Loader />}
@@ -417,7 +422,8 @@ function MovieDetails(props) {
 								</>
 							) : (
 								<p>
-									You rated this movie: <span>⭐</span> {watchedMovieRating}
+									You rated this movie: <span>⭐</span> {watchedMovieRating} /
+									10
 								</p>
 							)}
 						</div>
