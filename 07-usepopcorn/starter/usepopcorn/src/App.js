@@ -387,6 +387,21 @@ function MovieDetails(props) {
 		};
 	}, [title]);
 
+	useEffect(() => {
+		const keyDownEventCallback = (event) => {
+			if (event.code === 'Escape') {
+				handleCloseMovieDetails();
+				console.log('CLOSING');
+			}
+		};
+
+		document.addEventListener('keydown', keyDownEventCallback);
+
+		return () => {
+			document.removeEventListener('keydown', keyDownEventCallback);
+		};
+	}, [handleCloseMovieDetails]);
+
 	return (
 		<div className='details'>
 			{isLoading && <Loader />}
