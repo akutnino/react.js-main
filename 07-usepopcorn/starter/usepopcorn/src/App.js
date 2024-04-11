@@ -9,10 +9,14 @@ const KEY = '3494c38';
 export default function App() {
 	const [query, setQuery] = useState('');
 	const [movies, setMovies] = useState([]);
-	const [watched, setWatched] = useState([]);
+	// const [watched, setWatched] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [selectedMovieID, setSelectedMovieID] = useState(null);
+	const [watched, setWatched] = useState(() => {
+		const storedValue = localStorage.getItem('watchedMovie');
+		return JSON.parse(storedValue);
+	});
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -60,6 +64,10 @@ export default function App() {
 			controller.abort();
 		};
 	}, [query]);
+
+	useEffect(() => {
+		localStorage.setItem('watchedMovie', JSON.stringify(watched));
+	}, [watched]);
 
 	return (
 		<>
