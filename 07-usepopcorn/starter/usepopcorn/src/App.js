@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating';
 
 const average = (arr) =>
@@ -123,11 +123,31 @@ function NavBar(props) {
 
 function Search(props) {
 	const { query, setQuery } = props;
+	const inputElement = useRef(null);
 
 	const handleInput = (event) => {
 		const targetValue = event.target.value;
 		setQuery(targetValue);
 	};
+
+	// useEffect(() => {
+	// 	const element = document.querySelector('.search');
+	// 	console.log(element);
+	// }, []);
+
+	useEffect(() => {
+		const keyDownEventCallback = (event) => {
+			if (document.activeElement === inputElement.current) return;
+
+			if (event.code === 'Enter') {
+				inputElement.current.focus();
+				setQuery('');
+			}
+		};
+
+		document.addEventListener('keydown', keyDownEventCallback);
+		return () => document.addEventListener('keydown', keyDownEventCallback);
+	}, [setQuery]);
 
 	return (
 		<input
@@ -136,6 +156,7 @@ function Search(props) {
 			placeholder='Search movies...'
 			value={query}
 			onChange={handleInput}
+			ref={inputElement}
 		/>
 	);
 }
