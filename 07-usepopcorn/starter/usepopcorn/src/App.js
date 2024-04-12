@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating';
 import { useMovies } from './useMovies';
 import { useLocalStorageState } from './useLocalStorageState';
+import { useKey } from './useKey';
 
 const average = (arr) =>
 	arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -69,6 +70,11 @@ function NavBar(props) {
 function Search(props) {
 	const { query, setQuery } = props;
 	const inputElement = useRef(null);
+	useKey('Enter', () => {
+		if (document.activeElement === inputElement.current) return;
+		inputElement.current.focus();
+		setQuery('');
+	});
 
 	const handleInput = (event) => {
 		const targetValue = event.target.value;
@@ -80,19 +86,19 @@ function Search(props) {
 	// 	console.log(element);
 	// }, []);
 
-	useEffect(() => {
-		const keyDownEventCallback = (event) => {
-			if (document.activeElement === inputElement.current) return;
+	// useEffect(() => {
+	// 	const keyDownEventCallback = (event) => {
+	// 		if (document.activeElement === inputElement.current) return;
 
-			if (event.code === 'Enter') {
-				inputElement.current.focus();
-				setQuery('');
-			}
-		};
+	// 		if (event.code === 'Enter') {
+	// 			inputElement.current.focus();
+	// 			setQuery('');
+	// 		}
+	// 	};
 
-		document.addEventListener('keydown', keyDownEventCallback);
-		return () => document.removeEventListener('keydown', keyDownEventCallback);
-	}, [setQuery]);
+	// 	document.addEventListener('keydown', keyDownEventCallback);
+	// 	return () => document.removeEventListener('keydown', keyDownEventCallback);
+	// }, [setQuery]);
 
 	return (
 		<input
@@ -185,6 +191,7 @@ function MovieDetails(props) {
 	const [userMovieRating, setUserMovieRating] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
+	useKey('Escape', setSelectedMovieID);
 
 	const rateCountRef = useRef(0);
 
@@ -276,17 +283,6 @@ function MovieDetails(props) {
 			document.title = 'usePopcorn';
 		};
 	}, [title]);
-
-	useEffect(() => {
-		const keyDownEventCallback = (event) => {
-			if (event.code === 'Escape') {
-				handleCloseMovieDetails();
-			}
-		};
-
-		document.addEventListener('keydown', keyDownEventCallback);
-		return () => document.removeEventListener('keydown', keyDownEventCallback);
-	}, [handleCloseMovieDetails]);
 
 	useEffect(() => {
 		if (userMovieRating) {
