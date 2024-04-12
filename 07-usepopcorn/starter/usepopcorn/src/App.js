@@ -81,25 +81,6 @@ function Search(props) {
 		setQuery(targetValue);
 	};
 
-	// useEffect(() => {
-	// 	const element = document.querySelector('.search');
-	// 	console.log(element);
-	// }, []);
-
-	// useEffect(() => {
-	// 	const keyDownEventCallback = (event) => {
-	// 		if (document.activeElement === inputElement.current) return;
-
-	// 		if (event.code === 'Enter') {
-	// 			inputElement.current.focus();
-	// 			setQuery('');
-	// 		}
-	// 	};
-
-	// 	document.addEventListener('keydown', keyDownEventCallback);
-	// 	return () => document.removeEventListener('keydown', keyDownEventCallback);
-	// }, [setQuery]);
-
 	return (
 		<input
 			className='search'
