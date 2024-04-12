@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating';
+import { useMovies } from './useMovies';
 
 const average = (arr) =>
 	arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -8,60 +9,13 @@ const KEY = '3494c38';
 
 export default function App() {
 	const [query, setQuery] = useState('');
-	const [movies, setMovies] = useState([]);
-	// const [watched, setWatched] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState('');
 	const [selectedMovieID, setSelectedMovieID] = useState(null);
+	const { movies, isLoading, error } = useMovies(query, setSelectedMovieID);
+	// const [watched, setWatched] = useState([]);
 	const [watched, setWatched] = useState(() => {
 		const storedValue = localStorage.getItem('watchedMovie');
 		return JSON.parse(storedValue);
 	});
-
-	useEffect(() => {
-		const controller = new AbortController();
-
-		const fetchMovies = async () => {
-			try {
-				setIsLoading(true);
-				setError('');
-
-				const response = await fetch(
-					`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-					{ signal: controller.signal }
-				);
-
-				if (!response.ok) {
-					throw new Error('Something Went Wrong');
-				}
-
-				const data = await response.json();
-
-				if (data.Response === 'False') {
-					throw new Error('Movie Not Found');
-				}
-
-				setMovies(data.Search);
-				setError('');
-			} catch (error) {
-				if (error.name !== 'AbortError') {
-					setError(error.message);
-				}
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		if (query.length < 3) {
-			setMovies([]);
-			setError('');
-			return;
-		}
-
-		setSelectedMovieID(null);
-		fetchMovies();
-		return () => controller.abort();
-	}, [query]);
 
 	useEffect(() => {
 		localStorage.setItem('watchedMovie', JSON.stringify(watched));
@@ -334,7 +288,6 @@ function MovieDetails(props) {
 		const keyDownEventCallback = (event) => {
 			if (event.code === 'Escape') {
 				handleCloseMovieDetails();
-				console.log('CLOSING');
 			}
 		};
 
