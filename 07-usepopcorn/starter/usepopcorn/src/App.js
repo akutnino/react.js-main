@@ -25,12 +25,13 @@ export default function App() {
 			try {
 				setIsLoading(true);
 				setError('');
+
 				const response = await fetch(
 					`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
 					{ signal: controller.signal }
 				);
 
-				if (response.ok === false) {
+				if (!response.ok) {
 					throw new Error('Something Went Wrong');
 				}
 
@@ -59,10 +60,7 @@ export default function App() {
 
 		setSelectedMovieID(null);
 		fetchMovies();
-
-		return () => {
-			controller.abort();
-		};
+		return () => controller.abort();
 	}, [query]);
 
 	useEffect(() => {
@@ -146,7 +144,7 @@ function Search(props) {
 		};
 
 		document.addEventListener('keydown', keyDownEventCallback);
-		return () => document.addEventListener('keydown', keyDownEventCallback);
+		return () => document.removeEventListener('keydown', keyDownEventCallback);
 	}, [setQuery]);
 
 	return (
@@ -302,7 +300,7 @@ function MovieDetails(props) {
 					`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedMovieID}`
 				);
 
-				if (response.ok === false) {
+				if (!response.ok) {
 					throw new Error(`Something Went Wrong`);
 				}
 
@@ -341,10 +339,7 @@ function MovieDetails(props) {
 		};
 
 		document.addEventListener('keydown', keyDownEventCallback);
-
-		return () => {
-			document.removeEventListener('keydown', keyDownEventCallback);
-		};
+		return () => document.removeEventListener('keydown', keyDownEventCallback);
 	}, [handleCloseMovieDetails]);
 
 	useEffect(() => {
