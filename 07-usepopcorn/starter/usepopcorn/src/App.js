@@ -21,7 +21,7 @@ export default function App() {
 	useEffect(() => {
 		const controller = new AbortController();
 
-		async function fetchMovies() {
+		const fetchMovies = async () => {
 			try {
 				setIsLoading(true);
 				setError('');
@@ -50,7 +50,7 @@ export default function App() {
 			} finally {
 				setIsLoading(false);
 			}
-		}
+		};
 
 		if (query.length < 3) {
 			setMovies([]);
@@ -292,7 +292,7 @@ function MovieDetails(props) {
 	};
 
 	useEffect(() => {
-		async function getMovieDetails() {
+		const getMovieDetails = async () => {
 			try {
 				setError('');
 				setIsLoading(true);
@@ -316,7 +316,7 @@ function MovieDetails(props) {
 			} finally {
 				setIsLoading(false);
 			}
-		}
+		};
 
 		getMovieDetails();
 	}, [selectedMovieID]);
