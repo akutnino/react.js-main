@@ -241,6 +241,8 @@ function MovieDetails(props) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
 
+	const rateCountRef = useRef(0);
+
 	// prettier-ignore
 	const movieIsWatched = watched
 		.map((watchedMovieObj) =>
@@ -283,7 +285,8 @@ function MovieDetails(props) {
 			poster,
 			runtime: Number(runtime.split(' ').at(0)),
 			imdbRating: Number(imdbRating),
-			userRating: userMovieRating
+			userRating: userMovieRating,
+			ratingCountDecisions: rateCountRef.current
 		};
 
 		setWatched((currentState) => [...currentState, newWatchedMovieObject]);
@@ -343,6 +346,12 @@ function MovieDetails(props) {
 			document.removeEventListener('keydown', keyDownEventCallback);
 		};
 	}, [handleCloseMovieDetails]);
+
+	useEffect(() => {
+		if (userMovieRating) {
+			rateCountRef.current = rateCountRef.current + 1;
+		}
+	}, [userMovieRating]);
 
 	return (
 		<div className='details'>
