@@ -229,21 +229,15 @@ function MovieDetails(props) {
 	useEffect(() => {
 		const getMovieDetails = async () => {
 			try {
+				const URL = `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedMovieID}`;
 				setError('');
 				setIsLoading(true);
-				const response = await fetch(
-					`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedMovieID}`
-				);
 
-				if (!response.ok) {
-					throw new Error(`Something Went Wrong`);
-				}
+				const response = await fetch(URL);
+				if (response.ok === false) throw new Error(`Something Went Wrong`);
 
 				const data = await response.json();
-
-				if (data.Response === 'False') {
-					throw new Error('Movie Not Found');
-				}
+				if (data.Response === 'False') throw new Error('Movie Not Found');
 
 				setSelectedMovieObject(data);
 			} catch (error) {

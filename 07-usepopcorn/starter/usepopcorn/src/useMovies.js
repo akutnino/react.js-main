@@ -12,23 +12,15 @@ export function useMovies(query, callback) {
 
 		const fetchMovies = async () => {
 			try {
+				const URL = `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
 				setIsLoading(true);
 				setError('');
 
-				const response = await fetch(
-					`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-					{ signal: controller.signal }
-				);
-
-				if (!response.ok) {
-					throw new Error('Something Went Wrong');
-				}
+				const response = await fetch(URL, { signal: controller.signal });
+				if (response.ok === false) throw new Error('Something Went Wrong');
 
 				const data = await response.json();
-
-				if (data.Response === 'False') {
-					throw new Error('Movie Not Found');
-				}
+				if (data.Response === 'False') throw new Error('Movie Not Found');
 
 				setMovies(data.Search);
 				setError('');
