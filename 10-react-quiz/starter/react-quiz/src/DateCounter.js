@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useReducer } from 'react';
 
 function reducerFunc(state, action) {
 	switch (action.type) {
