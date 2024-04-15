@@ -2,19 +2,25 @@ import { useEffect, useReducer } from 'react';
 import Header from './Header';
 import Main from './Main';
 
+const initialState = {
+	questions: [],
+	status: 'loading'
+};
+
 function reducer(state, action) {
-	switch (action.payload) {
-		case 'a':
-			return;
-		case 'b':
-			return;
+	switch (action.type) {
+		case 'dataReceived':
+			return { ...state, status: 'ready', questions: action.payload };
+
+		case 'dataFailed':
+			return { ...state, status: 'error' };
+
 		default:
-			break;
+			throw new Error('Unknown Action');
 	}
 }
 
 export default function App(props) {
-	const initialState = {};
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const {} = state;
 
@@ -33,8 +39,10 @@ export default function App(props) {
 				if (data.Response === 'False') throw new Error('Something Went Wrong');
 
 				console.log(data);
+				dispatch({ type: 'dataReceived', payload: data });
 			} catch (error) {
-				if (error.name !== 'AbortError') console.log(error.name);
+				if (error.name !== 'AbortError') dispatch({ type: 'dataFailed' });
+				console.log(error.message);
 			}
 		};
 
