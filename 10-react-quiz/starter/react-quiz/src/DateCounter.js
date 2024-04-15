@@ -1,12 +1,6 @@
-import { type } from '@testing-library/user-event/dist/type';
 import { useReducer, useState } from 'react';
 
 function reducerFunc(state, action) {
-	console.log('The state is ====');
-	console.log(state);
-	console.log('The action payload is ====');
-	console.log(action.payload);
-
 	switch (action.type) {
 		case 'dec':
 			return { ...state, count: state.count - -action.payload };
@@ -32,9 +26,6 @@ function DateCounter() {
 	const initialState = { count: 0, step: 1 };
 	const [state, dispatch] = useReducer(reducerFunc, initialState);
 	const { count, step } = state;
-
-	console.log('The component state is ===');
-	console.log(state);
 
 	// This mutates the date object.
 	const date = new Date('june 21 2027');
