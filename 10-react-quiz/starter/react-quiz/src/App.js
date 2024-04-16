@@ -4,6 +4,7 @@ import Main from './Main';
 import Loader from './Loader';
 import Error from './Error';
 import StarScreen from './StartScreen';
+import Question from './Question';
 
 const initialState = {
 	questions: [],
@@ -17,6 +18,9 @@ function reducer(state, action) {
 
 		case 'dataFailed':
 			return { ...state, status: 'error' };
+
+		case 'startQuiz':
+			return { ...state, status: 'active' };
 
 		default:
 			throw new Error('Unknown Action');
@@ -62,8 +66,12 @@ export default function App(props) {
 				{status === 'loading' && <Loader />}
 				{status === 'error' && <Error />}
 				{status === 'ready' && (
-					<StarScreen totalQuizQuestions={totalQuizQuestions} />
+					<StarScreen
+						totalQuizQuestions={totalQuizQuestions}
+						dispatch={dispatch}
+					/>
 				)}
+				{status === 'active' && <Question />}
 			</Main>
 		</div>
 	);
