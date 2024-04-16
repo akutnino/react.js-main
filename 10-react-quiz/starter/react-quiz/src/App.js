@@ -1,6 +1,9 @@
 import { useEffect, useReducer } from 'react';
 import Header from './Header';
 import Main from './Main';
+import Loader from './Loader';
+import Error from './Error';
+import StarScreen from './StartScreen';
 
 const initialState = {
 	questions: [],
@@ -22,7 +25,8 @@ function reducer(state, action) {
 
 export default function App(props) {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const {} = state;
+	const { questions, status } = state;
+	const totalQuizQuestions = questions.length;
 
 	useEffect(() => {
 		const requestController = new AbortController();
@@ -54,9 +58,12 @@ export default function App(props) {
 		<div className='app'>
 			<Header />
 
-			<Main className='main'>
-				<p>1/15</p>
-				<p>Question</p>
+			<Main>
+				{status === 'loading' && <Loader />}
+				{status === 'error' && <Error />}
+				{status === 'ready' && (
+					<StarScreen totalQuizQuestions={totalQuizQuestions} />
+				)}
 			</Main>
 		</div>
 	);
