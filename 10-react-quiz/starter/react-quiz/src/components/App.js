@@ -9,7 +9,9 @@ import Question from './Question';
 const initialState = {
 	questions: [],
 	status: 'loading',
-	questionIndex: 0
+	questionIndex: 0,
+	questionAnswer: null,
+	points: 0
 };
 
 function reducer(state, action) {
@@ -23,6 +25,18 @@ function reducer(state, action) {
 		case 'startQuiz':
 			return { ...state, status: 'active' };
 
+		case 'newAnswer':
+			const currentQuestion = state.questions.at(state.questionIndex);
+
+			return {
+				...state,
+				questionAnswer: action.payload,
+				points:
+					currentQuestion.correctOption === action.payload
+						? state.points + currentQuestion.points
+						: state.points
+			};
+
 		default:
 			throw new Error('Unknown Action');
 	}
@@ -30,7 +44,7 @@ function reducer(state, action) {
 
 export default function App(props) {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const { questions, status, questionIndex } = state;
+	const { questions, status, questionIndex, questionAnswer } = state;
 	const totalQuizQuestions = questions.length;
 
 	useEffect(() => {
@@ -73,7 +87,11 @@ export default function App(props) {
 					/>
 				)}
 				{status === 'active' && (
-					<Question questionObject={questions.at(questionIndex)} />
+					<Question
+						questionObject={questions.at(questionIndex)}
+						dispatch={dispatch}
+						questionAnswer={questionAnswer}
+					/>
 				)}
 			</Main>
 		</div>
