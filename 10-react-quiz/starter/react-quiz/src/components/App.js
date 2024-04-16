@@ -8,7 +8,8 @@ import Question from './Question';
 
 const initialState = {
 	questions: [],
-	status: 'loading'
+	status: 'loading',
+	questionIndex: 0
 };
 
 function reducer(state, action) {
@@ -29,7 +30,7 @@ function reducer(state, action) {
 
 export default function App(props) {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const { questions, status } = state;
+	const { questions, status, questionIndex } = state;
 	const totalQuizQuestions = questions.length;
 
 	useEffect(() => {
@@ -71,7 +72,9 @@ export default function App(props) {
 						dispatch={dispatch}
 					/>
 				)}
-				{status === 'active' && <Question />}
+				{status === 'active' && (
+					<Question questionObject={questions.at(questionIndex)} />
+				)}
 			</Main>
 		</div>
 	);
