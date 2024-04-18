@@ -18,7 +18,9 @@ export default function FinishedScreen(props) {
 				<span>{emoji}</span> You Scored <strong>{points}</strong> out of{' '}
 				{totalPossiblePoints} ({Math.ceil(quizResultPercentage)}%)
 			</p>
+
 			<p className='highscore'>(Highscore: {highscore} points)</p>
+
 			<button
 				className='btn btn-ui'
 				onClick={handleQuizRestart}

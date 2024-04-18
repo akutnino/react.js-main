@@ -4,7 +4,6 @@ export default function Question(props) {
 	const { questionObject, dispatch, questionAnswer } = props;
 	const { correctOption, question, options, id, points } = questionObject;
 
-	console.log(questionObject);
 	return (
 		<div>
 			<h4>{question}</h4>
