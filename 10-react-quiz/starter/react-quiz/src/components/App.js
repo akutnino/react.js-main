@@ -6,6 +6,7 @@ import Error from './Error';
 import StarScreen from './StartScreen';
 import Question from './Question';
 import NextButton from './NextButton';
+import Progress from './Progress';
 
 const initialState = {
 	questions: [],
@@ -62,8 +63,12 @@ const reducer = (state, action) => {
 
 export default function App(props) {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const { questions, status, questionIndex, questionAnswer } = state;
+	const { questions, status, questionIndex, questionAnswer, points } = state;
 	const totalQuizQuestions = questions.length;
+	const totalPossiblePoints = questions.reduce(
+		(acc, curr) => (acc += curr.points),
+		0
+	);
 
 	useEffect(() => {
 		const requestController = new AbortController();
@@ -106,6 +111,13 @@ export default function App(props) {
 				)}
 				{status === 'active' && (
 					<>
+						<Progress
+							questionIndex={questionIndex}
+							totalQuizQuestions={totalQuizQuestions}
+							points={points}
+							totalPossiblePoints={totalPossiblePoints}
+							questionAnswer={questionAnswer}
+						/>
 						<Question
 							questionObject={questions.at(questionIndex)}
 							dispatch={dispatch}
