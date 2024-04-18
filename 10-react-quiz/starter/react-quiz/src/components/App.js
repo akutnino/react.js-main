@@ -5,6 +5,7 @@ import Loader from './Loader';
 import Error from './Error';
 import StarScreen from './StartScreen';
 import Question from './Question';
+import NextButton from './NextButton';
 
 const initialState = {
 	questions: [],
@@ -14,16 +15,26 @@ const initialState = {
 	points: 0
 };
 
-function reducer(state, action) {
+const reducer = (state, action) => {
 	switch (action.type) {
 		case 'dataReceived':
-			return { ...state, status: 'ready', questions: action.payload };
+			return {
+				...state,
+				status: 'ready',
+				questions: action.payload
+			};
 
 		case 'dataFailed':
-			return { ...state, status: 'error' };
+			return {
+				...state,
+				status: 'error'
+			};
 
 		case 'startQuiz':
-			return { ...state, status: 'active' };
+			return {
+				...state,
+				status: 'active'
+			};
 
 		case 'newAnswer':
 			const currentQuestion = state.questions.at(state.questionIndex);
@@ -37,10 +48,17 @@ function reducer(state, action) {
 						: state.points
 			};
 
+		case 'nextQuestion':
+			return {
+				...state,
+				questionIndex: state.questionIndex + 1,
+				questionAnswer: null
+			};
+
 		default:
 			throw new Error('Unknown Action');
 	}
-}
+};
 
 export default function App(props) {
 	const [state, dispatch] = useReducer(reducer, initialState);
@@ -87,11 +105,17 @@ export default function App(props) {
 					/>
 				)}
 				{status === 'active' && (
-					<Question
-						questionObject={questions.at(questionIndex)}
-						dispatch={dispatch}
-						questionAnswer={questionAnswer}
-					/>
+					<>
+						<Question
+							questionObject={questions.at(questionIndex)}
+							dispatch={dispatch}
+							questionAnswer={questionAnswer}
+						/>
+						<NextButton
+							dispatch={dispatch}
+							questionAnswer={questionAnswer}
+						/>
+					</>
 				)}
 			</Main>
 		</div>
