@@ -66,6 +66,16 @@ const reducer = (state, action) => {
 					state.points > state.highscore ? state.points : state.highscore
 			};
 
+		case 'restartQuiz':
+			return {
+				...initialState,
+				questions: state.questions,
+				status: 'ready',
+				questionIndex: 0,
+				questionAnswer: null,
+				points: 0
+			};
+
 		default:
 			throw new Error('Unknown Action');
 	}
@@ -153,6 +163,7 @@ export default function App(props) {
 						points={points}
 						totalPossiblePoints={totalPossiblePoints}
 						highscore={highscore}
+						dispatch={dispatch}
 					/>
 				)}
 			</Main>
