@@ -1,9 +1,13 @@
 export default function NextButton(props) {
-	const { dispatch, questionAnswer } = props;
+	const { dispatch, questionAnswer, totalQuizQuestions, questionIndex } = props;
 	if (questionAnswer === null) return null;
 
 	const handleNextClick = () => {
-		dispatch({ type: 'nextQuestion' });
+		if (questionIndex === totalQuizQuestions - 1) {
+			dispatch({ type: 'finished' });
+		} else {
+			dispatch({ type: 'nextQuestion' });
+		}
 	};
 
 	return (
@@ -11,7 +15,7 @@ export default function NextButton(props) {
 			className='btn btn-ui'
 			onClick={handleNextClick}
 		>
-			Next
+			{questionIndex < totalQuizQuestions - 1 ? 'Next' : 'Finish'}
 		</button>
 	);
 }
