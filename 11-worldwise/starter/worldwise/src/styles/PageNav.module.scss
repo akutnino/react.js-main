@@ -1,0 +1,16 @@
+@import 'App.module.scss';
+
+.nav {
+	ul {
+		display: flex;
+		list-style: none;
+
+		li {
+			margin: 0 rem(10);
+
+			a {
+				text-decoration: none;
+			}
+		}
+	}
+}
