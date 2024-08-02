@@ -4,6 +4,7 @@ import Homepage from '../pages/Homepage';
 import Product from '../pages/Product';
 import Pricing from '../pages/Pricing';
 import PageNotFound from '../pages/PageNotFound';
+import AppLayout from '../pages/AppLayout';
 
 export default function App() {
 	return (
@@ -20,6 +21,10 @@ export default function App() {
 				<Route
 					path='pricing'
 					element={<Pricing />}
+				/>
+				<Route
+					path='app'
+					element={<AppLayout />}
 				/>
 				<Route
 					path='*'
