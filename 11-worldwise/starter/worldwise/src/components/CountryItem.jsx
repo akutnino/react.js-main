@@ -1,6 +1,13 @@
 import styles from '../styles/CountryItem.module.scss';
+import PropTypes from 'prop-types';
 
-function CountryItem({ country }) {
+CountryItem.propTypes = {
+	country: PropTypes.object
+};
+
+function CountryItem(props) {
+	const { country } = props;
+
 	return (
 		<li className={styles.countryItem}>
 			<span>{country.emoji}</span>
