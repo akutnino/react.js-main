@@ -6,6 +6,14 @@ export default function Login() {
 	const [email, setEmail] = useState('jack@example.com');
 	const [password, setPassword] = useState('qwerty');
 
+	const handleEmailInput = (event) => {
+		setEmail(event.target.value);
+	};
+
+	const handlePasswordInput = (event) => {
+		setPassword(event.target.value);
+	};
+
 	return (
 		<main className={styles.login}>
 			<form className={styles.form}>
@@ -14,7 +22,7 @@ export default function Login() {
 					<input
 						type='email'
 						id='email'
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={handleEmailInput}
 						value={email}
 					/>
 				</div>
@@ -24,7 +32,7 @@ export default function Login() {
 					<input
 						type='password'
 						id='password'
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={handlePasswordInput}
 						value={password}
 					/>
 				</div>
