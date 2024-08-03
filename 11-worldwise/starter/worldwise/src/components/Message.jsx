@@ -5,7 +5,7 @@ Message.propTypes = {
 	message: PropTypes.string
 };
 
-function Message(props) {
+export default function Message(props) {
 	const { message } = props;
 
 	return (
@@ -14,5 +14,3 @@ function Message(props) {
 		</p>
 	);
 }
-
-export default Message;

@@ -5,7 +5,7 @@ CountryItem.propTypes = {
 	country: PropTypes.object
 };
 
-function CountryItem(props) {
+export default function CountryItem(props) {
 	const { country } = props;
 
 	return (
@@ -15,5 +15,3 @@ function CountryItem(props) {
 		</li>
 	);
 }
-
-export default CountryItem;

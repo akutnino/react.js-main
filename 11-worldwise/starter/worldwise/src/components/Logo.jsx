@@ -1,6 +1,6 @@
 import styles from '../styles/Logo.module.scss';
 
-function Logo() {
+export default function Logo() {
 	return (
 		<img
 			src='/logo.png'
@@ -9,5 +9,3 @@ function Logo() {
 		/>
 	);
 }
-
-export default Logo;

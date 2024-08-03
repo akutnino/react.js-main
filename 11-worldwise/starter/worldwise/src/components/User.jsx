@@ -7,7 +7,7 @@ const FAKE_USER = {
 	avatar: 'https://i.pravatar.cc/100?u=zz'
 };
 
-function User() {
+export default function User() {
 	const user = FAKE_USER;
 
 	function handleClick() {}
@@ -23,8 +23,6 @@ function User() {
 		</div>
 	);
 }
-
-export default User;
 
 /*
 CHALLENGE
