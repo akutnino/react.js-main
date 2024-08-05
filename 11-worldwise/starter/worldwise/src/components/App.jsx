@@ -30,7 +30,24 @@ export default function App() {
 				<Route
 					path='app'
 					element={<AppLayout />}
-				/>
+				>
+					<Route
+						index
+						element={<p>List Component</p>}
+					/>
+					<Route
+						path='cities'
+						element={<p>List of Cities</p>}
+					/>
+					<Route
+						path='countries'
+						element={<p>Countries</p>}
+					/>
+					<Route
+						path='form'
+						element={<p>Form</p>}
+					/>
+				</Route>
 				<Route
 					path='*'
 					element={<PageNotFound />}
