@@ -70,15 +70,15 @@ export default function App() {
 				/>
 				<Route
 					path='app'
-					element={<AppLayout />}
+					element={<AppLayout isLoading={isLoading} />}
 				>
 					<Route
 						index
-						element={<CityList />}
+						element={<CityList citiesArray={citiesArray} />}
 					/>
 					<Route
 						path='cities'
-						element={<CityList />}
+						element={<CityList citiesArray={citiesArray} />}
 					/>
 					<Route
 						path='countries'
