@@ -8,6 +8,7 @@ import PageNotFound from '../pages/PageNotFound';
 import AppLayout from '../pages/AppLayout';
 import Login from '../pages/Login';
 import CityList from './CityList';
+import CountryList from './CountryList';
 
 export default function App() {
 	const [citiesArray, setCitiesArray] = useState([]);
@@ -82,7 +83,7 @@ export default function App() {
 					/>
 					<Route
 						path='countries'
-						element={<p>Countries</p>}
+						element={<CountryList citiesArray={citiesArray} />}
 					/>
 					<Route
 						path='form'
