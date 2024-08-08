@@ -9,6 +9,7 @@ import AppLayout from '../pages/AppLayout';
 import Login from '../pages/Login';
 import CityList from './CityList';
 import CountryList from './CountryList';
+import City from './City';
 
 export default function App() {
 	const [citiesArray, setCitiesArray] = useState([]);
@@ -80,6 +81,10 @@ export default function App() {
 					<Route
 						path='cities'
 						element={<CityList citiesArray={citiesArray} />}
+					/>
+					<Route
+						path='cities/:id'
+						element={<City />}
 					/>
 					<Route
 						path='countries'
