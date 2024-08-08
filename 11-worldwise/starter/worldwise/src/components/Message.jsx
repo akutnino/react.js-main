@@ -1,5 +1,5 @@
-import styles from '../styles/Message.module.scss';
 import PropTypes from 'prop-types';
+import styles from '../styles/Message.module.scss';
 
 Message.propTypes = {
 	message: PropTypes.string

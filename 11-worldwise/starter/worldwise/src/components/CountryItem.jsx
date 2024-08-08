@@ -1,5 +1,5 @@
-import styles from '../styles/CountryItem.module.scss';
 import PropTypes from 'prop-types';
+import styles from '../styles/CountryItem.module.scss';
 
 const unicodeToEmoji = (flagUnicode) => {
 	const FIRST_CHARACTER_UNICODE = 127462; // https://www.alt-codes.net/flags

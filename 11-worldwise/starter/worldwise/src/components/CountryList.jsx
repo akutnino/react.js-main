@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Message from './Message';
-import styles from '../styles/CountryList.module.scss';
 import CountryItem from './CountryItem';
+import styles from '../styles/CountryList.module.scss';
 
 CountryList.propTypes = {
 	citiesArray: PropTypes.array
@@ -13,7 +13,7 @@ export default function CountryList(props) {
 	const emptyCitiesArrayMessage = 'Add Your First City by Clicking on the Map!';
 
 	const countriesArray = citiesArray.reduce((accumulator, currentObject) => {
-		const countryName = Object.entries(currentObject)[1][1];
+		const countryName = Object.values(currentObject)[1];
 		const accumulatorArray = accumulator
 			.map((cityObject) => Object.entries(cityObject).flat())
 			.flat();

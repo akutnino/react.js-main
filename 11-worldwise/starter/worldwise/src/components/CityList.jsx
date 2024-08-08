@@ -1,7 +1,7 @@
-import styles from '../styles/CityList.module.scss';
 import PropTypes from 'prop-types';
 import CityItem from './CityItem';
 import Message from './Message';
+import styles from '../styles/CityList.module.scss';
 
 CityList.propTypes = {
 	citiesArray: PropTypes.array
