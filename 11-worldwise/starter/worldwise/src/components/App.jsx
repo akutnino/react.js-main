@@ -10,6 +10,7 @@ import Login from '../pages/Login';
 import CityList from './CityList';
 import CountryList from './CountryList';
 import City from './City';
+import Form from './Form';
 
 export default function App() {
 	const [citiesArray, setCitiesArray] = useState([]);
@@ -92,7 +93,7 @@ export default function App() {
 					/>
 					<Route
 						path='form'
-						element={<p>Form</p>}
+						element={<Form />}
 					/>
 				</Route>
 				<Route
