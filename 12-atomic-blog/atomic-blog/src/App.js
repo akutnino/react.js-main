@@ -8,7 +8,7 @@ const createRandomPost = () => {
 	};
 };
 
-const lazyLoadedPosts = (length) => Array.from(Array(length), () => createRandomPost());
+const lazyLoadedPosts = (length) => Array.from(Array(length), () => createRandomPost()); // returns an Array of Objects.
 
 function App() {
 	const [posts, setPosts] = useState(lazyLoadedPosts(30));
@@ -24,10 +24,6 @@ function App() {
 	});
 
 	const searchedPosts = searchQuery.length > 0 ? filteredPosts : posts;
-
-	// const handleAddPost = (post) => {
-	// 	setPosts((posts) => [post, ...posts]);
-	// };
 
 	const handleThemeToggle = () => {
 		setIsFakeDark((isDarkTheme) => !isDarkTheme);
