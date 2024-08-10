@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
-import { PostProvider, PostContext, lazyLoadedPosts } from './PostContext';
+import { useEffect, useState } from 'react';
+import { PostProvider, usePost, lazyLoadedPosts } from './PostContext';
 
 function App() {
 	const [isFakeDark, setIsFakeDark] = useState(false);
@@ -33,7 +33,7 @@ function App() {
 }
 
 function Header() {
-	const { setPosts } = useContext(PostContext);
+	const { setPosts } = usePost();
 
 	const handleClearPosts = () => {
 		setPosts([]);
@@ -54,7 +54,7 @@ function Header() {
 }
 
 function SearchPosts() {
-	const { searchQuery, setSearchQuery } = useContext(PostContext);
+	const { searchQuery, setSearchQuery } = usePost();
 
 	const handleSearchInput = (event) => {
 		setSearchQuery(event.target.value);
@@ -70,7 +70,7 @@ function SearchPosts() {
 }
 
 function Results() {
-	const { posts } = useContext(PostContext);
+	const { posts } = usePost();
 
 	return <p>🚀 {posts.length} atomic posts found</p>;
 }
@@ -93,7 +93,7 @@ function Posts() {
 }
 
 function FormAddPost() {
-	const { setPosts } = useContext(PostContext);
+	const { setPosts } = usePost();
 	const [title, setTitle] = useState('');
 	const [body, setBody] = useState('');
 
@@ -132,7 +132,7 @@ function FormAddPost() {
 }
 
 function List() {
-	const { posts } = useContext(PostContext);
+	const { posts } = usePost();
 
 	return (
 		<ul>
@@ -147,7 +147,7 @@ function List() {
 }
 
 function Archive() {
-	const { setPosts } = useContext(PostContext);
+	const { setPosts } = usePost();
 	// Here we don't need the setter function. We're only using state to store these posts because the callback function passed into useState (which generates the posts) is only called once, on the initial render. So we use this trick as an optimization technique, because if we just used a regular variable, these posts would be re-created on every render. We could also move the posts outside the components, but I wanted to show you this trick 😉
 	const [posts] = useState(lazyLoadedPosts(1000));
 	const [showArchive, setShowArchive] = useState(false);

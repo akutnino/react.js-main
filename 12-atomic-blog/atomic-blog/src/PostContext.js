@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 const createRandomPost = () => {
@@ -41,4 +41,12 @@ function PostProvider(props) {
 	);
 }
 
-export { PostProvider, PostContext, lazyLoadedPosts };
+function usePost() {
+	const context = useContext(PostContext);
+	const errorMessage = 'PostContext was used outside of the PostProvider';
+
+	if (context === undefined) throw new Error(errorMessage);
+	return context;
+}
+
+export { PostProvider, usePost, lazyLoadedPosts };
