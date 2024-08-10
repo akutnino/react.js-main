@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 const createRandomPost = () => {
@@ -53,25 +53,17 @@ function App() {
 					{isFakeDark ? '☀️' : '🌙'}
 				</button>
 
-				<Header
-					posts={searchedPosts}
-					setPosts={setPosts}
-					searchQuery={searchQuery}
-					setSearchQuery={setSearchQuery}
-				/>
-				<Main
-					posts={searchedPosts}
-					setPosts={setPosts}
-				/>
-				<Archive setPosts={setPosts} />
+				<Header />
+				<Main />
+				<Archive />
 				<Footer />
 			</section>
 		</PostContext.Provider>
 	);
 }
 
-function Header(props) {
-	const { posts, setPosts, searchQuery, setSearchQuery } = props;
+function Header() {
+	const { setPosts } = useContext(PostContext);
 
 	const handleClearPosts = () => {
 		setPosts([]);
@@ -83,19 +75,16 @@ function Header(props) {
 				<span>⚛️</span>The Atomic Blog
 			</h1>
 			<div>
-				<Results posts={posts} />
-				<SearchPosts
-					searchQuery={searchQuery}
-					setSearchQuery={setSearchQuery}
-				/>
+				<Results />
+				<SearchPosts />
 				<button onClick={handleClearPosts}>Clear posts</button>
 			</div>
 		</header>
 	);
 }
 
-function SearchPosts(props) {
-	const { searchQuery, setSearchQuery } = props;
+function SearchPosts() {
+	const { searchQuery, setSearchQuery } = useContext(PostContext);
 
 	const handleSearchInput = (event) => {
 		setSearchQuery(event.target.value);
@@ -110,35 +99,31 @@ function SearchPosts(props) {
 	);
 }
 
-function Results(props) {
-	const { posts } = props;
+function Results() {
+	const { posts } = useContext(PostContext);
 
 	return <p>🚀 {posts.length} atomic posts found</p>;
 }
 
-function Main(props) {
-	const { posts, setPosts } = props;
-
+function Main() {
 	return (
 		<main>
-			<FormAddPost setPosts={setPosts} />
-			<Posts posts={posts} />
+			<FormAddPost />
+			<Posts />
 		</main>
 	);
 }
 
-function Posts(props) {
-	const { posts } = props;
-
+function Posts() {
 	return (
 		<section>
-			<List posts={posts} />
+			<List />
 		</section>
 	);
 }
 
-function FormAddPost(props) {
-	const { setPosts } = props;
+function FormAddPost() {
+	const { setPosts } = useContext(PostContext);
 	const [title, setTitle] = useState('');
 	const [body, setBody] = useState('');
 
@@ -176,8 +161,8 @@ function FormAddPost(props) {
 	);
 }
 
-function List(props) {
-	const { posts } = props;
+function List() {
+	const { posts } = useContext(PostContext);
 
 	return (
 		<ul>
@@ -191,8 +176,8 @@ function List(props) {
 	);
 }
 
-function Archive(props) {
-	const { setPosts } = props;
+function Archive() {
+	const { setPosts } = useContext(PostContext);
 	// Here we don't need the setter function. We're only using state to store these posts because the callback function passed into useState (which generates the posts) is only called once, on the initial render. So we use this trick as an optimization technique, because if we just used a regular variable, these posts would be re-created on every render. We could also move the posts outside the components, but I wanted to show you this trick 😉
 	const [posts] = useState(lazyLoadedPosts(1000));
 	const [showArchive, setShowArchive] = useState(false);
