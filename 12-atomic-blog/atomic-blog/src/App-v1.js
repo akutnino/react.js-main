@@ -1,8 +1,31 @@
-import { useContext, useEffect, useState } from 'react';
-import { PostProvider, PostContext, lazyLoadedPosts } from './PostContext';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { faker } from '@faker-js/faker';
+
+const createRandomPost = () => {
+	return {
+		title: `${faker.hacker.adjective()} ${faker.hacker.noun()}`,
+		body: faker.hacker.phrase(),
+	};
+};
+
+const lazyLoadedPosts = (length) => Array.from(Array(length), () => createRandomPost()); // returns an Array of Objects.
+
+const PostContext = createContext();
 
 function App() {
+	const [posts, setPosts] = useState(lazyLoadedPosts(30));
+	const [searchQuery, setSearchQuery] = useState('');
 	const [isFakeDark, setIsFakeDark] = useState(false);
+
+	const filteredPosts = posts.filter((postObject) => {
+		const titleStringsArray = postObject.title.toLowerCase().split(' ');
+		const bodyStringsArray = postObject.body.toLowerCase().split(' ');
+		const postContentsArray = [...titleStringsArray, ...bodyStringsArray];
+
+		return postContentsArray.includes(searchQuery.toLowerCase());
+	});
+
+	const searchedPosts = searchQuery.length > 0 ? filteredPosts : posts;
 
 	const handleThemeToggle = () => {
 		setIsFakeDark((isDarkTheme) => !isDarkTheme);
@@ -14,7 +37,14 @@ function App() {
 	}, [isFakeDark]);
 
 	return (
-		<PostProvider>
+		<PostContext.Provider
+			value={{
+				posts: searchedPosts,
+				setPosts,
+				searchQuery,
+				setSearchQuery,
+			}}
+		>
 			<section>
 				<button
 					onClick={handleThemeToggle}
@@ -28,7 +58,7 @@ function App() {
 				<Archive />
 				<Footer />
 			</section>
-		</PostProvider>
+		</PostContext.Provider>
 	);
 }
 
