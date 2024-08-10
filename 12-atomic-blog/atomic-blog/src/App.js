@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 const createRandomPost = () => {
 	return {
 		title: `${faker.hacker.adjective()} ${faker.hacker.noun()}`,
-		body: faker.hacker.phrase()
+		body: faker.hacker.phrase(),
 	};
 };
 
 const lazyLoadedPosts = (length) => Array.from(Array(length), () => createRandomPost()); // returns an Array of Objects.
+
+const PostContext = createContext();
 
 function App() {
 	const [posts, setPosts] = useState(lazyLoadedPosts(30));
@@ -35,27 +37,36 @@ function App() {
 	}, [isFakeDark]);
 
 	return (
-		<section>
-			<button
-				onClick={handleThemeToggle}
-				className='btn-fake-dark-mode'
-			>
-				{isFakeDark ? '☀️' : '🌙'}
-			</button>
+		<PostContext.Provider
+			value={{
+				posts: searchedPosts,
+				setPosts,
+				searchQuery,
+				setSearchQuery,
+			}}
+		>
+			<section>
+				<button
+					onClick={handleThemeToggle}
+					className='btn-fake-dark-mode'
+				>
+					{isFakeDark ? '☀️' : '🌙'}
+				</button>
 
-			<Header
-				posts={searchedPosts}
-				setPosts={setPosts}
-				searchQuery={searchQuery}
-				setSearchQuery={setSearchQuery}
-			/>
-			<Main
-				posts={searchedPosts}
-				setPosts={setPosts}
-			/>
-			<Archive setPosts={setPosts} />
-			<Footer />
-		</section>
+				<Header
+					posts={searchedPosts}
+					setPosts={setPosts}
+					searchQuery={searchQuery}
+					setSearchQuery={setSearchQuery}
+				/>
+				<Main
+					posts={searchedPosts}
+					setPosts={setPosts}
+				/>
+				<Archive setPosts={setPosts} />
+				<Footer />
+			</section>
+		</PostContext.Provider>
 	);
 }
 
