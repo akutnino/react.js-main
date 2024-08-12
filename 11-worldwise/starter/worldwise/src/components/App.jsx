@@ -27,9 +27,9 @@ export default function App() {
 				const fetchOptions = {
 					Headers: {
 						'Content-Type': 'application/json',
-						Accept: 'application/json'
+						Accept: 'application/json',
 					},
-					Signal: controller.signal
+					Signal: controller.signal,
 				};
 
 				const response = await fetch(fetchURL, fetchOptions);
