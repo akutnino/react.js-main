@@ -1,14 +1,10 @@
-import PropTypes from 'prop-types';
+import { useCities } from '../contexts/CitiesContext';
 import Message from './Message';
 import CountryItem from './CountryItem';
 import styles from '../styles/CountryList.module.scss';
 
-CountryList.propTypes = {
-	citiesArray: PropTypes.array
-};
-
 export default function CountryList(props) {
-	const { citiesArray } = props;
+	const { citiesArray } = useCities();
 	const citiesArrayIsEmpty = citiesArray.length === 0;
 	const emptyCitiesArrayMessage = 'Add Your First City by Clicking on the Map!';
 

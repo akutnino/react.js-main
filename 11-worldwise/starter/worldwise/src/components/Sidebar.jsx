@@ -1,17 +1,13 @@
 import { Outlet } from 'react-router-dom';
+import { useCities } from '../contexts/CitiesContext';
 import AppNav from './AppNav';
 import Logo from './Logo';
 import Footer from './Footer';
-import PropTypes from 'prop-types';
 import Spinner from './Spinner';
 import styles from '../styles/Sidebar.module.scss';
 
-Sidebar.propTypes = {
-	isLoading: PropTypes.bool
-};
-
 export default function Sidebar(props) {
-	const { isLoading } = props;
+	const { isLoading } = useCities();
 
 	return (
 		<div className={styles.sidebar}>
