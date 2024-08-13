@@ -1,6 +1,7 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useCities } from '../contexts/CitiesContext';
 import { useEffect } from 'react';
+import Button from './Button';
 import styles from '../styles/City.module.scss';
 
 const unicodeToEmoji = (flagCode) => {
@@ -31,8 +32,13 @@ const formatDate = (date) =>
 
 export default function City() {
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const { currentCity, getCity } = useCities();
 	const { cityName, emoji, date, notes } = currentCity;
+
+	const handleBackBtn = () => {
+		navigate(-1);
+	};
 
 	useEffect(() => {
 		getCity(id);
@@ -71,7 +77,14 @@ export default function City() {
 				</a>
 			</div>
 
-			<div>{/* <ButtonBack /> */}</div>
+			<div>
+				<Button
+					type={'back'}
+					onClick={handleBackBtn}
+				>
+					Back
+				</Button>
+			</div>
 		</div>
 	);
 }
