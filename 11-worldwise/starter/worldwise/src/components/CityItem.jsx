@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
+import { useCities } from '../contexts/CitiesContext';
 import PropTypes from 'prop-types';
 import styles from '../styles/CityItem.module.scss';
-import { Link } from 'react-router-dom';
 
 const unicodeToEmoji = (flagUnicode) => {
 	const FIRST_CHARACTER_UNICODE = 127462; // https://www.alt-codes.net/flags
@@ -25,11 +26,11 @@ const formatDate = (date) =>
 	new Intl.DateTimeFormat('en', {
 		day: 'numeric',
 		month: 'long',
-		year: 'numeric'
+		year: 'numeric',
 	}).format(new Date(date));
 
 CityItem.propTypes = {
-	cityObject: PropTypes.object
+	cityObject: PropTypes.object,
 };
 
 export default function CityItem(props) {
@@ -39,14 +40,16 @@ export default function CityItem(props) {
 		date,
 		emoji,
 		id,
-		position: { lat, lng }
+		position: { lat, lng },
 	} = cityObject;
+	const { currentCity } = useCities();
+	const isCurrentCity = id === currentCity.id ? styles['cityItem--active'] : '';
 
 	return (
 		<li>
 			<Link
 				to={`${id}?lat=${lat}&lng=${lng}`}
-				className={styles.cityItem}
+				className={`${styles.cityItem} ${isCurrentCity}`}
 			>
 				<span className={styles.emoji}>{unicodeToEmoji(emoji)}</span>
 				<h3 className={styles.name}>{cityName}</h3>
