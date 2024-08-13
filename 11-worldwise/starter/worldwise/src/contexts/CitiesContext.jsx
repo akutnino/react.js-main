@@ -11,6 +11,7 @@ function CitiesProvider(props) {
 	const { children } = props;
 	const [citiesArray, setCitiesArray] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const [currentCity, setCurrentCity] = useState({});
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -48,6 +49,30 @@ function CitiesProvider(props) {
 		};
 	}, []);
 
+	const getCity = async (id) => {
+		try {
+			setIsLoading(true);
+
+			const fetchURL = `http://localhost:5000/cities/${id}`;
+			const fetchOptions = {
+				Headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			};
+
+			const response = await fetch(fetchURL, fetchOptions);
+			if (!response.ok) throw new Error('Fetch Response Failed');
+
+			const data = await response.json();
+			setCurrentCity(data);
+		} catch (error) {
+			console.error({ error });
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<CitiesContext.Provider
 			value={{
@@ -55,6 +80,9 @@ function CitiesProvider(props) {
 				setCitiesArray,
 				isLoading,
 				setIsLoading,
+				currentCity,
+				setCurrentCity,
+				getCity,
 			}}
 		>
 			{children}
