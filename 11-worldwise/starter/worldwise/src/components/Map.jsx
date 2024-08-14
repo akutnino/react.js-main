@@ -1,16 +1,11 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import styles from '../styles/Map.module.scss';
 
 export default function Map() {
 	const navigate = useNavigate();
-	const [searchParams, setSearchParams] = useSearchParams();
-	const lat = searchParams.get('lat');
-	const lng = searchParams.get('lng');
-
-	const handleChangePos = (event) => {
-		event.stopPropagation();
-		setSearchParams({ lat: 909090, lng: 818181 });
-	};
+	const [mapPosition, setMapPosition] = useState([51.505, -0.09]);
 
 	const handleMapClick = () => {
 		navigate('form');
@@ -21,16 +16,22 @@ export default function Map() {
 			className={styles.mapContainer}
 			onClick={handleMapClick}
 		>
-			<h1>Map</h1>
-			<h1>
-				Position: {lat}, {lng}
-			</h1>
-			<button
-				type='button'
-				onClick={handleChangePos}
+			<MapContainer
+				center={mapPosition}
+				zoom={13}
+				scrollWheelZoom={true}
+				className={styles.map}
 			>
-				Change Position
-			</button>
+				<TileLayer
+					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+				/>
+				<Marker position={mapPosition}>
+					<Popup>
+						A pretty CSS3 popup. <br /> Easily customizable.
+					</Popup>
+				</Marker>
+			</MapContainer>
 		</div>
 	);
 }
