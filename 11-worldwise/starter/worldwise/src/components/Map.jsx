@@ -9,8 +9,10 @@ import {
 	useMapEvents,
 } from 'react-leaflet';
 import { useCities } from '../contexts/CitiesContext';
+import { useGeolocation } from '../hooks/useGeolocation';
 import PropTypes from 'prop-types';
 import styles from '../styles/Map.module.scss';
+import Button from './Button';
 
 UpdateMapCenter.propTypes = {
 	positionArray: PropTypes.array,
@@ -41,6 +43,9 @@ export default function Map() {
 	const [searchParams] = useSearchParams();
 	const mapLat = searchParams.get('lat');
 	const mapLng = searchParams.get('lng');
+	const [userPositionObject, getUserPosition] = useGeolocation();
+	const { isLoading: isLoadingPosition, position: geolocationPosition } =
+		userPositionObject;
 
 	useEffect(() => {
 		if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
@@ -48,8 +53,21 @@ export default function Map() {
 		return () => {};
 	}, [mapLat, mapLng]);
 
+	useEffect(() => {
+		if (geolocationPosition)
+			setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
+
+		return () => {};
+	}, [geolocationPosition]);
+
 	return (
 		<div className={styles.mapContainer}>
+			<Button
+				type={'position'}
+				onClick={getUserPosition}
+			>
+				{isLoadingPosition ? 'Loading...' : 'Use Your Location'}
+			</Button>
 			<MapContainer
 				center={mapPosition}
 				zoom={4}
