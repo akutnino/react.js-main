@@ -1,8 +1,13 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useCities } from '../contexts/CitiesContext';
+import PropTypes from 'prop-types';
 import styles from '../styles/Map.module.scss';
+
+UpdateMapCenter.propTypes = {
+	positionArray: PropTypes.array,
+};
 
 const unicodeToEmoji = (flagUnicode) => {
 	const FIRST_CHARACTER_UNICODE = 127462; // https://www.alt-codes.net/flags
@@ -27,10 +32,19 @@ export default function Map() {
 	const navigate = useNavigate();
 	const { citiesArray } = useCities();
 	const [mapPosition, setMapPosition] = useState([51.505, -0.09]);
+	const [searchParams] = useSearchParams();
+	const mapLat = searchParams.get('lat');
+	const mapLng = searchParams.get('lng');
 
 	const handleMapClick = () => {
 		navigate('form');
 	};
+
+	useEffect(() => {
+		if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
+
+		return () => {};
+	}, [mapLat, mapLng]);
 
 	return (
 		<div
@@ -43,6 +57,7 @@ export default function Map() {
 				scrollWheelZoom={true}
 				className={styles.map}
 			>
+				<UpdateMapCenter positionArray={mapPosition} />
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -69,4 +84,13 @@ export default function Map() {
 			</MapContainer>
 		</div>
 	);
+}
+
+function UpdateMapCenter(props) {
+	const { positionArray } = props;
+	const [lat, lng] = positionArray;
+	const map = useMap();
+	map.setView([lat, lng]);
+
+	return null;
 }
