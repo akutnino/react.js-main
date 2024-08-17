@@ -1,5 +1,4 @@
 import { useCities } from '../contexts/CitiesContext';
-
 import CityItem from './CityItem';
 import Message from './Message';
 import styles from '../styles/CityList.module.scss';

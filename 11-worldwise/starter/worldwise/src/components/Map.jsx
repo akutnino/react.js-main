@@ -11,8 +11,8 @@ import {
 import { useCities } from '../contexts/CitiesContext';
 import { useGeolocation } from '../hooks/useGeolocation';
 import PropTypes from 'prop-types';
-import styles from '../styles/Map.module.scss';
 import Button from './Button';
+import styles from '../styles/Map.module.scss';
 
 UpdateMapCenter.propTypes = {
 	positionArray: PropTypes.array,
@@ -39,7 +39,7 @@ const unicodeToEmoji = (flagUnicode) => {
 
 export default function Map() {
 	const { citiesArray } = useCities();
-	const [mapPosition, setMapPosition] = useState([51.505, -0.09]);
+	const [mapPosition, setMapPosition] = useState([0, 0]);
 	const [searchParams] = useSearchParams();
 	const mapLat = searchParams.get('lat');
 	const mapLng = searchParams.get('lng');
