@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUrlPosition } from '../hooks/useUrlPosition';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Button from './Button';
 import Message from './Message';
 import styles from '../styles/Form.module.scss';
@@ -32,8 +34,8 @@ export default function Form() {
 		setCityName(event.target.value);
 	};
 
-	const handleDateInput = (event) => {
-		setDate(event.target.value);
+	const handleDateInput = (date) => {
+		setDate(date);
 	};
 
 	const handleNotesInput = (event) => {
@@ -47,7 +49,8 @@ export default function Form() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log('submitted');
+
+		if (!cityName || !date) return;
 	};
 
 	useEffect(() => {
@@ -113,10 +116,11 @@ export default function Form() {
 
 					<div className={styles.row}>
 						<label htmlFor='date'>When did you go to {cityName}?</label>
-						<input
+						<DatePicker
 							id='date'
+							selected={date}
 							onChange={handleDateInput}
-							value={date}
+							dateFormat='MMMM d, yyyy'
 						/>
 					</div>
 
