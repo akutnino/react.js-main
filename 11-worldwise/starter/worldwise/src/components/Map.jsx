@@ -10,10 +10,10 @@ import {
 } from 'react-leaflet';
 import { useCities } from '../contexts/CitiesContext';
 import { useGeolocation } from '../hooks/useGeolocation';
+import { useUrlPosition } from '../hooks/useUrlPosition';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import styles from '../styles/Map.module.scss';
-import { useUrlPosition } from '../hooks/useUrlPosition';
 
 UpdateMapCenter.propTypes = {
 	mapPosition: PropTypes.array,
@@ -46,6 +46,10 @@ export default function Map() {
 	const { isLoading: isLoadingPosition, position: geolocationPosition } =
 		userPositionObject;
 
+	const handleUserLocation = () => {
+		getUserPosition();
+	};
+
 	useEffect(() => {
 		if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
 
@@ -63,7 +67,7 @@ export default function Map() {
 		<div className={styles.mapContainer}>
 			<Button
 				type={'position'}
-				onClick={getUserPosition}
+				onClick={handleUserLocation}
 			>
 				{isLoadingPosition ? 'Loading...' : 'Use Your Location'}
 			</Button>
