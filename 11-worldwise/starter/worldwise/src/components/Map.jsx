@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
 	MapContainer,
 	TileLayer,
@@ -13,9 +13,10 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import styles from '../styles/Map.module.scss';
+import { useUrlPosition } from '../hooks/useUrlPosition';
 
 UpdateMapCenter.propTypes = {
-	positionArray: PropTypes.array,
+	mapPosition: PropTypes.array,
 };
 
 const unicodeToEmoji = (flagUnicode) => {
@@ -40,9 +41,7 @@ const unicodeToEmoji = (flagUnicode) => {
 export default function Map() {
 	const { citiesArray } = useCities();
 	const [mapPosition, setMapPosition] = useState([0, 0]);
-	const [searchParams] = useSearchParams();
-	const mapLat = searchParams.get('lat');
-	const mapLng = searchParams.get('lng');
+	const [mapLat, mapLng] = useUrlPosition();
 	const [userPositionObject, getUserPosition] = useGeolocation();
 	const { isLoading: isLoadingPosition, position: geolocationPosition } =
 		userPositionObject;
@@ -74,7 +73,7 @@ export default function Map() {
 				scrollWheelZoom={true}
 				className={styles.map}
 			>
-				<UpdateMapCenter positionArray={mapPosition} />
+				<UpdateMapCenter mapPosition={mapPosition} />
 				<DetectMapClick />
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -105,8 +104,8 @@ export default function Map() {
 }
 
 function UpdateMapCenter(props) {
-	const { positionArray } = props;
-	const [lat, lng] = positionArray;
+	const { mapPosition } = props;
+	const [lat, lng] = mapPosition;
 	const map = useMap();
 	map.setView([lat, lng]);
 
