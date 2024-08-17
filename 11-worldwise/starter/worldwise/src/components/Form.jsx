@@ -42,7 +42,12 @@ export default function Form() {
 
 	const handleBackBtn = (event) => {
 		event.preventDefault();
-		navigate(-1);
+		navigate('/app/cities');
+	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		console.log('submitted');
 	};
 
 	useEffect(() => {
@@ -80,6 +85,7 @@ export default function Form() {
 			}
 		};
 
+		if (!mapLat && !mapLng) return;
 		fetchCityData();
 		return () => {
 			controller.abort();
@@ -91,7 +97,10 @@ export default function Form() {
 			{geocodingError ? (
 				<Message message={geocodingError} />
 			) : (
-				<form className={styles.form}>
+				<form
+					className={styles.form}
+					onSubmit={handleSubmit}
+				>
 					<div className={styles.row}>
 						<label htmlFor='cityName'>City name</label>
 						<input
