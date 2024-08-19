@@ -51,6 +51,8 @@ export default function Form() {
 		event.preventDefault();
 
 		if (!cityName || !date) return;
+
+		const newCity = {};
 	};
 
 	useEffect(() => {
