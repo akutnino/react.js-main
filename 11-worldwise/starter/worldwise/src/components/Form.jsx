@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUrlPosition } from '../hooks/useUrlPosition';
+import { useCities } from '../contexts/CitiesContext';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Button from './Button';
@@ -20,6 +21,7 @@ const unicodeToEmoji = (flagUnicode) => {
 };
 
 export default function Form() {
+	const { createCity } = useCities();
 	const [cityName, setCityName] = useState('');
 	const [country, setCountry] = useState('');
 	const [date, setDate] = useState(new Date());
@@ -52,7 +54,16 @@ export default function Form() {
 
 		if (!cityName || !date) return;
 
-		const newCity = {};
+		const newCity = {
+			cityName,
+			country,
+			emoji: countryEmoji,
+			date,
+			notes,
+			position: { lat: mapLat, lng: mapLng },
+		};
+
+		createCity(newCity);
 	};
 
 	useEffect(() => {

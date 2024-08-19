@@ -73,6 +73,32 @@ function CitiesProvider(props) {
 		}
 	};
 
+	const createCity = async (newCityObject) => {
+		try {
+			setIsLoading(true);
+
+			const fetchURL = `http://localhost:5000/cities`;
+			const fetchOptions = {
+				method: 'POST',
+				Headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+				body: JSON.stringify(newCityObject),
+			};
+
+			const response = await fetch(fetchURL, fetchOptions);
+			if (!response.ok) throw new Error('Fetch Response Failed');
+
+			const data = await response.json();
+			console.log(data);
+		} catch (error) {
+			console.log({ error });
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<CitiesContext.Provider
 			value={{
@@ -83,6 +109,7 @@ function CitiesProvider(props) {
 				currentCity,
 				setCurrentCity,
 				getCity,
+				createCity,
 			}}
 		>
 			{children}

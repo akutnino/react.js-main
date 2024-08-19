@@ -6,10 +6,16 @@ import styles from '../styles/City.module.scss';
 
 const unicodeToEmoji = (flagCode) => {
 	const FIRST_CHARACTER_UNICODE = 127462; // https://www.alt-codes.net/flags
+	const TOTAL_ALPHABET_CHARACTERS = 26;
+	const ALPHABET_ARRAY = Array.from(Array(TOTAL_ALPHABET_CHARACTERS))
+		.map((val, index) => index)
+		.map((val, index) => String.fromCodePoint('A'.codePointAt() + index));
+
 	const flagCodeString = [...flagCode]
 		.map((flagChar) => {
-			const unicodeDifference = flagChar.codePointAt() - FIRST_CHARACTER_UNICODE;
+			if (ALPHABET_ARRAY.includes(flagChar)) return flagChar;
 
+			const unicodeDifference = flagChar.codePointAt() - FIRST_CHARACTER_UNICODE;
 			return String.fromCodePoint(unicodeDifference + 'A'.codePointAt());
 		})
 		.join('');
