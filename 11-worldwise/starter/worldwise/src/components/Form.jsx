@@ -21,7 +21,7 @@ const unicodeToEmoji = (flagUnicode) => {
 };
 
 export default function Form() {
-	const { createCity } = useCities();
+	const { createCity, isLoading } = useCities();
 	const [cityName, setCityName] = useState('');
 	const [country, setCountry] = useState('');
 	const [date, setDate] = useState(new Date());
@@ -49,7 +49,7 @@ export default function Form() {
 		navigate('/app/cities');
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		if (!cityName || !date) return;
@@ -63,7 +63,8 @@ export default function Form() {
 			position: { lat: mapLat, lng: mapLng },
 		};
 
-		createCity(newCity);
+		await createCity(newCity);
+		navigate('/app/cities');
 	};
 
 	useEffect(() => {
@@ -114,7 +115,7 @@ export default function Form() {
 				<Message message={geocodingError} />
 			) : (
 				<form
-					className={styles.form}
+					className={`${styles.form} ${isLoading ? styles.loading : ''}`}
 					onSubmit={handleSubmit}
 				>
 					<div className={styles.row}>

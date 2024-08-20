@@ -91,7 +91,7 @@ function CitiesProvider(props) {
 			if (!response.ok) throw new Error('Fetch Response Failed');
 
 			const data = await response.json();
-			console.log(data);
+			setCitiesArray((currentCitiesArray) => [...currentCitiesArray, data]);
 		} catch (error) {
 			console.log({ error });
 		} finally {
