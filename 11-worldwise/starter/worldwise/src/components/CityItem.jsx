@@ -50,6 +50,13 @@ export default function CityItem(props) {
 	const { currentCity } = useCities();
 	const isCurrentCity = id === currentCity.id ? styles['cityItem--active'] : '';
 
+	const handleDeleteCity = (cityID) => {
+		return (event) => {
+			event.preventDefault();
+			console.log(cityID);
+		};
+	};
+
 	return (
 		<li>
 			<Link
@@ -59,7 +66,12 @@ export default function CityItem(props) {
 				<span className={styles.emoji}>{unicodeToEmoji(emoji)}</span>
 				<h3 className={styles.name}>{cityName}</h3>
 				<time className={styles.data}>( {formatDate(date)} )</time>
-				<button className={styles.deleteBtn}>&times;</button>
+				<button
+					className={styles.deleteBtn}
+					onClick={handleDeleteCity(id)}
+				>
+					&times;
+				</button>
 			</Link>
 		</li>
 	);
