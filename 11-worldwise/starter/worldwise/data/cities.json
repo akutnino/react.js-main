@@ -59,6 +59,18 @@
         "lat": "14.530415228007362",
         "lng": "120.98693847656251"
       }
+    },
+    {
+      "id": "9d15",
+      "cityName": "New York City",
+      "country": "United States of America (the)",
+      "emoji": "US",
+      "date": "2024-08-22T16:33:02.421Z",
+      "notes": "Hello!",
+      "position": {
+        "lat": "40.56389453066509",
+        "lng": "-73.98193359375001"
+      }
     }
   ]
 }
