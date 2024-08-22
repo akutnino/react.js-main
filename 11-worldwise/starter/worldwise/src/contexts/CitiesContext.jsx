@@ -99,6 +99,32 @@ function CitiesProvider(props) {
 		}
 	};
 
+	const deleteCity = async (cityID) => {
+		try {
+			setIsLoading(true);
+
+			const fetchURL = `http://localhost:5000/cities/${cityID}`;
+			const fetchOptions = {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			};
+
+			const response = await fetch(fetchURL, fetchOptions);
+			if (!response.ok) throw new Error('Fetch Response Failed');
+
+			setCitiesArray((currentCitiesArray) =>
+				currentCitiesArray.filter((cityObject) => cityObject.id !== cityID)
+			);
+		} catch (error) {
+			console.error({ error });
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<CitiesContext.Provider
 			value={{
@@ -110,6 +136,7 @@ function CitiesProvider(props) {
 				setCurrentCity,
 				getCity,
 				createCity,
+				deleteCity,
 			}}
 		>
 			{children}

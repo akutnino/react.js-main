@@ -47,13 +47,13 @@ export default function CityItem(props) {
 		id,
 		position: { lat, lng },
 	} = cityObject;
-	const { currentCity } = useCities();
+	const { currentCity, deleteCity } = useCities();
 	const isCurrentCity = id === currentCity.id ? styles['cityItem--active'] : '';
 
 	const handleDeleteCity = (cityID) => {
 		return (event) => {
 			event.preventDefault();
-			console.log(cityID);
+			deleteCity(cityID);
 		};
 	};
 
