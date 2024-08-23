@@ -12,6 +12,7 @@ import CityList from './CityList';
 import CountryList from './CountryList';
 import City from './City';
 import Form from './Form';
+import ProtectedRoute from '../pages/ProtectedRoute';
 
 export default function App() {
 	return (
@@ -37,7 +38,11 @@ export default function App() {
 						/>
 						<Route
 							path='app'
-							element={<AppLayout />}
+							element={
+								<ProtectedRoute>
+									<AppLayout />
+								</ProtectedRoute>
+							}
 						>
 							<Route
 								index
