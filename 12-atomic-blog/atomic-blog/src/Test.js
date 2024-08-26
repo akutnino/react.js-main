@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 function SlowComponent() {
 	// If this is too slow on your maching, reduce the `length`
-	const words = Array.from({ length: 100_000 }, () => 'WORD');
+	const words = Array.from({ length: 10_000 }, () => 'WORD');
 	return (
 		<ul>
 			{words.map((word, i) => (
@@ -14,13 +14,27 @@ function SlowComponent() {
 	);
 }
 
-export default function Test() {
+function Counter(props) {
+	const { children } = props;
 	const [count, setCount] = useState(0);
+
+	const handleCount = () => {
+		setCount((currentCount) => currentCount + 1);
+	};
+
 	return (
 		<div>
 			<h1>Slow counter?!?</h1>
-			<button onClick={() => setCount((c) => c + 1)}>Increase: {count}</button>
-			<SlowComponent />
+			<button onClick={handleCount}>Increase: {count}</button>
+			{children}
 		</div>
+	);
+}
+
+export default function Test() {
+	return (
+		<Counter>
+			<SlowComponent />
+		</Counter>
 	);
 }
