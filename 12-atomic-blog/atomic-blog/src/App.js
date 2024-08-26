@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PostProvider, usePost, lazyLoadedPosts } from './PostContext';
+import Test from './Test';
 
 function App() {
 	const [isFakeDark, setIsFakeDark] = useState(false);
@@ -135,14 +136,17 @@ function List() {
 	const { posts } = usePost();
 
 	return (
-		<ul>
-			{posts.map((post, index) => (
-				<li key={index}>
-					<h3>{post.title}</h3>
-					<p>{post.body}</p>
-				</li>
-			))}
-		</ul>
+		<>
+			<ul>
+				{posts.map((post, index) => (
+					<li key={index}>
+						<h3>{post.title}</h3>
+						<p>{post.body}</p>
+					</li>
+				))}
+			</ul>
+			<Test />
+		</>
 	);
 }
 
