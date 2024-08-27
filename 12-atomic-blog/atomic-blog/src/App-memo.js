@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
+import { memo } from 'react';
 
 function createRandomPost() {
 	return {
@@ -52,7 +53,10 @@ function App() {
 				posts={searchedPosts}
 				setPosts={setPosts}
 			/>
-			<Archive setPosts={setPosts} />
+			<Archive
+				setPosts={setPosts}
+				isOpen={false}
+			/>
 			<Footer />
 		</section>
 	);
@@ -179,10 +183,10 @@ function List(props) {
 	);
 }
 
-function Archive(props) {
-	const { setPosts } = props;
-	const [posts] = useState(lazyLoadedPosts(1000));
-	const [showArchive, setShowArchive] = useState(false);
+const Archive = memo(function Archive(props) {
+	const { setPosts, isOpen } = props;
+	const [posts] = useState(lazyLoadedPosts(8000));
+	const [showArchive, setShowArchive] = useState(isOpen);
 
 	const handleArchiveToggle = () => {
 		setShowArchive((isArchiveOpen) => !isArchiveOpen);
@@ -213,7 +217,7 @@ function Archive(props) {
 			)}
 		</aside>
 	);
-}
+});
 
 function Footer() {
 	return <footer>&copy; by The Atomic Blog ✌️</footer>;
