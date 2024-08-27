@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { memo } from 'react';
 
@@ -34,6 +34,12 @@ function App() {
 		document.documentElement.classList.toggle('fake-dark-mode');
 	}, [isFakeDark]);
 
+	const archiveOptions = useMemo(() => {
+		return {
+			title: `Post archive in addition to ${posts.length} main posts`,
+		};
+	}, [posts.length]);
+
 	return (
 		<section>
 			<button
@@ -56,6 +62,7 @@ function App() {
 			<Archive
 				setPosts={setPosts}
 				isOpen={false}
+				archiveOptions={archiveOptions}
 			/>
 			<Footer />
 		</section>
@@ -184,7 +191,7 @@ function List(props) {
 }
 
 const Archive = memo(function Archive(props) {
-	const { setPosts, isOpen } = props;
+	const { setPosts, isOpen, archiveOptions } = props;
 	const [posts] = useState(lazyLoadedPosts(8000));
 	const [showArchive, setShowArchive] = useState(isOpen);
 
@@ -198,7 +205,7 @@ const Archive = memo(function Archive(props) {
 
 	return (
 		<aside>
-			<h2>Post archive</h2>
+			<h2>{archiveOptions.title}</h2>
 			<button onClick={handleArchiveToggle}>
 				{showArchive ? 'Hide archive posts' : 'Show archive posts'}
 			</button>
