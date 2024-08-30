@@ -111,9 +111,9 @@ export default function Form() {
 
 	return (
 		<>
-			{geocodingError ? (
-				<Message message={geocodingError} />
-			) : (
+			{geocodingError && <Message message={geocodingError} />}
+
+			{!geocodingError && (
 				<form
 					className={`${styles.form} ${isLoading ? styles.loading : ''}`}
 					onSubmit={handleSubmit}

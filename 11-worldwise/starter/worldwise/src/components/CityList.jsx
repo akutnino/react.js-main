@@ -10,9 +10,9 @@ export default function CityList(props) {
 
 	return (
 		<>
-			{citiesArrayIsEmpty ? (
-				<Message message={emptyCitiesArrayMessage} />
-			) : (
+			{citiesArrayIsEmpty && <Message message={emptyCitiesArrayMessage} />}
+
+			{!citiesArrayIsEmpty && (
 				<ul className={styles.cityList}>
 					{citiesArray.map((cityObject) => (
 						<CityItem

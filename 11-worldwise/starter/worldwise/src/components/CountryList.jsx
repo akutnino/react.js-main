@@ -20,9 +20,9 @@ export default function CountryList(props) {
 
 	return (
 		<>
-			{citiesArrayIsEmpty ? (
-				<Message message={emptyCitiesArrayMessage} />
-			) : (
+			{citiesArrayIsEmpty && <Message message={emptyCitiesArrayMessage} />}
+
+			{!citiesArrayIsEmpty && (
 				<ul className={styles.countryList}>
 					{countriesArray.map((cityObject) => (
 						<CountryItem
