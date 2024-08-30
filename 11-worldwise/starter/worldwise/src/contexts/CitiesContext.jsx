@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
+import { createContext, useCallback, useContext, useEffect, useReducer } from 'react';
 import { CitiesContextReducer, INITIAL_STATE } from '../functions/CitiesContextReducer';
 import PropTypes from 'prop-types';
 
@@ -48,30 +48,33 @@ function CitiesProvider(props) {
 		};
 	}, []);
 
-	const getCity = async (id) => {
-		if (Number(id) === currentCity.id) return;
+	const getCity = useCallback(
+		async (id) => {
+			if (Number(id) === currentCity.id) return;
 
-		try {
-			dispatch({ type: 'loading' });
+			try {
+				dispatch({ type: 'loading' });
 
-			const fetchURL = `http://localhost:5000/cities/${id}`;
-			const fetchOptions = {
-				Headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-				},
-			};
+				const fetchURL = `http://localhost:5000/cities/${id}`;
+				const fetchOptions = {
+					Headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json',
+					},
+				};
 
-			const response = await fetch(fetchURL, fetchOptions);
-			if (!response.ok) throw new Error('Fetch Response Failed');
+				const response = await fetch(fetchURL, fetchOptions);
+				if (!response.ok) throw new Error('Fetch Response Failed');
 
-			const data = await response.json();
-			dispatch({ type: 'city/loaded', payload: data });
-		} catch (error) {
-			dispatch({ type: 'rejected', payload: error.message });
-			console.error({ error });
-		}
-	};
+				const data = await response.json();
+				dispatch({ type: 'city/loaded', payload: data });
+			} catch (error) {
+				dispatch({ type: 'rejected', payload: error.message });
+				console.error({ error });
+			}
+		},
+		[currentCity.id]
+	);
 
 	const createCity = async (newCityObject) => {
 		try {

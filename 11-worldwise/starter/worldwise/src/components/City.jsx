@@ -50,7 +50,7 @@ export default function City() {
 	useEffect(() => {
 		getCity(id);
 		return () => {};
-	}, [id]);
+	}, [id, getCity]);
 
 	return (
 		<>
