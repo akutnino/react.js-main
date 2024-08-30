@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react';
-import { PostProvider, usePost, lazyLoadedPosts } from './PostContext';
+import { PostProvider, usePost } from './PostContext';
 
 function App() {
 	const [isFakeDark, setIsFakeDark] = useState(false);
@@ -14,21 +14,21 @@ function App() {
 	}, [isFakeDark]);
 
 	return (
-		<PostProvider>
-			<section>
-				<button
-					onClick={handleThemeToggle}
-					className='btn-fake-dark-mode'
-				>
-					{isFakeDark ? '☀️' : '🌙'}
-				</button>
+		<section>
+			<button
+				onClick={handleThemeToggle}
+				className='btn-fake-dark-mode'
+			>
+				{isFakeDark ? '☀️' : '🌙'}
+			</button>
 
+			<PostProvider>
 				<Header />
 				<Main />
 				<Archive />
 				<Footer />
-			</section>
-		</PostProvider>
+			</PostProvider>
+		</section>
 	);
 }
 
@@ -75,14 +75,14 @@ function Results() {
 	return <p>🚀 {posts.length} atomic posts found</p>;
 }
 
-function Main() {
+const Main = memo(function Main() {
 	return (
 		<main>
 			<FormAddPost />
 			<Posts />
 		</main>
 	);
-}
+});
 
 function Posts() {
 	return (
@@ -131,7 +131,7 @@ function FormAddPost() {
 	);
 }
 
-const List = memo(function List() {
+function List() {
 	const { posts } = usePost();
 
 	return (
@@ -144,11 +144,10 @@ const List = memo(function List() {
 			))}
 		</ul>
 	);
-});
+}
 
 const Archive = memo(function Archive() {
-	const { setPosts } = usePost();
-	// Here we don't need the setter function. We're only using state to store these posts because the callback function passed into useState (which generates the posts) is only called once, on the initial render. So we use this trick as an optimization technique, because if we just used a regular variable, these posts would be re-created on every render. We could also move the posts outside the components, but I wanted to show you this trick 😉
+	const { setPosts, lazyLoadedPosts } = usePost();
 	const [posts] = useState(lazyLoadedPosts(1000));
 	const [showArchive, setShowArchive] = useState(false);
 

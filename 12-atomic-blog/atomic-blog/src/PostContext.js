@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 const createRandomPost = () => {
@@ -8,12 +8,15 @@ const createRandomPost = () => {
 	};
 };
 
-const lazyLoadedPosts = (length) => Array.from(Array(length), () => createRandomPost()); // returns an Array of Objects.
-
 const PostContext = createContext();
 
 function PostProvider(props) {
 	const { children } = props;
+
+	const lazyLoadedPosts = useCallback((length) => {
+		return Array.from(Array(length), () => createRandomPost());
+	}, []);
+
 	const [posts, setPosts] = useState(lazyLoadedPosts(30));
 	const [searchQuery, setSearchQuery] = useState('');
 
@@ -33,8 +36,9 @@ function PostProvider(props) {
 			setPosts,
 			searchQuery,
 			setSearchQuery,
+			lazyLoadedPosts,
 		};
-	}, [searchedPosts, searchQuery]);
+	}, [searchedPosts, searchQuery, lazyLoadedPosts]);
 
 	return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
 }
@@ -47,4 +51,4 @@ function usePost() {
 	return context;
 }
 
-export { PostProvider, usePost, lazyLoadedPosts };
+export { PostProvider, usePost };
