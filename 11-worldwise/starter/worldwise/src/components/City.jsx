@@ -40,8 +40,9 @@ const formatDate = (date) =>
 export default function City() {
 	const { id } = useParams();
 	const navigate = useNavigate();
-	const { isLoading, currentCity, getCity } = useCities();
+	const { currentCity, getCity } = useCities();
 	const { cityName, emoji, date, notes } = currentCity;
+	const isCityLoaded = currentCity.id === id;
 
 	const handleBackBtn = () => {
 		navigate(-1);
@@ -54,9 +55,9 @@ export default function City() {
 
 	return (
 		<>
-			{isLoading && <Spinner />}
+			{!isCityLoaded && <Spinner />}
 
-			{!isLoading && (
+			{isCityLoaded && (
 				<div className={styles.city}>
 					<div className={styles.row}>
 						<h6>City name</h6>
