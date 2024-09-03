@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import clickSound from './ClickSound.m4a';
 
 function Calculator(props) {
@@ -7,8 +7,8 @@ function Calculator(props) {
 	const [sets, setSets] = useState(3);
 	const [speed, setSpeed] = useState(90);
 	const [durationBreak, setDurationBreak] = useState(5);
+	const [duration, setDuration] = useState(0);
 
-	const duration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
 	const mins = Math.floor(duration);
 	const seconds = (duration - mins) * 60;
 
@@ -34,9 +34,23 @@ function Calculator(props) {
 		setDurationBreak(Number(event.target.value));
 	};
 
-	const handleAddTime = () => {};
+	const handleAddTime = () => {
+		setDuration((currentDuration) => Math.floor(currentDuration) + 1);
+	};
 
-	const handleDeductTime = () => {};
+	const handleDeductTime = () => {
+		setDuration((currentDuration) => {
+			const newDuration = Math.ceil(currentDuration) - 1;
+
+			return newDuration <= 0 ? 0 : newDuration;
+		});
+	};
+
+	useEffect(() => {
+		setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
+
+		return () => {};
+	}, [number, sets, speed, durationBreak]);
 
 	return (
 		<>
@@ -97,13 +111,13 @@ function Calculator(props) {
 			</form>
 
 			<section>
-				<button onClick={handleAddTime}>–</button>
+				<button onClick={handleDeductTime}>–</button>
 				<p>
 					{mins < 10 && '0'}
 					{mins}:{seconds < 10 && '0'}
 					{seconds}
 				</p>
-				<button onClick={handleDeductTime}>+</button>
+				<button onClick={handleAddTime}>+</button>
 			</section>
 		</>
 	);
