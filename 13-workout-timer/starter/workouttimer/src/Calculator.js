@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import clickSound from './ClickSound.m4a';
 
-function Calculator({ workouts, allowSound }) {
+const Calculator = memo(function Calculator(props) {
+	const { workouts, allowSound } = props;
 	const [number, setNumber] = useState(workouts.at(0).numExercises);
 	const [sets, setSets] = useState(3);
 	const [speed, setSpeed] = useState(90);
@@ -17,6 +18,26 @@ function Calculator({ workouts, allowSound }) {
 		sound.play();
 	};
 
+	const handleWorkoutType = (event) => {
+		setNumber(Number(event.target.value));
+	};
+
+	const handleWorkoutSetCount = (event) => {
+		setSets(Number(event.target.value));
+	};
+
+	const handleWorkoutSpeed = (event) => {
+		setSpeed(Number(event.target.value));
+	};
+
+	const handleWorkoutBreakLength = (event) => {
+		setDurationBreak(Number(event.target.value));
+	};
+
+	const handleAddTime = () => {};
+
+	const handleDeductTime = () => {};
+
 	return (
 		<>
 			<form>
@@ -24,7 +45,7 @@ function Calculator({ workouts, allowSound }) {
 					<label>Type of workout</label>
 					<select
 						value={number}
-						onChange={(e) => setNumber(+e.target.value)}
+						onChange={handleWorkoutType}
 					>
 						{workouts.map((workout) => (
 							<option
@@ -36,6 +57,7 @@ function Calculator({ workouts, allowSound }) {
 						))}
 					</select>
 				</div>
+
 				<div>
 					<label>How many sets?</label>
 					<input
@@ -43,10 +65,11 @@ function Calculator({ workouts, allowSound }) {
 						min='1'
 						max='5'
 						value={sets}
-						onChange={(e) => setSets(e.target.value)}
+						onChange={handleWorkoutSetCount}
 					/>
 					<span>{sets}</span>
 				</div>
+
 				<div>
 					<label>How fast are you?</label>
 					<input
@@ -55,10 +78,11 @@ function Calculator({ workouts, allowSound }) {
 						max='180'
 						step='30'
 						value={speed}
-						onChange={(e) => setSpeed(e.target.value)}
+						onChange={handleWorkoutSpeed}
 					/>
 					<span>{speed} sec/exercise</span>
 				</div>
+
 				<div>
 					<label>Break length</label>
 					<input
@@ -66,22 +90,23 @@ function Calculator({ workouts, allowSound }) {
 						min='1'
 						max='10'
 						value={durationBreak}
-						onChange={(e) => setDurationBreak(e.target.value)}
+						onChange={handleWorkoutBreakLength}
 					/>
 					<span>{durationBreak} minutes/break</span>
 				</div>
 			</form>
+
 			<section>
-				<button onClick={() => {}}>–</button>
+				<button onClick={handleAddTime}>–</button>
 				<p>
 					{mins < 10 && '0'}
 					{mins}:{seconds < 10 && '0'}
 					{seconds}
 				</p>
-				<button onClick={() => {}}>+</button>
+				<button onClick={handleDeductTime}>+</button>
 			</section>
 		</>
 	);
-}
+});
 
 export default Calculator;
