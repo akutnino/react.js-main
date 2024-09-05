@@ -12,12 +12,6 @@ function Calculator(props) {
 	const mins = Math.floor(duration);
 	const seconds = (duration - mins) * 60;
 
-	const playSound = () => {
-		if (!allowSound) return;
-		const sound = new Audio(clickSound);
-		sound.play();
-	};
-
 	const handleWorkoutType = (event) => {
 		setNumber(Number(event.target.value));
 	};
@@ -51,6 +45,18 @@ function Calculator(props) {
 
 		return () => {};
 	}, [number, sets, speed, durationBreak]);
+
+	useEffect(() => {
+		const playSound = () => {
+			const audio = new Audio(clickSound);
+
+			if (!allowSound) return;
+			if (navigator.userActivation.hasBeenActive) audio.play();
+		};
+
+		playSound();
+		return () => {};
+	}, [duration, allowSound]);
 
 	return (
 		<>
