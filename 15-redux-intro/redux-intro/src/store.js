@@ -44,12 +44,25 @@ const reducerFunc = (currentState = INITIAL_STATE, action) => {
 
 const store = createStore(reducerFunc);
 
-store.dispatch({ type: 'account/deposit', payload: 500 });
-store.dispatch({ type: 'account/withdraw', payload: 400 });
-store.dispatch({
-	type: 'account/requestLoan',
-	payload: { amount: 1000, purpose: 'buy a car' },
-});
-store.dispatch({ type: 'account/payLoan' });
+function deposit(amount) {
+	return { type: 'account/deposit', payload: amount };
+}
+
+function withdraw(amount) {
+	return { type: 'account/withdraw', payload: amount };
+}
+
+function requestLoan(amount, purpose) {
+	return { type: 'account/requestLoan', payload: { amount, purpose } };
+}
+
+function payload() {
+	return { type: 'account/payLoan' };
+}
+
+store.dispatch(deposit(500));
+store.dispatch(withdraw(200));
+store.dispatch(requestLoan(1000, 'buy a car'));
+store.dispatch(payload());
 
 console.log(store.getState());
