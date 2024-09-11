@@ -2,6 +2,7 @@ const INITIAL_STATE_ACCOUNT = {
 	balance: 0,
 	loanBalance: 0,
 	loanPurpose: '',
+	isLoading: false,
 };
 
 const accountReducer = (currentState = INITIAL_STATE_ACCOUNT, action) => {
@@ -10,6 +11,7 @@ const accountReducer = (currentState = INITIAL_STATE_ACCOUNT, action) => {
 			return {
 				...currentState,
 				balance: currentState.balance + action.payload,
+				isLoading: false,
 			};
 
 		case 'account/withdraw':
@@ -35,13 +37,44 @@ const accountReducer = (currentState = INITIAL_STATE_ACCOUNT, action) => {
 				loanPurpose: '',
 			};
 
+		case 'account/convertingCurrency':
+			return {
+				...currentState,
+				isLoading: true,
+			};
+
 		default:
 			return currentState;
 	}
 };
 
-export function deposit(amount) {
-	return { type: 'account/deposit', payload: amount };
+export function deposit(amount, currency) {
+	if (currency === 'USD') return { type: 'account/deposit', payload: amount };
+	return async (dispatch, getState) => {
+		try {
+			dispatch({ type: 'account/convertingCurrency' });
+
+			const host = 'api.frankfurter.app';
+			const fetchURL = `https://${host}/latest?amount=${amount}&from=${currency}&to=USD`;
+			const fetchOptions = {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			};
+
+			const response = await fetch(fetchURL, fetchOptions);
+			if (!response.ok) throw new Error('FETCH RESPONSE FAILED');
+
+			const data = await response.json();
+			const convertedAmount = data.rates.USD;
+
+			dispatch({ type: 'account/deposit', payload: convertedAmount });
+		} catch (error) {
+			console.error({ error });
+		}
+	};
 }
 
 export function withdraw(amount) {
