@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function SearchOrder() {
 	const [userQuery, setUserQuery] = useState('');
+	const navigate = useNavigate();
 
 	const handleUserQuery = (event) => {
 		setUserQuery(event.target.value);
@@ -9,6 +11,10 @@ function SearchOrder() {
 
 	const handleFormSumbit = (event) => {
 		event.preventDefault();
+
+		if (!userQuery) return;
+		navigate(`/order/${userQuery}`);
+		setUserQuery('');
 	};
 
 	return (
