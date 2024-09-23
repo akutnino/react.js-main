@@ -1,11 +1,13 @@
 const INITIAL_STATE_USER = {};
 
 function userReducer(currentState = INITIAL_STATE_USER, action) {
-	switch ('') {
+	switch (action.type) {
 		case '':
-			break;
+			return;
 
 		default:
-			break;
+			return currentState;
 	}
 }
+
+export default userReducer;
