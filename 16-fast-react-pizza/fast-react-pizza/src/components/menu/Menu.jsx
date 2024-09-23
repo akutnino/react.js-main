@@ -11,11 +11,11 @@ function Menu() {
 	const menu = useLoaderData();
 
 	return (
-		<ul>
+		<ul className='divide-y divide-stone-200 px-2'>
 			{menu.map((pizzaObject) => (
 				<MenuItem
-					key={pizzaObject.id}
 					pizzaObject={pizzaObject}
+					key={pizzaObject.id}
 				/>
 			))}
 		</ul>
