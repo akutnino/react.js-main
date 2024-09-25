@@ -4,9 +4,13 @@ import Button from '../../interfaces/Button';
 function CreateUser() {
 	const [username, setUsername] = useState('');
 
-	function handleSubmit(e) {
-		e.preventDefault();
-	}
+	const handleSubmit = (event) => {
+		event.preventDefault();
+	};
+
+	const handleUserInput = (event) => {
+		setUsername(event.target.value);
+	};
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -18,7 +22,7 @@ function CreateUser() {
 				type='text'
 				placeholder='Your full name'
 				value={username}
-				onChange={(e) => setUsername(e.target.value)}
+				onChange={handleUserInput}
 				className='input mb-8 w-72'
 			/>
 

@@ -1,6 +1,12 @@
 import { formatCurrency } from '../../utils/helpers';
+import PropTypes from 'prop-types';
 
-function OrderItem({ item, isLoadingIngredients, ingredients }) {
+OrderItem.propTypes = {
+	item: PropTypes.object,
+};
+
+function OrderItem(props) {
+	const { item, isLoadingIngredients, ingredients } = props;
 	const { quantity, name, totalPrice } = item;
 
 	return (

@@ -1,7 +1,13 @@
 import Button from '../../interfaces/Button';
+import PropTypes from 'prop-types';
 import { formatCurrency } from '../../utils/helpers';
 
-function CartItem({ item }) {
+CartItem.propTypes = {
+	item: PropTypes.object,
+};
+
+function CartItem(props) {
+	const { item } = props;
 	const { pizzaId, name, quantity, totalPrice } = item;
 
 	return (
