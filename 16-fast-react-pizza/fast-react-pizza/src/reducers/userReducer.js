@@ -1,9 +1,14 @@
-const INITIAL_STATE_USER = {};
+const INITIAL_STATE_USER = {
+	userName: '',
+};
 
 function userReducer(currentState = INITIAL_STATE_USER, action) {
 	switch (action.type) {
-		case '':
-			return;
+		case 'user/inputUserName':
+			return {
+				...currentState,
+				userName: action.payload,
+			};
 
 		default:
 			return currentState;

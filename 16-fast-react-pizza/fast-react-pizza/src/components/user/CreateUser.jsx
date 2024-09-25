@@ -1,11 +1,18 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { inputUserName } from '../../actions/userActions';
 import Button from '../../interfaces/Button';
 
 function CreateUser() {
 	const [username, setUsername] = useState('');
+	const dispatch = useDispatch();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+
+		if (!username) return;
+		dispatch(inputUserName(username));
+		setUsername('');
 	};
 
 	const handleUserInput = (event) => {
