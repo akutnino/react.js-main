@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { userSelector } from '../../selectors/userSelector';
+import { userSelector } from '../../stores/selectors/userSelector';
 
 function Username() {
 	const { userName } = useSelector(userSelector);

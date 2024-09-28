@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { inputUserName } from '../../actions/userActions';
+import { inputUserName } from '../../stores/actions/userActions';
 import Button from '../../interfaces/Button';
 
 function CreateUser() {
