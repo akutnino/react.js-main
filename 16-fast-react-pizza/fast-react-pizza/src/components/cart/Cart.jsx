@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import LinkButton from '../../interfaces/LinkButton';
 import CartItem from './CartItem';
 import Button from '../../interfaces/Button';
-import { useSelector } from 'react-redux';
 
 const fakeCart = [
 	{

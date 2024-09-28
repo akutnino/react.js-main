@@ -1,6 +1,12 @@
+import { useSelector } from 'react-redux';
+import { userSelector } from '../stores/selectors/userSelector';
 import CreateUser from '../components/user/CreateUser';
+import Button from './Button';
 
 function Home() {
+	const { userName } = useSelector(userSelector);
+	const isUserNameEntered = userName !== '';
+
 	return (
 		<div className='my-10 px-4 text-center sm:my-16'>
 			<h1 className='mb-8 text-xl font-semibold md:text-3xl'>
@@ -11,7 +17,15 @@ function Home() {
 				</span>
 			</h1>
 
-			<CreateUser />
+			{!isUserNameEntered && <CreateUser />}
+			{isUserNameEntered && (
+				<Button
+					to={'/menu'}
+					type={'primary'}
+				>
+					Continue ordering, {userName}
+				</Button>
+			)}
 		</div>
 	);
 }

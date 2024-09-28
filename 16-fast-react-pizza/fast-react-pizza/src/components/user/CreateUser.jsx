@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { inputUserName } from '../../stores/actions/userActions';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../interfaces/Button';
 
 function CreateUser() {
 	const [username, setUsername] = useState('');
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -13,6 +15,7 @@ function CreateUser() {
 		if (!username) return;
 		dispatch(inputUserName(username));
 		setUsername('');
+		navigate('/menu');
 	};
 
 	const handleUserInput = (event) => {

@@ -1,6 +1,6 @@
-import Button from '../../interfaces/Button';
-import PropTypes from 'prop-types';
 import { formatCurrency } from '../../utils/helpers';
+import PropTypes from 'prop-types';
+import Button from '../../interfaces/Button';
 
 CartItem.propTypes = {
 	item: PropTypes.object,

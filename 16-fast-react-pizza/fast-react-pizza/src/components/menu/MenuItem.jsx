@@ -1,6 +1,6 @@
-import Button from '../../interfaces/Button';
 import { formatCurrency } from '../../utils/helpers';
 import PropTypes from 'prop-types';
+import Button from '../../interfaces/Button';
 
 MenuItem.propTypes = {
 	pizzaObject: PropTypes.object,
