@@ -1,7 +1,7 @@
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import { createOrder } from '../../services/apiRestaurant';
 import { useSelector } from 'react-redux';
-import { userSelector } from '../../stores/selectors/userSelector';
+import { getUsername } from '../../stores/selectors/userSelectors';
 import Button from '../../interfaces/Button';
 
 // https://uibakery.io/regex-library/phone-number
@@ -57,7 +57,7 @@ async function action(props) {
 
 function CreateOrder() {
 	// const [withPriority, setWithPriority] = useState(false);
-	const { userName } = useSelector(userSelector);
+	const userName = useSelector(getUsername);
 	const formErrors = useActionData();
 	const navigation = useNavigation();
 	const isSubmitting = navigation.state === 'submitting';
