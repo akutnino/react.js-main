@@ -1,4 +1,3 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsername } from '../../stores/selectors/userSelectors';
 import { getCartArray } from '../../stores/selectors/cartSelectors';
