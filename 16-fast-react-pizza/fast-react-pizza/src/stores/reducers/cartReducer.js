@@ -1,13 +1,5 @@
 const INITIAL_STATE_CART = {
-	cartArray: [
-		// {
-		// 	pizzaId: 12,
-		// 	name: 'Mediterranean',
-		// 	quantity: 2,
-		// 	unitPrice: 16,
-		// 	totalPrice: 32,
-		// },
-	],
+	cartArray: [],
 };
 
 function cartReducer(currentState = INITIAL_STATE_CART, action) {
