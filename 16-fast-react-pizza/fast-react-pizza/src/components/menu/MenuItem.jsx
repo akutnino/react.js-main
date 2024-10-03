@@ -5,6 +5,7 @@ import { getCurrentQuantityById } from '../../stores/selectors/cartSelectors';
 import PropTypes from 'prop-types';
 import Button from '../../interfaces/Button';
 import DeleteItem from '../cart/DeleteItem';
+import UpdateItemQuantity from '../cart/UpdateItemQuantity';
 
 MenuItem.propTypes = {
 	pizzaObject: PropTypes.object,
@@ -48,7 +49,15 @@ function MenuItem(props) {
 						<p className='text-sm font-medium uppercase text-stone-500'>Sold out</p>
 					)}
 
-					{isPizzaInCart && <DeleteItem pizzaId={id} />}
+					{isPizzaInCart && (
+						<div className='flex items-center gap-3 sm:gap-8'>
+							<UpdateItemQuantity
+								pizzaId={id}
+								quantity={pizzaQuantity}
+							/>
+							<DeleteItem pizzaId={id} />
+						</div>
+					)}
 
 					{!soldOut && !isPizzaInCart && (
 						<Button

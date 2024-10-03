@@ -37,13 +37,18 @@ function cartReducer(currentState = INITIAL_STATE_CART, action) {
 		}
 
 		case 'cart/decreaseItemQuantity': {
-			const updatedArray = currentState.cartArray.map((orderObject) => {
-				if (orderObject.pizzaId === action.payload) {
-					orderObject.quantity = orderObject.quantity - 1;
-					orderObject.totalPrice = orderObject.quantity * orderObject.unitPrice;
-				}
-				return orderObject;
-			});
+			const updatedArray = currentState.cartArray
+				.map((orderObject) => {
+					if (orderObject.pizzaId === action.payload) {
+						const updatedQuantity =
+							orderObject.quantity === 0 ? 0 : orderObject.quantity - 1;
+
+						orderObject.quantity = updatedQuantity;
+						orderObject.totalPrice = orderObject.quantity * orderObject.unitPrice;
+					}
+					return orderObject;
+				})
+				.filter((orderObject) => orderObject.quantity !== 0);
 
 			return {
 				...currentState,
