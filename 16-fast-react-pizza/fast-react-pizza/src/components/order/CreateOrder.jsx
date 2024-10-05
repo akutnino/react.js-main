@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import { createOrder } from '../../services/apiRestaurant';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUsername } from '../../stores/selectors/userSelectors';
 import { getCartArray, getTotalCartPrice } from '../../stores/selectors/cartSelectors';
 import { clearCart } from '../../stores/actions/cartActions';
 import { formatCurrency } from '../../utils/helpers';
+import { fetchUserAddress } from '../../stores/actions/userActions';
 import Button from '../../interfaces/Button';
 import EmptyCart from '../cart/EmptyCart';
 import store from '../../stores/store';
@@ -44,10 +45,11 @@ function CreateOrder() {
 	const userName = useSelector(getUsername);
 	const cartArray = useSelector(getCartArray);
 	const totalCartPrice = useSelector(getTotalCartPrice);
-	const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
-	const totalPrice = totalCartPrice + priorityPrice;
 	const formErrors = useActionData();
 	const navigation = useNavigation();
+	const dispatch = useDispatch();
+	const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+	const totalPrice = totalCartPrice + priorityPrice;
 	const isSubmitting = navigation.state === 'submitting';
 
 	const handlePriorityToggle = (event) => {
