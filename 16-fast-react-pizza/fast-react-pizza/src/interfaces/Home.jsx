@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
-import { getUsername } from '../stores/selectors/userSelectors';
+import { getUser } from '../stores/selectors/userSelectors';
 import CreateUser from '../components/user/CreateUser';
 import Button from './Button';
 
 function Home() {
-	const userName = useSelector(getUsername);
+	const { userName } = useSelector(getUser);
 	const isUserNameEntered = userName !== '';
 
 	return (
