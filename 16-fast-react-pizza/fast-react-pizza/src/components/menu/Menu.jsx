@@ -2,7 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import { getMenu } from '../../services/apiRestaurant';
 import MenuItem from './MenuItem';
 
-async function loader() {
+async function menuLoader() {
 	const menu = await getMenu();
 	return menu;
 }
@@ -22,4 +22,4 @@ function Menu() {
 	);
 }
 
-export { Menu as default, loader };
+export { Menu as default, menuLoader };

@@ -2,7 +2,7 @@ import Button from '../../interfaces/Button';
 import { useFetcher } from 'react-router-dom';
 import { updateOrder } from '../../services/apiRestaurant';
 
-async function action(props) {
+async function updateOrderAction(props) {
 	const { params } = props;
 	const data = { priority: true };
 
@@ -23,4 +23,4 @@ function UpdateOrder() {
 	);
 }
 
-export { UpdateOrder as default, action };
+export { UpdateOrder as default, updateOrderAction };

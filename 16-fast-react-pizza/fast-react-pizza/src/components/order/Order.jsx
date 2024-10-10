@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import OrderItem from './OrderItem';
 import UpdateOrder from './UpdateOrder';
 
-async function loader(props) {
+async function orderLoader(props) {
 	const { params } = props;
 	const order = await getOrder(params.orderId);
 
@@ -89,4 +89,4 @@ function Order() {
 	);
 }
 
-export { Order as default, loader };
+export { Order as default, orderLoader };

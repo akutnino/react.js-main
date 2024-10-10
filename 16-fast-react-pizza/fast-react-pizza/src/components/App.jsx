@@ -4,10 +4,10 @@ import {
 	Route,
 	RouterProvider,
 } from 'react-router-dom';
-import { action as updateOrderAction } from './order/UpdateOrder';
-import Menu, { loader as menuLoader } from './menu/Menu';
-import Order, { loader as orderLoader } from './order/Order';
-import CreateOrder, { action as createOrderAction } from './order/CreateOrder';
+import { updateOrderAction } from './order/UpdateOrder';
+import Menu, { menuLoader } from './menu/Menu';
+import Order, { orderLoader } from './order/Order';
+import CreateOrder, { createOrderAction } from './order/CreateOrder';
 import Home from '../interfaces/Home';
 import Cart from './cart/Cart';
 import AppLayout from '../interfaces/AppLayout';

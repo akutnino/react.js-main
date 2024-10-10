@@ -17,7 +17,7 @@ const isValidPhone = (str) =>
 		str,
 	);
 
-async function action(props) {
+async function createOrderAction(props) {
 	const { request } = props;
 	const formData = await request.formData();
 	const data = Object.fromEntries(formData);
@@ -172,4 +172,4 @@ function CreateOrder() {
 	);
 }
 
-export { CreateOrder as default, action };
+export { CreateOrder as default, createOrderAction };
