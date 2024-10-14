@@ -1,13 +1,13 @@
-import Heading from "../ui/Heading";
-import Row from "../ui/Row";
+import Heading from '../components/common/Heading';
+import Row from '../components/common/Row';
 
 function Dashboard() {
-  return (
-    <Row type="horizontal">
-      <Heading as="h1">Dashboard</Heading>
-      <p>TEST</p>
-    </Row>
-  );
+	return (
+		<Row type='horizontal'>
+			<Heading as='h1'>Dashboard</Heading>
+			<p>TEST</p>
+		</Row>
+	);
 }
 
 export default Dashboard;
