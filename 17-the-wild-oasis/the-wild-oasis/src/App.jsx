@@ -19,6 +19,7 @@ import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
 import GlobalStyles from './styles/GlobalStyles';
 import AppLayout from './components/common/AppLayout';
+import { StyleSheetManager } from 'styled-components';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -107,7 +108,11 @@ function App() {
 					},
 				}}
 			/>
-			<RouterProvider router={Router} />
+			<StyleSheetManager
+				shouldForwardProp={(prop) => ['variation'].every((value) => value !== prop)}
+			>
+				<RouterProvider router={Router} />
+			</StyleSheetManager>
 		</QueryClientProvider>
 	);
 }
