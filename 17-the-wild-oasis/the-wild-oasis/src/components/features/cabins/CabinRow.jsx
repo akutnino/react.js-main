@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { formatCurrency } from '../../../utils/helpers';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteCabin } from '../../../services/apiCabins';
+import toast from 'react-hot-toast';
 
 CabinRow.propTypes = {
 	cabinObject: PropTypes.object,
@@ -54,14 +55,15 @@ function CabinRow(props) {
 	const queryClient = useQueryClient();
 
 	const { isPending, mutate } = useMutation({
-		mutationFn: (id) => deleteCabin(id),
+		mutationFn: () => deleteCabin(cabinID),
 		onSuccess: () => {
-			alert('success');
+			toast.success('Cabin successfully deleted.');
+
 			queryClient.invalidateQueries({
 				queryKey: ['cabins'],
 			});
 		},
-		onError: (error) => alert(error.message),
+		onError: (error) => toast.error(error.message),
 	});
 
 	const handleDeleteCabin = () => {
