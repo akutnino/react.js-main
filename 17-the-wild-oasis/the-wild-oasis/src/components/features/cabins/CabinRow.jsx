@@ -55,7 +55,7 @@ function CabinRow(props) {
 	const queryClient = useQueryClient();
 
 	const { isPending, mutate } = useMutation({
-		mutationFn: () => deleteCabin(cabinID),
+		mutationFn: (cabinID) => deleteCabin(cabinID),
 		onSuccess: () => {
 			toast.success('Cabin successfully deleted.');
 
