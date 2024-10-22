@@ -1,9 +1,11 @@
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { formatCurrency } from '../../../utils/helpers';
+import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { formatCurrency } from '../../../utils/helpers';
 import { deleteCabin } from '../../../services/apiCabins';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import toast from 'react-hot-toast';
+import CreateCabinForm from './CreateCabinForm';
 
 CabinRow.propTypes = {
 	cabinObject: PropTypes.object,
@@ -51,7 +53,7 @@ const Discount = styled.div`
 function CabinRow(props) {
 	const { cabinObject } = props;
 	const { id: cabinID, image, name, regularPrice, discount, maxCapacity } = cabinObject;
-
+	const [showForm, setShowForm] = useState(false);
 	const queryClient = useQueryClient();
 
 	const { isPending, mutate } = useMutation({
@@ -66,25 +68,41 @@ function CabinRow(props) {
 		onError: (error) => toast.error(error.message),
 	});
 
+	const handleEditCabin = () => {
+		setShowForm((currentState) => !currentState);
+	};
+
 	const handleDeleteCabin = () => {
 		mutate(cabinID);
 	};
 
 	return (
-		<TableRow role='row'>
-			<Img src={image} />
-			<Cabin>{name}</Cabin>
-			<div>Fits up to {maxCapacity} quests</div>
-			<Price>{formatCurrency(regularPrice)}</Price>
-			<Discount>{formatCurrency(discount)}</Discount>
-			<button
-				type='button'
-				disabled={isPending}
-				onClick={handleDeleteCabin}
-			>
-				Delete
-			</button>
-		</TableRow>
+		<>
+			<TableRow role='row'>
+				<Img src={image} />
+				<Cabin>{name}</Cabin>
+				<div>Fits up to {maxCapacity} quests</div>
+				<Price>{formatCurrency(regularPrice)}</Price>
+				<Discount>{formatCurrency(discount)}</Discount>
+				<div>
+					<button
+						type='button'
+						onClick={handleEditCabin}
+					>
+						Edit
+					</button>
+					<button
+						type='button'
+						disabled={isPending}
+						onClick={handleDeleteCabin}
+					>
+						Delete
+					</button>
+				</div>
+			</TableRow>
+
+			{showForm && <CreateCabinForm cabinToEdit={cabinObject} />}
+		</>
 	);
 }
 
