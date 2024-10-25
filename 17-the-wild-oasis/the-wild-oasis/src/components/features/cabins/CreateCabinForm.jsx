@@ -11,10 +11,12 @@ import FormRow from '../../common/FormRow';
 
 CreateCabinForm.propTypes = {
 	cabinToEdit: PropTypes.object,
+	setIsOpenModal: PropTypes.func,
+	isOpenModal: PropTypes.bool,
 };
 
 function CreateCabinForm(props) {
-	const { cabinToEdit = {} } = props;
+	const { cabinToEdit = {}, setIsOpenModal, isOpenModal } = props;
 	const { id: editID, ...editValues } = cabinToEdit;
 
 	const { createCabin, isCreating } = useCreateCabin();
@@ -33,6 +35,10 @@ function CreateCabinForm(props) {
 		defaultValues: isEdisSession ? editValues : {},
 	});
 
+	const handleCloseModal = () => {
+		setIsOpenModal((currentState) => !currentState);
+	};
+
 	const handleOnSubmit = (data) => {
 		const imageData = typeof data.image === 'string' ? data.image : data.image[0];
 
@@ -45,6 +51,7 @@ function CreateCabinForm(props) {
 				{
 					onSuccess: (data) => {
 						console.log(data);
+						handleCloseModal();
 						reset();
 					},
 				}
@@ -55,6 +62,7 @@ function CreateCabinForm(props) {
 				{
 					onSuccess: (data) => {
 						console.log(data);
+						handleCloseModal();
 						reset();
 					},
 				}
@@ -72,7 +80,10 @@ function CreateCabinForm(props) {
 	};
 
 	return (
-		<Form onSubmit={handleSubmit(handleOnSubmit, handleOnSubmitError)}>
+		<Form
+			onSubmit={handleSubmit(handleOnSubmit, handleOnSubmitError)}
+			type={isOpenModal ? 'modal' : 'regular'}
+		>
 			<FormRow
 				formLabel={'Cabin Name'}
 				error={errors?.name?.message}
@@ -171,6 +182,7 @@ function CreateCabinForm(props) {
 				<Button
 					variation='secondary'
 					type='reset'
+					onClick={handleCloseModal}
 					disabled={isWorking}
 				>
 					Cancel

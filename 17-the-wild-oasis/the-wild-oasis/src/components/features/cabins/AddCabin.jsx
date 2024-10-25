@@ -13,7 +13,15 @@ function AddCabin() {
 	return (
 		<div>
 			<Button onClick={handleAddCabin}>Add New Cabin</Button>
-			{isOpenModal && <Modal />}
+
+			{isOpenModal && (
+				<Modal setIsOpenModal={setIsOpenModal}>
+					<CreateCabinForm
+						isOpenModal={isOpenModal}
+						setIsOpenModal={setIsOpenModal}
+					/>
+				</Modal>
+			)}
 		</div>
 	);
 }
