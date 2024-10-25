@@ -1,7 +1,7 @@
+import { createPortal } from 'react-dom';
+import { HiXMark } from 'react-icons/hi2';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { HiXMark } from 'react-icons/hi2';
-import { createPortal } from 'react-dom';
 
 Modal.propTypes = {
 	setIsOpenModal: PropTypes.func,
@@ -64,7 +64,7 @@ function Modal(props) {
 		setIsOpenModal((currentState) => !currentState);
 	};
 
-	return (
+	return createPortal(
 		<Overlay>
 			<StyledModal>
 				<Button
@@ -76,7 +76,8 @@ function Modal(props) {
 
 				<div>{children}</div>
 			</StyledModal>
-		</Overlay>
+		</Overlay>,
+		document.body
 	);
 }
 
