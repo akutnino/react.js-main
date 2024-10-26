@@ -1,6 +1,7 @@
 import { cloneElement, createContext, useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -86,11 +87,12 @@ function Open(props) {
 function Window(props) {
 	const { name, children } = props;
 	const { openName, handleCloseWindow } = useContext(ModalContext);
+	const { ref } = useOutsideClick(openName, handleCloseWindow);
 
 	if (name !== openName) return null;
 	return createPortal(
 		<Overlay>
-			<StyledModal>
+			<StyledModal ref={ref}>
 				<Button
 					type='button'
 					onClick={handleCloseWindow}
@@ -100,7 +102,7 @@ function Window(props) {
 
 				<div>
 					{cloneElement(children, {
-						isOpenModal: openName,
+						isOpenModal: Boolean(openName),
 						setIsOpenModal: handleCloseWindow,
 					})}
 				</div>
