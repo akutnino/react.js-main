@@ -15,6 +15,11 @@ Row.propTypes = {
 	children: PropTypes.node,
 };
 
+Body.propTypes = {
+	data: PropTypes.array,
+	renderProps: PropTypes.func,
+};
+
 const StyledTable = styled.div`
 	border: 1px solid var(--color-grey-200);
 
@@ -116,9 +121,10 @@ function Row(props) {
 }
 
 function Body(props) {
-	const { children } = props;
+	const { data, renderProps } = props;
 
-	return;
+	if (!data.length) return <Empty>No Data to Show at the moment</Empty>;
+	return <StyledBody>{data.map(renderProps)}</StyledBody>;
 }
 
 Table.Header = Header;
