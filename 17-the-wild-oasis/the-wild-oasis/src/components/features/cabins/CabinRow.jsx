@@ -5,6 +5,7 @@ import { useDeleteCabin } from './useDeleteCabin';
 import CreateCabinForm from './CreateCabinForm';
 import Modal from '../../common/Modal';
 import ConfirmDelete from '../../common/ConfirmDelete';
+import Table from '../../common/Table';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -12,17 +13,17 @@ CabinRow.propTypes = {
 	cabinObject: PropTypes.object,
 };
 
-const TableRow = styled.div`
-	display: grid;
-	grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-	column-gap: 2.4rem;
-	align-items: center;
-	padding: 1.4rem 2.4rem;
+// const TableRow = styled.div`
+// 	display: grid;
+// 	grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+// 	column-gap: 2.4rem;
+// 	align-items: center;
+// 	padding: 1.4rem 2.4rem;
 
-	&:not(:last-child) {
-		border-bottom: 1px solid var(--color-grey-100);
-	}
-`;
+// 	&:not(:last-child) {
+// 		border-bottom: 1px solid var(--color-grey-100);
+// 	}
+// `;
 
 const Img = styled.img`
 	display: block;
@@ -82,7 +83,7 @@ function CabinRow(props) {
 	};
 
 	return (
-		<TableRow role='row'>
+		<Table.Row role='row'>
 			<Img src={image} />
 			<Cabin>{name}</Cabin>
 			<div>Fits up to {maxCapacity} quests</div>
@@ -128,7 +129,7 @@ function CabinRow(props) {
 					</Modal.Window>
 				</Modal>
 			</div>
-		</TableRow>
+		</Table.Row>
 	);
 }
 
