@@ -1,6 +1,10 @@
 import { useEffect, useRef } from 'react';
 
-export function useOutsideClick(openName, handleCloseWindow, listenCapturing = true) {
+export function useOutsideClick(
+	openName = '',
+	handleCloseWindow,
+	listenCapturing = true
+) {
 	const ref = useRef();
 
 	useEffect(() => {
