@@ -126,9 +126,8 @@ function Order({ closeHour }: { closeHour: number }) {
 }
 
 function Pizza({ name, ingredients, price, photoName, soldOut }: PizzaDataType) {
-	if (soldOut) return null;
 	return (
-		<li className='pizza'>
+		<li className={`pizza ${soldOut ? 'sold-out' : ''}`}>
 			<img
 				src={photoName}
 				alt={name}
@@ -136,7 +135,7 @@ function Pizza({ name, ingredients, price, photoName, soldOut }: PizzaDataType) 
 			<div>
 				<h3>{name}</h3>
 				<p>{ingredients}</p>
-				<span>{price}</span>
+				<span>{soldOut ? 'Sold Out' : price}</span>
 			</div>
 		</li>
 	);
