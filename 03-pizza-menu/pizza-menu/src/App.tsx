@@ -113,7 +113,8 @@ function Footer() {
 	);
 }
 
-function Pizza({ name, ingredients, price, photoName }: PizzaDataType) {
+function Pizza({ name, ingredients, price, photoName, soldOut }: PizzaDataType) {
+	if (soldOut) return null;
 	return (
 		<li className='pizza'>
 			<img
