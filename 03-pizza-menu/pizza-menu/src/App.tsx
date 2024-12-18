@@ -1,3 +1,5 @@
+import './main.css';
+
 type PizzaDataType = {
 	name: string;
 	ingredients: string;
@@ -52,15 +54,21 @@ const pizzaData: PizzaDataType[] = [
 ];
 
 function Header() {
-	return <h1>Fast React Pizza Co.</h1>;
+	const styleSample = { color: 'red', fontSize: '48px' };
+
+	return (
+		<header className='header'>
+			<h1 style={styleSample}>Fast React Pizza Co.</h1>
+		</header>
+	);
 }
 
 function Menu() {
 	return (
-		<div>
-			<h2>Our Menu</h2>;
+		<main className='menu'>
+			<h2>Our Menu</h2>
 			<Pizza />
-		</div>
+		</main>
 	);
 }
 
@@ -70,7 +78,11 @@ function Footer() {
 	const closeHour = 22;
 	const isOpen = hour >= openHour && hour <= closeHour;
 
-	return <footer>{new Date().toLocaleTimeString()}we're currently open</footer>;
+	return (
+		<footer className='footer'>
+			{new Date().toLocaleTimeString()}we're currently open
+		</footer>
+	);
 }
 
 function Pizza() {
@@ -88,7 +100,7 @@ function Pizza() {
 
 function App() {
 	return (
-		<div>
+		<div className='container'>
 			<Header />
 			<Menu />
 			<Footer />
