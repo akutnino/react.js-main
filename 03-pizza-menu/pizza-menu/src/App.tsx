@@ -71,14 +71,20 @@ function Menu() {
 			<h2>Our Menu</h2>
 
 			{pizzaArray.length ? (
-				<ul className='pizzas'>
-					{pizzaData.map((pizzaObject: PizzaDataType) => (
-						<Pizza
-							{...pizzaObject}
-							key={pizzaObject.name}
-						/>
-					))}
-				</ul>
+				<>
+					<p>
+						Authentic Italian cuisine. 6 creative dishes to choose from. All from our
+						stone oven, all organic, all delicious.
+					</p>
+					<ul className='pizzas'>
+						{pizzaData.map((pizzaObject: PizzaDataType) => (
+							<Pizza
+								{...pizzaObject}
+								key={pizzaObject.name}
+							/>
+						))}
+					</ul>
+				</>
 			) : (
 				<p>We're still working on our menu.</p>
 			)}
