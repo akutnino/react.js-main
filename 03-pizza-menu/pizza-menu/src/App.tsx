@@ -67,7 +67,18 @@ function Menu() {
 	return (
 		<main className='menu'>
 			<h2>Our Menu</h2>
-			<Pizza />
+			<Pizza
+				pizzaName='Pizza Spinaci'
+				pizzaIngredients='Tomato, mozarella, spinach, and ricotta cheese'
+				pizzaImage='/spinaci.jpg'
+				pizzaPrice={10}
+			/>
+			<Pizza
+				pizzaName='Pizza Funghi'
+				pizzaIngredients='Tomato, mozarella, mushrooms, and onion'
+				pizzaImage='/funghi.jpg'
+				pizzaPrice={12}
+			/>
 		</main>
 	);
 }
@@ -85,15 +96,28 @@ function Footer() {
 	);
 }
 
-function Pizza() {
+function Pizza({
+	pizzaName,
+	pizzaIngredients,
+	pizzaImage,
+	pizzaPrice,
+}: {
+	pizzaName: string;
+	pizzaIngredients: string;
+	pizzaImage: string;
+	pizzaPrice: number;
+}) {
 	return (
-		<div>
+		<div className='pizza'>
 			<img
-				src='/spinaci.jpg'
-				alt='spinaci.jpg'
+				src={pizzaImage}
+				alt={pizzaName}
 			/>
-			<h2>Pizza Spinaci</h2>
-			<p>Tomato, mozarella, spinach, and ricotta cheese</p>
+			<div>
+				<h3>{pizzaName}</h3>
+				<p>{pizzaIngredients}</p>
+				<span>{pizzaPrice}</span>
+			</div>
 		</div>
 	);
 }
