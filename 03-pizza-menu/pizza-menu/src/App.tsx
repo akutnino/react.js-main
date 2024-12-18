@@ -65,6 +65,11 @@ function Menu() {
 }
 
 function Footer() {
+	const hour: number = new Date().getHours();
+	const openHour = 12;
+	const closeHour = 22;
+	const isOpen = hour >= openHour && hour <= closeHour;
+
 	return <footer>{new Date().toLocaleTimeString()}we're currently open</footer>;
 }
 
@@ -72,7 +77,7 @@ function Pizza() {
 	return (
 		<div>
 			<img
-				src='./public/spinaci.jpg'
+				src='/spinaci.jpg'
 				alt='spinaci.jpg'
 			/>
 			<h2>Pizza Spinaci</h2>
