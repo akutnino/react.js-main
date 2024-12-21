@@ -1,9 +1,10 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test } from 'vitest';
+import { render } from '@testing-library/react';
+import Header from '../components/Header.tsx';
 
-describe.only('Header test suite', () => {
-	test('should', () => {
-		const systemUnderTest = 1;
-		const actualResult = 1;
-		expect(actualResult).toBe(systemUnderTest);
+describe('Header component test suit', () => {
+	test('should render the component correctly', () => {
+		const sample = render(<Header />).container;
+		console.log(sample.innerHTML);
 	});
 });

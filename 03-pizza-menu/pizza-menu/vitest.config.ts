@@ -12,7 +12,7 @@ const config: ViteUserConfig = defineConfig({
 		},
 		watch: false,
 		globals: true,
-		environment: 'node',
+		environment: 'jsdom',
 		dir: './src/tests/',
 		reporters: ['verbose'],
 	},
