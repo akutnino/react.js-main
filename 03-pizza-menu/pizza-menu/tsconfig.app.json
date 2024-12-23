@@ -24,7 +24,13 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"noUncheckedSideEffectImports": true
+		"noUncheckedSideEffectImports": true,
+		"types": [
+			"vitest",
+			"@testing-library/jest-dom",
+			"@testing-library/react",
+			"@testing-library/user-event"
+		]
 	},
 	"include": ["src"]
 }

@@ -1,10 +1,13 @@
-import { describe, test } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import Header from '../components/Header.tsx';
 
-describe('Header component test suit', () => {
-	test('should render the component correctly', () => {
-		const sample = render(<Header />).container;
-		console.log(sample.innerHTML);
+describe('Header component test suite', () => {
+	test('should render correctly the login component', () => {
+		const container = render(<Header />).container;
+		console.log(container.innerHTML);
+
+		const mainElement = screen.getByRole('heading');
+		expect(mainElement).toBeInTheDocument();
 	});
 });

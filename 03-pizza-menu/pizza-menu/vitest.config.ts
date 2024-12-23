@@ -15,6 +15,12 @@ const config: ViteUserConfig = defineConfig({
 		environment: 'jsdom',
 		dir: './src/tests/',
 		reporters: ['verbose'],
+		setupFiles: [
+			'vitest',
+			'@testing-library/jest-dom',
+			'@testing-library/react',
+			'@testing-library/user-event',
+		],
 	},
 });
 
