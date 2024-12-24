@@ -1,18 +1,16 @@
-import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { cleanup, render } from '@testing-library/react';
+import { afterEach, describe, expect, test } from 'vitest';
 import Header from '../components/Header.tsx';
 
 describe('Header component test suite', () => {
-	beforeEach(() => {
-		render(<Header />);
+	afterEach(() => {
+		cleanup();
 	});
 
-	test('should render correctly the login component', () => {
-		const mainElement = screen.getByRole('heading');
-		expect(mainElement).toBeInTheDocument();
-	});
+	test('should render the login component correctly', () => {
+		const { getByRole, getByTestId } = render(<Header />);
 
-	test('should render correctly h1 element', () => {
-		expect(screen.getByTestId('header-h1')).toBeInTheDocument();
+		expect(getByRole('heading')).toBeInTheDocument();
+		expect(getByTestId('header')).toBeInTheDocument();
 	});
 });
