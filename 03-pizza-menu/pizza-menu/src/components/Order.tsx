@@ -1,4 +1,6 @@
-function Order({ closeHour }: { closeHour: number }) {
+export type OrderType = { closeHour: number };
+
+function Order({ closeHour }: OrderType) {
 	return (
 		<div
 			className='order'
