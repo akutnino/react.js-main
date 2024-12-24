@@ -2,7 +2,10 @@ import { PizzaDataType } from './Menu.tsx';
 
 function Pizza({ name, ingredients, price, photoName, soldOut }: PizzaDataType) {
 	return (
-		<li className={`pizza ${soldOut ? 'sold-out' : ''}`}>
+		<li
+			className={`pizza ${soldOut ? 'sold-out' : ''}`}
+			data-testid='pizza'
+		>
 			<img
 				src={photoName}
 				alt={name}
