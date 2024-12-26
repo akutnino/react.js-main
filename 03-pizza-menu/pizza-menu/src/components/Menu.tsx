@@ -53,16 +53,17 @@ const pizzaData: PizzaDataType[] = [
 	},
 ];
 
-function Menu() {
-	const pizzaArray: PizzaDataType[] = pizzaData;
-
+function Menu({ pizzaArray = pizzaData }: { pizzaArray?: PizzaDataType[] }) {
 	return (
-		<main className='menu'>
+		<main
+			className='menu'
+			data-testid='menu'
+		>
 			<h2>Our Menu</h2>
 
 			{pizzaArray.length ? (
 				<>
-					<p>
+					<p data-testid='pizza-menu'>
 						Authentic Italian cuisine. 6 creative dishes to choose from. All from our
 						stone oven, all organic, all delicious.
 					</p>
@@ -76,7 +77,7 @@ function Menu() {
 					</ul>
 				</>
 			) : (
-				<p>We're still working on our menu.</p>
+				<p data-testid='menu-message'>We're still working on our menu.</p>
 			)}
 		</main>
 	);
