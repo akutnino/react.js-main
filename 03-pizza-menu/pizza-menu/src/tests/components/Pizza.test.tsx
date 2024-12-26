@@ -1,7 +1,7 @@
 import { cleanup, render } from '@testing-library/react';
 import { afterEach, describe, expect, expectTypeOf, test } from 'vitest';
-import { PizzaDataType } from '../components/Menu.tsx';
-import Pizza from '../components/Pizza.tsx';
+import { PizzaDataType } from '../../components/Menu.tsx';
+import Pizza from '../../components/Pizza.tsx';
 
 describe('Pizza component test suite', () => {
 	afterEach(() => {

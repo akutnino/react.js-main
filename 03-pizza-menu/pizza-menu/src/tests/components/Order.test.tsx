@@ -1,6 +1,6 @@
 import { cleanup, render } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
-import Order, { OrderType } from '../components/Order.tsx';
+import Order, { OrderType } from '../../components/Order.tsx';
 
 describe('Order component test suite', () => {
 	afterEach(() => {

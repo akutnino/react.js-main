@@ -1,6 +1,6 @@
 import { cleanup, render } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import Footer from '../components/Footer.tsx';
+import Footer from '../../components/Footer.tsx';
 
 describe('Footer component test suite', () => {
 	afterEach(() => {
