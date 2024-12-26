@@ -22,7 +22,7 @@ describe('Pizza component test suite', () => {
 		expectTypeOf(stubPizza).toEqualTypeOf<PizzaDataType>();
 	});
 
-	test('should render Pizza component with classname sold-out if it is sold out', () => {
+	test(`should render Pizza component with classname "pizza sold-out" if it is sold out`, () => {
 		const dummyPizza: PizzaDataType = {
 			name: 'Pizza Name',
 			ingredients: 'Pizza Ingredients',
@@ -37,5 +37,22 @@ describe('Pizza component test suite', () => {
 		expect(dummyPizza.soldOut).toBe(true);
 		expect(container).toHaveProperty('className');
 		expect(container.firstChild).toHaveClass('pizza sold-out');
+	});
+
+	test(`should render Pizza component with classname "sold-out" if it is not sold out`, () => {
+		const dummyPizza: PizzaDataType = {
+			name: 'Pizza Name',
+			ingredients: 'Pizza Ingredients',
+			price: 10,
+			photoName: '/Pizza.jpg',
+			soldOut: false,
+		};
+		const { getByTestId, container } = render(<Pizza {...dummyPizza} />);
+
+		expect(getByTestId('pizza')).toBeInTheDocument();
+		expect(dummyPizza).toHaveProperty('soldOut');
+		expect(dummyPizza.soldOut).toBe(false);
+		expect(container).toHaveProperty('className');
+		expect(container.firstChild).toHaveClass('pizza');
 	});
 });
