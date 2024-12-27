@@ -5,7 +5,10 @@ import './styles/main.css';
 
 function App() {
 	return (
-		<div className='container'>
+		<div
+			className='container'
+			data-testid='container'
+		>
 			<Header />
 			<Menu />
 			<Footer />
