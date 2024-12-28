@@ -1,4 +1,4 @@
-import { defineConfig, ViteUserConfig } from 'vitest/config';
+import { configDefaults, defineConfig, ViteUserConfig } from 'vitest/config';
 
 const config: ViteUserConfig = defineConfig({
 	test: {
@@ -6,6 +6,7 @@ const config: ViteUserConfig = defineConfig({
 			enabled: true,
 			all: true,
 			include: ['**/src/**', '**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+			exclude: [...configDefaults.include, '**/src/main.tsx'],
 			provider: 'v8',
 			reporter: ['text', 'html', 'clover', 'json'],
 			reportOnFailure: true,
