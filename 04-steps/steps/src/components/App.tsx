@@ -8,8 +8,14 @@ function App() {
 	const step: number = 3;
 
 	return (
-		<div className='steps'>
-			<div className='numbers'>
+		<div
+			className='steps'
+			data-testid='steps'
+		>
+			<div
+				className='numbers'
+				data-testid='numbers'
+			>
 				<div className={step >= 1 ? 'active' : ''}>1</div>
 				<div className={step >= 2 ? 'active' : ''}>2</div>
 				<div className={step >= 3 ? 'active' : ''}>3</div>
