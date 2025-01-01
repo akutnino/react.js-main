@@ -1,5 +1,10 @@
-import { describe, test } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import { afterEach, describe, test } from 'vitest';
 
 describe('App component test suite', () => {
-	test.todo('should render the component correctly', () => {});
+	afterEach(() => {
+		cleanup();
+	});
+
+	test('should render the component correctly', () => {});
 });
