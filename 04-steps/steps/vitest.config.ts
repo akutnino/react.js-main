@@ -6,7 +6,7 @@ const config: ViteUserConfig = defineConfig({
 			enabled: true,
 			all: true,
 			include: ['**/src/**', '**/*.{test,spec}.?(c|m)[jt]s?(x)'],
-			exclude: [...configDefaults.include, '/src/components/Main.tsx'],
+			exclude: [...configDefaults.include, '**/src/components/Main.tsx'],
 			provider: 'v8',
 			reporter: ['text', 'html', 'clover', 'json'],
 			reportOnFailure: true,
@@ -14,7 +14,7 @@ const config: ViteUserConfig = defineConfig({
 		watch: false,
 		globals: true,
 		environment: 'jsdom',
-		dir: '/src/tests',
+		dir: './src/tests',
 		reporters: ['verbose'],
 		setupFiles: [
 			'vitest',
