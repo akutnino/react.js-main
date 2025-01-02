@@ -8,7 +8,7 @@ const messages: string[] = [
 
 function App() {
 	const [step, setStep] = useState<number>(1);
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [isOpen, setIsOpen] = useState<boolean>(true);
 
 	const handleOpen = () => {
 		setIsOpen(!isOpen);
@@ -26,11 +26,13 @@ function App() {
 		<>
 			<button
 				className='close'
+				data-testid='close'
 				type='button'
 				onClick={handleOpen}
 			>
 				&times;
 			</button>
+
 			{isOpen && (
 				<div
 					className='steps'
