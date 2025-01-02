@@ -10,7 +10,9 @@ describe('Main component test suite', () => {
 	test('should render the component without crashing', () => {
 		const { getByTestId, container } = render(<App />);
 
+		expect(getByTestId('close')).toBeInTheDocument();
 		expect(getByTestId('steps')).toBeInTheDocument();
+		expect(container).toContainElement(getByTestId('close'));
 		expect(container).toContainElement(getByTestId('steps'));
 	});
 });
