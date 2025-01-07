@@ -104,10 +104,26 @@ describe('App component test suite', () => {
 			})
 		);
 
+		fireEvent.click(
+			nextButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		fireEvent.click(
+			nextButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
 		expect(getByTestId('buttons')).toBeInTheDocument();
 		expect(nextButton).toBeInTheDocument();
-		expect(result.current.step).toBe(2);
-		expect(timesCalled).toBe(1);
+		expect(result.current.step).toBe(3);
+		expect(timesCalled).toBe(3);
 	});
 
 	test('should decrease step count if previous button is clicked', () => {
@@ -139,5 +155,84 @@ describe('App component test suite', () => {
 		expect(previousButton).toBeInTheDocument();
 		expect(result.current.step).toBe(2);
 		expect(timesCalled).toBe(1);
+	});
+
+	test('should both increase and decrease step count if the buttons are clicked', () => {
+		const { getByTestId } = render(<App />);
+		const nextButton = getByTestId('buttons').lastElementChild as HTMLElement;
+		const previousButton = getByTestId('buttons').firstElementChild as HTMLElement;
+		let timesCalled: number = 0;
+
+		const { result } = renderHook(() => {
+			const [step, setStep] = useState<number>(1);
+			return { step, setStep };
+		});
+
+		const handlePreviousMock = () => {
+			timesCalled++;
+			result.current.setStep((currentStep) => (currentStep > 1 ? currentStep - 1 : 1));
+		};
+
+		const handleNextMock = () => {
+			timesCalled++;
+			result.current.setStep((currentStep) => (currentStep < 3 ? currentStep + 1 : 3));
+		};
+
+		previousButton.addEventListener('click', handlePreviousMock);
+		nextButton.addEventListener('click', handleNextMock);
+
+		fireEvent.click(
+			nextButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		fireEvent.click(
+			nextButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		fireEvent.click(
+			nextButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		fireEvent.click(
+			previousButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		fireEvent.click(
+			previousButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		fireEvent.click(
+			previousButton,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		expect(getByTestId('buttons')).toBeInTheDocument();
+		expect(previousButton).toBeInTheDocument();
+		expect(nextButton).toBeInTheDocument();
+		expect(result.current.step).toBe(1);
+		expect(timesCalled).toBe(6);
 	});
 });
