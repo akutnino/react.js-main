@@ -1,4 +1,4 @@
-import { ItemType } from './App.tsx';
+import { type ItemType } from './App.tsx';
 import PackingItem from './PackingItem.tsx';
 
 function PackingList({ initialItems }: { initialItems: ItemType[] }) {
