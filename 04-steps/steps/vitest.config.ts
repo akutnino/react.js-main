@@ -5,7 +5,7 @@ const config: ViteUserConfig = defineConfig({
 		coverage: {
 			enabled: true,
 			all: true,
-			include: ['**/src/**', '**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+			include: ['**/src/**', '**\\/*.{test,spec}.?(c|m)[jt]s?(x)'],
 			exclude: [...configDefaults.include, '**/src/components/Main.tsx'],
 			provider: 'v8',
 			reporter: ['text', 'html', 'clover', 'json'],
