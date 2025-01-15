@@ -1,13 +1,6 @@
-function PackingItem({
-	description,
-	quantity,
-	packed,
-}: {
-	id: number;
-	description: string;
-	quantity: number;
-	packed: boolean;
-}) {
+import { type ItemType } from './App.tsx';
+
+function PackingItem({ description, quantity, packed }: ItemType) {
 	return (
 		<li>
 			<span style={packed ? { textDecoration: 'line-through' } : {}}>
