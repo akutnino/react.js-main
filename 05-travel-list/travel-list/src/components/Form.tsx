@@ -1,8 +1,14 @@
-import { type FormEvent } from 'react';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
 
 function Form() {
-	const handleSubmit = (event: FormEvent) => {
+	const [description, setDescription] = useState<string>('');
+
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+	};
+
+	const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
+		setDescription(event.target.value);
 	};
 
 	return (
@@ -24,6 +30,8 @@ function Form() {
 			<input
 				type='text'
 				placeholder='Item...'
+				value={description}
+				onChange={handleInput}
 			/>
 			<button type='button'>Add</button>
 		</form>
