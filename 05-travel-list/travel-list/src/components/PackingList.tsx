@@ -1,11 +1,11 @@
 import { type ItemType } from './App.tsx';
 import PackingItem from './PackingItem.tsx';
 
-function PackingList({ initialItems }: { initialItems: ItemType[] }) {
+function PackingList({ items }: { items: ItemType[] }) {
 	return (
 		<div className='list'>
 			<ul>
-				{initialItems.map((item: ItemType) => (
+				{items.map((item: ItemType) => (
 					<PackingItem
 						{...item}
 						key={item.id}
