@@ -32,6 +32,12 @@ function PackingList({
 		setSortBy(event.target.value);
 	};
 
+	const handleClear = () => {
+		const confirmed = window.confirm('Are you sure to clear all items?');
+
+		if (confirmed) setItems([]);
+	};
+
 	return (
 		<div className='list'>
 			<ul>
@@ -52,6 +58,12 @@ function PackingList({
 					<option value='description'>Sort by input description</option>
 					<option value='packed'>Sort by input packer status</option>
 				</select>
+				<button
+					type='button'
+					onClick={handleClear}
+				>
+					Clear list
+				</button>
 			</div>
 		</div>
 	);

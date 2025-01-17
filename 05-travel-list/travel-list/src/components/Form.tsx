@@ -23,8 +23,6 @@ function Form({ setItems }: { setItems: Dispatch<SetStateAction<ItemType[]>> }) 
 			packed: false,
 		};
 
-		console.log(newItem);
-
 		setItems((currentItems) => [...currentItems, newItem]);
 		setDescription('');
 		setQuantity(1);
