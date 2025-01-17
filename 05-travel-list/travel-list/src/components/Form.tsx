@@ -1,7 +1,13 @@
-import { type ChangeEvent, type FormEvent, Dispatch, useState } from 'react';
+import {
+	type ChangeEvent,
+	type Dispatch,
+	type FormEvent,
+	type SetStateAction,
+	useState,
+} from 'react';
 import { type ItemType } from './App.tsx';
 
-function Form({ setItems }: { setItems: Dispatch<React.SetStateAction<ItemType[]>> }) {
+function Form({ setItems }: { setItems: Dispatch<SetStateAction<ItemType[]>> }) {
 	const [description, setDescription] = useState<string>('');
 	const [quantity, setQuantity] = useState<number>(1);
 
