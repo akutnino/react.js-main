@@ -1,4 +1,4 @@
-import { type SetStateAction, type Dispatch } from 'react';
+import { type SetStateAction, type Dispatch, type ChangeEvent, useState } from 'react';
 import { type ItemType } from './App.tsx';
 import PackingItem from './PackingItem.tsx';
 
@@ -9,10 +9,33 @@ function PackingList({
 	items: ItemType[];
 	setItems: Dispatch<SetStateAction<ItemType[]>>;
 }) {
+	const [sortBy, setSortBy] = useState<string>('input');
+	let sortedItems: ItemType[] = items;
+
+	if (sortBy === 'input') {
+		sortedItems = items.toSorted((a: ItemType, b: ItemType) => a.id - b.id);
+	}
+
+	if (sortBy === 'description') {
+		sortedItems = items.toSorted((a: ItemType, b: ItemType) =>
+			a.description.localeCompare(b.description)
+		);
+	}
+
+	if (sortBy === 'packed') {
+		sortedItems = items.toSorted(
+			(a: ItemType, b: ItemType) => Number(b.packed) - Number(a.packed)
+		);
+	}
+
+	const handleSort = (event: ChangeEvent<HTMLSelectElement>) => {
+		setSortBy(event.target.value);
+	};
+
 	return (
 		<div className='list'>
 			<ul>
-				{items.map((item: ItemType) => (
+				{sortedItems.map((item: ItemType) => (
 					<PackingItem
 						item={item}
 						setItems={setItems}
@@ -20,6 +43,16 @@ function PackingList({
 					/>
 				))}
 			</ul>
+			<div className='actions'>
+				<select
+					value={sortBy}
+					onChange={handleSort}
+				>
+					<option value='input'>Sort by input order</option>
+					<option value='description'>Sort by input description</option>
+					<option value='packed'>Sort by input packer status</option>
+				</select>
+			</div>
 		</div>
 	);
 }
