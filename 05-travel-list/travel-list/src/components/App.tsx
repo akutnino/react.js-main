@@ -22,7 +22,7 @@ function App() {
 				items={items}
 				setItems={setItems}
 			/>
-			<Stats />
+			<Stats items={items} />
 		</div>
 	);
 }
