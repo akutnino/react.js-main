@@ -15,7 +15,10 @@ function App() {
 	const [items, setItems] = useState<ItemType[]>([]);
 
 	return (
-		<div className='app'>
+		<div
+			className='app'
+			data-testid='container'
+		>
 			<Logo />
 			<Form setItems={setItems} />
 			<PackingList
