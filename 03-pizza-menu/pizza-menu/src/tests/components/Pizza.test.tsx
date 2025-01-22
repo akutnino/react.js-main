@@ -9,17 +9,17 @@ describe('Pizza component test suite', () => {
 	});
 
 	test('should render Pizza component correcty', () => {
-		const stubPizza: PizzaDataType = {
+		const dummyPizza: PizzaDataType = {
 			name: 'Pizza Name',
 			ingredients: 'Pizza Ingredients',
 			price: 10,
 			photoName: '/Pizza.jpg',
 			soldOut: false,
 		};
-		const { getByTestId } = render(<Pizza {...stubPizza} />);
+		const { getByTestId } = render(<Pizza {...dummyPizza} />);
 
 		expect(getByTestId('pizza')).toBeInTheDocument();
-		expectTypeOf(stubPizza).toEqualTypeOf<PizzaDataType>();
+		expectTypeOf(dummyPizza).toEqualTypeOf<PizzaDataType>();
 	});
 
 	test(`should render Pizza component with classname "pizza sold-out" if it is sold out`, () => {

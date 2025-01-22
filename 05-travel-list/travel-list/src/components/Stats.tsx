@@ -13,7 +13,7 @@ function Stats({ items }: { items: ItemType[] }) {
 			className='stats'
 			data-testid='stats'
 		>
-			<em>
+			<em data-testid='stats-em'>
 				{packedItemsPercent === 100
 					? 'You got everything! Ready to go!'
 					: packedItemsPercent < 100
