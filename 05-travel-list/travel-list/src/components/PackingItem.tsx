@@ -28,6 +28,7 @@ function PackingItem({
 				type='checkbox'
 				checked={packed}
 				onChange={handleToggle}
+				data-testid='packingList'
 			/>
 			<span style={packed ? { textDecoration: 'line-through' } : {}}>
 				{quantity} {description}

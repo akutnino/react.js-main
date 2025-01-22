@@ -39,7 +39,10 @@ function PackingList({
 	};
 
 	return (
-		<div className='list'>
+		<div
+			className='list'
+			data-testid='packingList'
+		>
 			<ul>
 				{sortedItems.map((item: ItemType) => (
 					<PackingItem

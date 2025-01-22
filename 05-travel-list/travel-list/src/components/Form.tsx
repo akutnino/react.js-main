@@ -40,6 +40,7 @@ function Form({ setItems }: { setItems: Dispatch<SetStateAction<ItemType[]>> }) 
 		<form
 			className='add-form'
 			onSubmit={handleSubmit}
+			data-testid='form'
 		>
 			<h3>What do you need for your 😍 trip?</h3>
 			<select

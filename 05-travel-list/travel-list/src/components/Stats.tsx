@@ -9,7 +9,10 @@ function Stats({ items }: { items: ItemType[] }) {
 	const packedItemsPercent: number = Math.round((totalPackedItems / totalItems) * 100);
 
 	return (
-		<footer className='stats'>
+		<footer
+			className='stats'
+			data-testid='stats'
+		>
 			<em>
 				{packedItemsPercent === 100
 					? 'You got everything! Ready to go!'
