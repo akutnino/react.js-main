@@ -42,10 +42,11 @@ function Form({ setItems }: { setItems: Dispatch<SetStateAction<ItemType[]>> }) 
 			onSubmit={handleSubmit}
 			data-testid='form'
 		>
-			<h3>What do you need for your 😍 trip?</h3>
+			<h3 data-testid='form-h3'>What do you need for your 😍 trip?</h3>
 			<select
 				value={quantity}
 				onChange={handleSelect}
+				data-testid='form-select'
 			>
 				{Array.from(Array(20), (_, index) => index + 1).map((value) => (
 					<option
@@ -61,8 +62,14 @@ function Form({ setItems }: { setItems: Dispatch<SetStateAction<ItemType[]>> }) 
 				placeholder='Item...'
 				value={description}
 				onChange={handleInput}
+				data-testid='form-input'
 			/>
-			<button type='submit'>Add</button>
+			<button
+				type='submit'
+				data-testid='form-submit'
+			>
+				Add
+			</button>
 		</form>
 	);
 }
