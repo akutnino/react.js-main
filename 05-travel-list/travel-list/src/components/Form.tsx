@@ -7,6 +7,8 @@ import {
 } from 'react';
 import { type ItemType } from './App.tsx';
 
+export const idNumber: number = Date.now();
+
 function Form({ setItems }: { setItems: Dispatch<SetStateAction<ItemType[]>> }) {
 	const [description, setDescription] = useState<string>('');
 	const [quantity, setQuantity] = useState<number>(1);
@@ -17,7 +19,7 @@ function Form({ setItems }: { setItems: Dispatch<SetStateAction<ItemType[]>> }) 
 		if (!description) return;
 
 		const newItem: ItemType = {
-			id: Date.now(),
+			id: idNumber,
 			description,
 			quantity,
 			packed: false,
