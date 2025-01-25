@@ -174,6 +174,7 @@ describe('App component test suite', () => {
 				setQuantity,
 			};
 		});
+
 		const { getByTestId } = render(<Form setItems={result.current.setItems} />);
 		let inputMockFnIsCalled: number = 0;
 		let submitMockFnIsCalled: number = 0;
@@ -218,10 +219,10 @@ describe('App component test suite', () => {
 
 		console.log(result.current.items);
 
+		expect(result.current.items.length).toEqual(1);
 		expect(result.current.description).toEqual('');
 		expect(result.current.quantity).toEqual(1);
 		expect(inputMockFnIsCalled).toBe(1);
 		expect(submitMockFnIsCalled).toBe(1);
-		expect(result.current.items.length).toEqual(1);
 	});
 });
