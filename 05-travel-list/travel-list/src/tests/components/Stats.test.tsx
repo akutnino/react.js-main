@@ -12,8 +12,9 @@ describe('App component test suite', () => {
 		const dummyItem: ItemType[] = [];
 
 		const { getByTestId } = render(<Stats items={dummyItem} />);
+		const emElement = getByTestId('stats-em');
 
-		expect(getByTestId('stats-em').innerHTML).toEqual(
+		expect(emElement.innerHTML).toEqual(
 			'Start adding some items to your packing list 🚀'
 		);
 	});
@@ -24,8 +25,9 @@ describe('App component test suite', () => {
 		];
 
 		const { getByTestId } = render(<Stats items={dummyItem} />);
+		const emElement = getByTestId('stats-em');
 
-		expect(getByTestId('stats-em').innerHTML).toEqual(
+		expect(emElement.innerHTML).toEqual(
 			'👜 You have 1 items on your list, and you already packed 0 (0%)'
 		);
 	});
@@ -36,7 +38,8 @@ describe('App component test suite', () => {
 		];
 
 		const { getByTestId } = render(<Stats items={dummyItem} />);
+		const emElement = getByTestId('stats-em');
 
-		expect(getByTestId('stats-em').innerHTML).toEqual('You got everything! Ready to go!');
+		expect(emElement.innerHTML).toEqual('You got everything! Ready to go!');
 	});
 });
