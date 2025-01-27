@@ -52,10 +52,14 @@ function PackingList({
 					/>
 				))}
 			</ul>
-			<div className='actions'>
+			<div
+				className='actions'
+				data-testid='actions-div'
+			>
 				<select
 					value={sortBy}
 					onChange={handleSort}
+					data-testid='actions-select'
 				>
 					<option value='input'>Sort by input order</option>
 					<option value='description'>Sort by input description</option>
@@ -64,6 +68,7 @@ function PackingList({
 				<button
 					type='button'
 					onClick={handleClear}
+					data-testid='clear-btn'
 				>
 					Clear list
 				</button>
