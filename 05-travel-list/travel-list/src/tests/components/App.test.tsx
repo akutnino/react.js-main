@@ -18,10 +18,11 @@ describe('App component test suite', () => {
 
 	test('should render the components in order', () => {
 		const { getByTestId, container } = render(<App />);
+		const appContainer = container.firstElementChild;
 
-		expect(getByTestId('logo')).toEqual(container.firstElementChild?.firstElementChild);
-		expect(getByTestId('form')).toEqual(container.firstElementChild?.children[1]);
-		expect(getByTestId('packingList')).toEqual(container.firstElementChild?.children[2]);
-		expect(getByTestId('stats')).toEqual(container.firstElementChild?.lastElementChild);
+		expect(getByTestId('logo')).toEqual(appContainer?.firstElementChild);
+		expect(getByTestId('form')).toEqual(appContainer?.children[1]);
+		expect(getByTestId('packingList')).toEqual(appContainer?.children[2]);
+		expect(getByTestId('stats')).toEqual(appContainer?.lastElementChild);
 	});
 });
