@@ -43,7 +43,7 @@ function PackingList({
 			className='list'
 			data-testid='packingList'
 		>
-			<ul>
+			<ul data-testid='packing-list'>
 				{sortedItems.map((item: ItemType) => (
 					<PackingItem
 						item={item}

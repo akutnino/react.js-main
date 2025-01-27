@@ -23,12 +23,11 @@ function PackingItem({
 	};
 
 	return (
-		<li>
+		<li data-testid='packing-item'>
 			<input
 				type='checkbox'
 				checked={packed}
 				onChange={handleToggle}
-				data-testid='packingList'
 			/>
 			<span style={packed ? { textDecoration: 'line-through' } : {}}>
 				{quantity} {description}

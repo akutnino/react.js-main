@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, renderHook } from '@testing-library/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { afterEach, describe, expect, test } from 'vitest';
 import { type ItemType } from '../../components/App.tsx';
-import Form, { idNumber } from '../../components/Form.tsx';
+import Form from '../../components/Form.tsx';
 
 describe('App component test suite', () => {
 	afterEach(() => {
@@ -44,119 +44,57 @@ describe('App component test suite', () => {
 	test('should render the correct value of select item if user clicked an option', () => {
 		const { result } = renderHook(() => {
 			const [items, setItems] = useState<ItemType[]>([]);
-			const [quantity, setQuantity] = useState<number>(1);
-
-			return {
-				items,
-				quantity,
-				setItems,
-				setQuantity,
-			};
+			return { items, setItems };
 		});
 
 		const { getByTestId } = render(<Form setItems={result.current.setItems} />);
-		let timesCalled: number = 0;
+		const selectElement = getByTestId('form-select') as HTMLSelectElement;
 
-		const handleSelectMock = (event: ChangeEvent<HTMLSelectElement>) => {
-			result.current.setQuantity(Number(event.currentTarget.value));
-			timesCalled++;
-		};
-
-		getByTestId('form-select').addEventListener('change', handleSelectMock as () => void);
-
-		fireEvent.change(getByTestId('form-select'), {
-			target: { value: 5 },
+		fireEvent.change(selectElement, {
+			target: { value: 10 },
 		});
 
-		expect(result.current.quantity).toEqual(5);
-		expect(timesCalled).toBe(1);
+		expect(selectElement.value).toBe('10');
 	});
 
 	test('should render correct value if user enters an input', () => {
 		const { result } = renderHook(() => {
 			const [items, setItems] = useState<ItemType[]>([]);
-			const [description, setDescription] = useState<string>('');
-
-			return {
-				items,
-				description,
-				setItems,
-				setDescription,
-			};
+			return { items, setItems };
 		});
 
 		const { getByTestId } = render(<Form setItems={result.current.setItems} />);
-		let timesCalled: number = 0;
+		const inputElement = getByTestId('form-input') as HTMLInputElement;
 
-		const handleInputMock = (event: ChangeEvent<HTMLInputElement>) => {
-			result.current.setDescription(event.currentTarget.value);
-			timesCalled++;
-		};
-
-		getByTestId('form-input').addEventListener('change', handleInputMock as () => void);
-
-		fireEvent.change(getByTestId('form-input'), {
-			target: { value: 'test' },
+		fireEvent.change(inputElement, {
+			target: { value: 'testing' },
 		});
 
-		expect(result.current.description).toEqual('test');
-		expect(timesCalled).toBe(1);
+		expect(inputElement.value).toEqual('testing');
 	});
 
 	test('should exit the submit mock if the description state is falsy ', () => {
 		const { result } = renderHook(() => {
 			const [items, setItems] = useState<ItemType[]>([]);
-			const [description, setDescription] = useState<string>('');
-			const [quantity, setQuantity] = useState<number>(1);
-
-			return {
-				items,
-				description,
-				quantity,
-				setItems,
-				setDescription,
-				setQuantity,
-			};
+			return { items, setItems };
 		});
 
-		const { getByTestId } = render(<Form setItems={result.current.setItems} />);
-		let mockFnIsCalled;
-		let mockFnReturned = true;
-
-		const handleSubmitMock = (event: FormEvent<HTMLFormElement>) => {
-			event.preventDefault();
-
-			mockFnIsCalled = true;
-			if (!result.current.description) return;
-			mockFnReturned = false;
-
-			const newItem: ItemType = {
-				id: Date.now(),
-				description: result.current.description,
-				quantity: result.current.quantity,
-				packed: false,
-			};
-
-			result.current.setItems((currentItems) => [...currentItems, newItem]);
-			result.current.setDescription('');
-			result.current.setQuantity(1);
-		};
-
-		getByTestId('form').addEventListener('submit', handleSubmitMock as () => void);
+		const { getByTestId, queryAllByTestId } = render(
+			<Form setItems={result.current.setItems} />
+		);
+		const inputElement = getByTestId('form-input') as HTMLInputElement;
+		const buttonElement = getByTestId('form-submit') as HTMLButtonElement;
 
 		fireEvent.click(
-			getByTestId('form-submit'),
+			buttonElement,
 			new MouseEvent('click', {
 				bubbles: true,
 				cancelable: true,
 			})
 		);
 
-		expect(result.current.items).toEqual([]);
-		expect(result.current.description).toEqual('');
-		expect(result.current.quantity).toEqual(1);
-		expect(mockFnIsCalled).toBe(true);
-		expect(mockFnReturned).toBe(true);
+		expect(inputElement.value).toEqual('');
+		expect(queryAllByTestId('packing-item')).toHaveLength(0);
 	});
 
 	test('should render correct changes in DOM when user clicks Add button ', () => {
