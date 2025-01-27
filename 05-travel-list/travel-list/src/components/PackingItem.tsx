@@ -28,13 +28,18 @@ function PackingItem({
 				type='checkbox'
 				checked={packed}
 				onChange={handleToggle}
+				data-testid='checkbox-input'
 			/>
-			<span style={packed ? { textDecoration: 'line-through' } : {}}>
+			<span
+				style={packed ? { textDecoration: 'line-through' } : {}}
+				data-testid='item-name'
+			>
 				{quantity} {description}
 			</span>
 			<button
 				type='button'
 				onClick={handleDelete}
+				data-testid='delete-btn'
 			>
 				❌
 			</button>
