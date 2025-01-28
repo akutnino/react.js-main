@@ -47,12 +47,7 @@ function App() {
 						<div className={step >= 3 ? 'active' : ''}>3</div>
 					</div>
 
-					<p
-						className='message'
-						data-testid='message'
-					>
-						Step {step}: {messages[step - 1]}
-					</p>
+					<StepMessage step={step}>{messages[step - 1]}</StepMessage>
 
 					<div
 						className='buttons'
@@ -79,6 +74,18 @@ function App() {
 				</div>
 			)}
 		</>
+	);
+}
+
+function StepMessage({ step, children }: { step: number; children: ReactNode }) {
+	return (
+		<div
+			className='message'
+			data-testid='message'
+		>
+			<h3>Step: {step}</h3>
+			{children}
+		</div>
 	);
 }
 
