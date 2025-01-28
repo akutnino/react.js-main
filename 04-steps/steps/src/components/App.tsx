@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 
 const messages: string[] = [
 	'Start Learning React ⚛️',
@@ -58,24 +58,49 @@ function App() {
 						className='buttons'
 						data-testid='buttons'
 					>
-						<button
-							type='button'
-							style={{ backgroundColor: '#7950f2', color: '#fff' }}
+						<Button
+							textColor='#fff'
+							bgColor='#7950f2'
 							onClick={handlePrevious}
 						>
+							<span>👈</span>
 							Previous
-						</button>
-						<button
-							type='button'
-							style={{ backgroundColor: '#7950f2', color: '#fff' }}
+						</Button>
+
+						<Button
+							textColor='#fff'
+							bgColor='#7950f2'
 							onClick={handleNext}
 						>
 							Next
-						</button>
+							<span>👉</span>
+						</Button>
 					</div>
 				</div>
 			)}
 		</>
+	);
+}
+
+function Button({
+	textColor,
+	bgColor,
+	onClick,
+	children,
+}: {
+	textColor: string;
+	bgColor: string;
+	onClick: () => void;
+	children: ReactNode;
+}) {
+	return (
+		<button
+			type='button'
+			style={{ backgroundColor: bgColor, color: textColor }}
+			onClick={onClick}
+		>
+			{children}
+		</button>
 	);
 }
 
