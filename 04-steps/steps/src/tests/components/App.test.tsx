@@ -95,6 +95,6 @@ describe('App component test suite', () => {
 		expect(getByTestId('buttons')).toBeInTheDocument();
 		expect(previousButton).toBeInTheDocument();
 		expect(nextButton).toBeInTheDocument();
-		expect(pElement.innerHTML).toBe('Step 1: Start Learning React ⚛️');
+		expect(pElement.innerHTML).toBe('<h3>Step: 1</h3>Start Learning React ⚛️');
 	});
 });
