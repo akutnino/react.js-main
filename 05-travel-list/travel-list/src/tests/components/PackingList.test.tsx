@@ -50,8 +50,18 @@ describe('App component test suite', () => {
 
 	test('should render the select element value to description if user clicked the option', () => {
 		const dummyItem = [
-			{ id: 1, description: 'Passports', quantity: 2, packed: false },
-			{ id: 2, description: 'Socks', quantity: 12, packed: false },
+			{
+				id: 1,
+				description: 'Passports',
+				quantity: 2,
+				packed: false,
+			},
+			{
+				id: 2,
+				description: 'Socks',
+				quantity: 12,
+				packed: false,
+			},
 		];
 
 		const { result } = renderHook(() => {

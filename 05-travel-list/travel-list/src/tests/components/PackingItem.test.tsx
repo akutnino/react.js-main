@@ -10,7 +10,14 @@ describe('App component test suite', () => {
 	});
 
 	test('should render the component correctly', () => {
-		const dummyItem = [{ id: 1, description: 'Passports', quantity: 2, packed: false }];
+		const dummyItem = [
+			{
+				id: 1,
+				description: 'Passports',
+				quantity: 2,
+				packed: false,
+			},
+		];
 
 		const { result } = renderHook(() => {
 			const [items, setItems] = useState<ItemType[]>(dummyItem);
@@ -31,7 +38,14 @@ describe('App component test suite', () => {
 	});
 
 	test('should render the component elements in order', () => {
-		const dummyItem = [{ id: 1, description: 'Passports', quantity: 2, packed: false }];
+		const dummyItem = [
+			{
+				id: 1,
+				description: 'Passports',
+				quantity: 2,
+				packed: false,
+			},
+		];
 
 		const { result } = renderHook(() => {
 			const [items, setItems] = useState<ItemType[]>(dummyItem);
@@ -53,8 +67,18 @@ describe('App component test suite', () => {
 
 	test('should update list item check state if user clicked the checkbox', () => {
 		const dummyItem = [
-			{ id: 1, description: 'Passports', quantity: 2, packed: true },
-			{ id: 2, description: 'Socks', quantity: 12, packed: false },
+			{
+				id: 1,
+				description: 'Passports',
+				quantity: 2,
+				packed: true,
+			},
+			{
+				id: 2,
+				description: 'Socks',
+				quantity: 12,
+				packed: false,
+			},
 		];
 
 		const { result } = renderHook(() => {
