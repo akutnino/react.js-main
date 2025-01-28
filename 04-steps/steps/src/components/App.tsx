@@ -47,7 +47,10 @@ function App() {
 						<div className={step >= 3 ? 'active' : ''}>3</div>
 					</div>
 
-					<p className='message'>
+					<p
+						className='message'
+						data-testid='message'
+					>
 						Step {step}: {messages[step - 1]}
 					</p>
 

@@ -1,6 +1,5 @@
-import { cleanup, fireEvent, render, renderHook } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
-import { useState } from 'react';
 import App from '../../components/App.tsx';
 
 describe('App component test suite', () => {
@@ -24,21 +23,10 @@ describe('App component test suite', () => {
 
 	test('should update isOpen boolean state and remove the steps component if close button is clicked', () => {
 		const { getByTestId, container } = render(<App />);
-		const closeButton = container.firstElementChild as Element;
-
-		const { result } = renderHook(() => {
-			const [isOpen, setIsOpen] = useState<boolean>(true);
-			return { isOpen, setIsOpen };
-		});
-
-		const handleOpenMock = () => {
-			result.current.setIsOpen(!result.current.isOpen);
-		};
-
-		closeButton.addEventListener('click', handleOpenMock);
+		const closeButton = getByTestId('close') as HTMLButtonElement;
 
 		fireEvent.click(
-			getByTestId('close'),
+			closeButton,
 			new MouseEvent('click', {
 				bubbles: true,
 				cancelable: true,
@@ -46,34 +34,15 @@ describe('App component test suite', () => {
 		);
 
 		expect(closeButton).toBeInTheDocument();
-		expect(result.current.isOpen).toBe(false);
 		expect(closeButton).toEqual(container.lastElementChild);
 		expect(container.childElementCount).toBe(1);
 	});
 
 	test('should both increase and decrease step count if the buttons are clicked', () => {
 		const { getByTestId } = render(<App />);
-		const nextButton = getByTestId('buttons').lastElementChild as HTMLElement;
-		const previousButton = getByTestId('buttons').firstElementChild as HTMLElement;
-		let timesCalled: number = 0;
-
-		const { result } = renderHook(() => {
-			const [step, setStep] = useState<number>(1);
-			return { step, setStep };
-		});
-
-		const handlePreviousMock = () => {
-			timesCalled++;
-			result.current.setStep((currentStep) => (currentStep > 1 ? currentStep - 1 : 1));
-		};
-
-		const handleNextMock = () => {
-			timesCalled++;
-			result.current.setStep((currentStep) => (currentStep < 3 ? currentStep + 1 : 3));
-		};
-
-		previousButton.addEventListener('click', handlePreviousMock);
-		nextButton.addEventListener('click', handleNextMock);
+		const nextButton = getByTestId('buttons').lastElementChild as HTMLButtonElement;
+		const previousButton = getByTestId('buttons').firstElementChild as HTMLButtonElement;
+		const pElement = getByTestId('message') as HTMLParagraphElement;
 
 		fireEvent.click(
 			nextButton,
@@ -126,7 +95,6 @@ describe('App component test suite', () => {
 		expect(getByTestId('buttons')).toBeInTheDocument();
 		expect(previousButton).toBeInTheDocument();
 		expect(nextButton).toBeInTheDocument();
-		expect(result.current.step).toBe(1);
-		expect(timesCalled).toBe(6);
+		expect(pElement.innerHTML).toBe('Step 1: Start Learning React ⚛️');
 	});
 });
