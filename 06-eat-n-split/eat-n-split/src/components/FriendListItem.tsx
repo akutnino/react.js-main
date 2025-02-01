@@ -1,4 +1,5 @@
-import { FriendObjectType } from '../types/components/types.ts';
+import { type FriendObjectType } from '../types/components/types.ts';
+import Button from './Button.tsx';
 
 function FriendListItem({ name, image, balance }: FriendObjectType) {
 	return (
@@ -23,6 +24,8 @@ function FriendListItem({ name, image, balance }: FriendObjectType) {
 					You owe {name} {Math.abs(balance)}$
 				</p>
 			)}
+
+			<Button>Select</Button>
 		</li>
 	);
 }
