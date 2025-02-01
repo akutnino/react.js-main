@@ -1,4 +1,4 @@
-import { FriendObjectType } from '../types/components/types.ts';
+import { type FriendObjectType } from '../types/components/types.ts';
 import FriendListItem from './FriendListItem.tsx';
 
 function FriendsList() {
