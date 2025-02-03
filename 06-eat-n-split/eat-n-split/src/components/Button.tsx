@@ -1,11 +1,18 @@
-import { type ReactNode } from 'react';
+import { type ComponentPropsWithRef, type ReactNode } from 'react';
 
-function Button({ onClick, children }: { onClick: () => void; children: ReactNode }) {
+function Button({
+	onClick,
+	children,
+	...props
+}: {
+	onClick?: () => void;
+	children: ReactNode;
+} & ComponentPropsWithRef<'button'>) {
 	return (
 		<button
 			className='button'
-			type='button'
 			onClick={onClick}
+			{...props}
 		>
 			{children}
 		</button>
