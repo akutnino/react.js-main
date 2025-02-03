@@ -1,9 +1,10 @@
+import { type FriendObjectType } from '../types/components/types.ts';
 import Button from './Button.tsx';
 
-function FormSplitBill() {
+function FormSplitBill({ selectedFriend }: { selectedFriend: FriendObjectType | null }) {
 	return (
 		<form className='form-split-bill'>
-			<h2>Split a bill with X</h2>
+			<h2>Split a bill with {selectedFriend?.name}</h2>
 
 			<label>💰 Bill Value</label>
 			<input type='text' />
@@ -11,7 +12,7 @@ function FormSplitBill() {
 			<label>🧍‍♂️ Your Expense</label>
 			<input type='text' />
 
-			<label>🧑‍🤝‍👩 X's Expense</label>
+			<label>🧑‍🤝‍👩 {selectedFriend?.name}'s Expense</label>
 			<input
 				type='text'
 				disabled
@@ -20,7 +21,7 @@ function FormSplitBill() {
 			<label>🤑 Who is paying the bill?</label>
 			<select>
 				<option value='user'>You</option>
-				<option value='friend'>X</option>
+				<option value='friend'>{selectedFriend?.name}</option>
 			</select>
 
 			<Button>Split Bill</Button>
