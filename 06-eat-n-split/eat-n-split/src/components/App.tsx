@@ -57,7 +57,13 @@ function App() {
 				</Button>
 			</div>
 
-			{Boolean(selectedFriend) && <FormSplitBill selectedFriend={selectedFriend} />}
+			{Boolean(selectedFriend) && (
+				<FormSplitBill
+					selectedFriend={selectedFriend}
+					setFriendsArray={setFriendsArray}
+					setSelectedFriend={setSelectedFriend}
+				/>
+			)}
 		</div>
 	);
 }
