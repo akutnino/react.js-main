@@ -1,9 +1,30 @@
+import { type Dispatch } from 'react';
 import { type FriendObjectType } from '../types/components/types.ts';
 import Button from './Button.tsx';
 
-function FriendListItem({ name, image, balance }: FriendObjectType) {
+function FriendListItem({
+	friend,
+	selectedFriend,
+	setSelectedFriend,
+	setToggleFormAddFriend,
+}: {
+	friend: FriendObjectType;
+	selectedFriend: FriendObjectType | null;
+	setSelectedFriend: Dispatch<React.SetStateAction<FriendObjectType | null>>;
+	setToggleFormAddFriend: Dispatch<React.SetStateAction<boolean>>;
+}) {
+	const { id, name, image, balance } = friend;
+	const isSelected: boolean = id === selectedFriend?.id;
+
+	const handleSelect = (isSelected: boolean) => {
+		return () => {
+			setSelectedFriend(isSelected ? null : friend);
+			setToggleFormAddFriend(false);
+		};
+	};
+
 	return (
-		<li>
+		<li className={isSelected ? 'selected' : ''}>
 			<img
 				src={image}
 				alt={`${name}-image`}
@@ -25,7 +46,9 @@ function FriendListItem({ name, image, balance }: FriendObjectType) {
 				</p>
 			)}
 
-			<Button>Select</Button>
+			<Button onClick={handleSelect(isSelected)}>
+				{isSelected ? 'Close' : 'Select'}
+			</Button>
 		</li>
 	);
 }
