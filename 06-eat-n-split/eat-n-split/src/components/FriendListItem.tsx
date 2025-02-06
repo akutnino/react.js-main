@@ -24,7 +24,10 @@ function FriendListItem({
 	};
 
 	return (
-		<li className={isSelected ? 'selected' : ''}>
+		<li
+			className={isSelected ? 'selected' : ''}
+			data-testid='friendListItem'
+		>
 			<img
 				src={image}
 				alt={`${name}-image`}
