@@ -36,8 +36,14 @@ function App() {
 	};
 
 	return (
-		<div className='app'>
-			<div className='sidebar'>
+		<div
+			className='app'
+			data-testid='container'
+		>
+			<div
+				className='sidebar'
+				data-testid='sidebar'
+			>
 				<FriendsList
 					friendsArray={friendsArray}
 					selectedFriend={selectedFriend}

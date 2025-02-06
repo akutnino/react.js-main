@@ -42,6 +42,7 @@ function FormAddFriend({
 		<form
 			className='form-add-friend'
 			onSubmit={handleSubmit}
+			data-testid='formAddFriend'
 		>
 			<label>🧑‍🤝‍👩 Friend Name</label>
 			<input

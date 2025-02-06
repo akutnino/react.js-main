@@ -11,6 +11,7 @@ function Button({
 		<button
 			className='button'
 			onClick={onClick}
+			data-testid='button'
 		>
 			{children}
 		</button>

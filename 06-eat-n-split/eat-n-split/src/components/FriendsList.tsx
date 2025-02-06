@@ -14,7 +14,7 @@ function FriendsList({
 	setToggleFormAddFriend: Dispatch<React.SetStateAction<boolean>>;
 }) {
 	return (
-		<ul>
+		<ul data-testid='friendsList'>
 			{friendsArray.map((friend: FriendObjectType) => (
 				<FriendListItem
 					selectedFriend={selectedFriend}

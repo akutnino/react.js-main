@@ -77,6 +77,7 @@ function FormSplitBill({
 		<form
 			className='form-split-bill'
 			onSubmit={handleSubmit(selectedFriend)}
+			data-testid='formSplitBill'
 		>
 			<h2>Split a bill with {selectedFriend?.name}</h2>
 
