@@ -49,6 +49,7 @@ function FormAddFriend({
 				type='text'
 				value={friendNameInput}
 				onChange={handleFriendName}
+				data-testid='friendNameInput'
 			/>
 
 			<label>🌇 Image URL</label>
@@ -56,6 +57,7 @@ function FormAddFriend({
 				type='text'
 				value={imageURLInput}
 				onChange={handleImageURL}
+				data-testid='imageURLInput'
 			/>
 
 			<Button type='submit'>Add</Button>
