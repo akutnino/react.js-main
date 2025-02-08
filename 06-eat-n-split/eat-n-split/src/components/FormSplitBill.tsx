@@ -86,6 +86,7 @@ function FormSplitBill({
 				type='number'
 				value={billValue}
 				onChange={handleBillValue}
+				data-testid='billValueInput'
 			/>
 
 			<label>🧍‍♂️ Your Expense</label>
@@ -93,6 +94,7 @@ function FormSplitBill({
 				type='number'
 				value={userExpense}
 				onChange={handleUserExpense}
+				data-testid='userExpenseInput'
 			/>
 
 			<label>🧑‍🤝‍👩 {selectedFriend?.name}'s Expense</label>
@@ -100,12 +102,14 @@ function FormSplitBill({
 				type='number'
 				value={friendExpense}
 				disabled
+				data-testid='friendExpenseInput'
 			/>
 
 			<label>🤑 Who is paying the bill?</label>
 			<select
 				onChange={handleChange}
 				value={billPayer}
+				data-testid='billPayerValue'
 			>
 				<option value='user'>You</option>
 				<option value='friend'>{selectedFriend?.name}</option>
