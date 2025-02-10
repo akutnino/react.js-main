@@ -1,19 +1,18 @@
-import {
-	cleanup,
-	fireEvent,
-	type Matcher,
-	type MatcherOptions,
-	render,
-	renderHook,
-} from '@testing-library/react';
+import { cleanup, fireEvent, render, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { useState } from 'react';
 import { type FriendObjectType } from '../types/components/types.ts';
 import FormSplitBill from '../components/FormSplitBill.tsx';
 
 describe('FormSplitBill component test suite', () => {
-	let sutGetByTestId: (id: Matcher, options?: MatcherOptions | undefined) => HTMLElement;
-	let sutGetByText: (id: Matcher, options?: MatcherOptions | undefined) => HTMLElement;
+	let formSplitBillElement: HTMLFormElement;
+	let formHeaderElement: HTMLHeadingElement;
+	let friendExpenseElement: HTMLInputElement;
+	let billValueInputElement: HTMLInputElement;
+	let userExpenseInputElement: HTMLInputElement;
+	let billPayerValueElement: HTMLInputElement;
+	let submitButtonElement: HTMLButtonElement;
+
 	let sutResult: {
 		current: {
 			friendsArray: FriendObjectType[];
@@ -22,12 +21,6 @@ describe('FormSplitBill component test suite', () => {
 			setSelectedFriend: React.Dispatch<React.SetStateAction<FriendObjectType | null>>;
 		};
 	};
-
-	let friendExpenseElement: HTMLInputElement;
-	let billValueInputElement: HTMLInputElement;
-	let userExpenseInputElement: HTMLInputElement;
-	let billPayerValueElement: HTMLInputElement;
-	let submitButtonElement: HTMLButtonElement;
 
 	beforeEach(() => {
 		const { result } = renderHook(() => {
@@ -69,9 +62,9 @@ describe('FormSplitBill component test suite', () => {
 		);
 
 		sutResult = result;
-		sutGetByTestId = getByTestId;
-		sutGetByText = getByText;
 
+		formSplitBillElement = getByTestId('formSplitBill') as HTMLFormElement;
+		formHeaderElement = getByText('Split a bill with Clark') as HTMLHeadingElement;
 		friendExpenseElement = getByTestId('friendExpenseInput') as HTMLInputElement;
 		billValueInputElement = getByTestId('billValueInput') as HTMLInputElement;
 		userExpenseInputElement = getByTestId('userExpenseInput') as HTMLInputElement;
@@ -84,12 +77,12 @@ describe('FormSplitBill component test suite', () => {
 	});
 
 	test('should render the component correctly', () => {
-		expect(sutGetByTestId('formSplitBill')).toBeInTheDocument();
-		expect(sutGetByText('Split a bill with Clark')).toBeInTheDocument();
+		expect(formSplitBillElement).toBeInTheDocument();
+		expect(formHeaderElement).toBeInTheDocument();
 	});
 
 	test('should render the correct values within the inputs', () => {
-		// Simulating the user events of the billValueInputElement.
+		// Simulating the user events to the billValueInputElement.
 		fireEvent.change(billValueInputElement, {
 			target: { value: -100 },
 		});
@@ -98,7 +91,7 @@ describe('FormSplitBill component test suite', () => {
 			target: { value: 100 },
 		});
 
-		// Simulating the user events of the userExpenseInputElement.
+		// Simulating the user events to the userExpenseInputElement.
 		fireEvent.change(userExpenseInputElement, {
 			target: { value: -200 },
 		});
@@ -111,7 +104,7 @@ describe('FormSplitBill component test suite', () => {
 			target: { value: 200 },
 		});
 
-		// Simulating the user events of the billPayerValueElement.
+		// Simulating the user events to the billPayerValueElement.
 		fireEvent.change(billPayerValueElement, {
 			target: { value: 'friend' },
 		});
@@ -123,7 +116,7 @@ describe('FormSplitBill component test suite', () => {
 	});
 
 	test('should render the changes when the user submit the form as user', () => {
-		// Simulating the user events of the submitButtonElement.
+		// Simulating the user events to the submitButtonElement.
 		fireEvent.click(
 			submitButtonElement,
 			new MouseEvent('click', {
@@ -132,17 +125,17 @@ describe('FormSplitBill component test suite', () => {
 			})
 		);
 
-		// Simulating the user events of the billValueInputElement.
+		// Simulating the user events to the billValueInputElement.
 		fireEvent.change(billValueInputElement, {
 			target: { value: 100 },
 		});
 
-		// Simulating the user events of the userExpenseInputElement.
+		// Simulating the user events to the userExpenseInputElement.
 		fireEvent.change(userExpenseInputElement, {
 			target: { value: 80 },
 		});
 
-		// Simulating the user events of the billPayerValueElement.
+		// Simulating the user events to the billPayerValueElement.
 		fireEvent.change(billPayerValueElement, {
 			target: { value: 'user' },
 		});
@@ -173,17 +166,17 @@ describe('FormSplitBill component test suite', () => {
 	});
 
 	test('should render the changes when the user submit the form as friend', () => {
-		// Simulating the user events of the billValueInputElement.
+		// Simulating the user events to the billValueInputElement.
 		fireEvent.change(billValueInputElement, {
 			target: { value: 100 },
 		});
 
-		// Simulating the user events of the userExpenseInputElement.
+		// Simulating the user events to the userExpenseInputElement.
 		fireEvent.change(userExpenseInputElement, {
 			target: { value: 80 },
 		});
 
-		// Simulating the user events of the billPayerValueElement.
+		// Simulating the user events to the billPayerValueElement.
 		fireEvent.change(billPayerValueElement, {
 			target: { value: 'friend' },
 		});
