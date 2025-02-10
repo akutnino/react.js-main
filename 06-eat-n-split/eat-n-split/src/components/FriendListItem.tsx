@@ -49,7 +49,10 @@ function FriendListItem({
 				</p>
 			)}
 
-			<Button onClick={handleSelect(isSelected)}>
+			<Button
+				onClick={handleSelect(isSelected)}
+				type='button'
+			>
 				{isSelected ? 'Close' : 'Select'}
 			</Button>
 		</li>
