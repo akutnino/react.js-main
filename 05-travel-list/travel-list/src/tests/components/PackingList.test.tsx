@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, renderHook } from '@testing-library/react';
 import { useState } from 'react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { ItemType } from '../../components/App.tsx';
+import { type ItemType } from '../../components/App.tsx';
 import PackingList from '../../components/PackingList.tsx';
 
 describe('PackingList component test suite', () => {
