@@ -73,6 +73,7 @@ describe('PackingList component test suite', () => {
 	});
 
 	test('should render the select element value to description if user clicked the option', () => {
+		// Simulating the user event to the actionsSelectElement.
 		fireEvent.change(actionsSelectElement, {
 			target: {
 				value: 'description',
@@ -83,6 +84,7 @@ describe('PackingList component test suite', () => {
 	});
 
 	test('should render the select element value to packed if user clicked the option', () => {
+		// Simulating the user event to the actionsSelectElement.
 		fireEvent.change(actionsSelectElement, {
 			target: {
 				value: 'packed',
@@ -95,6 +97,7 @@ describe('PackingList component test suite', () => {
 	test('should clear the list if user clicked the clear button', () => {
 		window.confirm = vi.fn(() => true);
 
+		// Simulating the user event to the clearButtonElement.
 		fireEvent.click(
 			clearButtonElement,
 			new MouseEvent('click', {

@@ -70,6 +70,7 @@ describe('PackingItem component test suite', () => {
 	});
 
 	test('should update list item check state if user clicked the checkbox', () => {
+		// Simulating the user event to the checkboxInputElement.
 		fireEvent.click(
 			checkboxInputElement,
 			new MouseEvent('click', {
@@ -88,6 +89,7 @@ describe('PackingItem component test suite', () => {
 	});
 
 	test('should delete list item if user clicked the delete button', () => {
+		// Simulating the user event to the deleteButtonElement.
 		fireEvent.click(
 			deleteButtonElement,
 			new MouseEvent('click', {
