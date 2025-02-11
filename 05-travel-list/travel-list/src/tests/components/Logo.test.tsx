@@ -2,7 +2,7 @@ import { cleanup, render } from '@testing-library/react';
 import { afterEach, describe, expect, test } from 'vitest';
 import Logo from '../../components/Logo.tsx';
 
-describe('App component test suite', () => {
+describe('Logo component test suite', () => {
 	afterEach(() => {
 		cleanup();
 	});

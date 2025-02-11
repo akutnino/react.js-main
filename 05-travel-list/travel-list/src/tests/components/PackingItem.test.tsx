@@ -4,7 +4,7 @@ import { afterEach, describe, expect, test } from 'vitest';
 import App, { type ItemType } from '../../components/App.tsx';
 import PackingItem from '../../components/PackingItem.tsx';
 
-describe('App component test suite', () => {
+describe('PackingItem component test suite', () => {
 	afterEach(() => {
 		cleanup();
 	});

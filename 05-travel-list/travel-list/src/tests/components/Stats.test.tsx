@@ -3,7 +3,7 @@ import { afterEach, describe, expect, test } from 'vitest';
 import { ItemType } from '../../components/App.tsx';
 import Stats from '../../components/Stats.tsx';
 
-describe('App component test suite', () => {
+describe('Stats component test suite', () => {
 	afterEach(() => {
 		cleanup();
 	});
