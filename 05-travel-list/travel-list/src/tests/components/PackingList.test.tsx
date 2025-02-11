@@ -1,55 +1,25 @@
 import { cleanup, fireEvent, render, renderHook } from '@testing-library/react';
 import { useState } from 'react';
-import { afterEach, describe, expect, test, vi } from 'vitest';
-import App, { ItemType } from '../../components/App.tsx';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { ItemType } from '../../components/App.tsx';
 import PackingList from '../../components/PackingList.tsx';
 
 describe('PackingList component test suite', () => {
-	afterEach(() => {
-		cleanup();
-	});
+	let packingListElement: Element | null;
+	let packingListDivElement: HTMLDivElement;
+	let packingListULElement: HTMLUListElement;
+	let actionsDivElement: HTMLDivElement;
+	let actionsSelectElement: HTMLSelectElement;
+	let clearButtonElement: HTMLButtonElement;
+	let sutResult: {
+		current: {
+			items: ItemType[];
+			setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
+		};
+	};
 
-	test('should render the component correctly', () => {
-		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>([]);
-			return { items, setItems };
-		});
-
-		const { getByTestId } = render(
-			<PackingList
-				items={result.current.items}
-				setItems={result.current.setItems}
-			/>
-		);
-
-		expect(getByTestId('packingList')).toBeInTheDocument();
-		expect(getByTestId('packing-list')).toBeInTheDocument();
-		expect(getByTestId('actions-div')).toBeInTheDocument();
-		expect(getByTestId('actions-select')).toBeInTheDocument();
-		expect(getByTestId('clear-btn')).toBeInTheDocument();
-	});
-
-	test('should render the component elements in order', () => {
-		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>([]);
-			return { items, setItems };
-		});
-
-		const { getByTestId, container } = render(
-			<PackingList
-				items={result.current.items}
-				setItems={result.current.setItems}
-			/>
-		);
-
-		const packingListElement = container.firstElementChild;
-
-		expect(getByTestId('packing-list')).toEqual(packingListElement?.firstElementChild);
-		expect(getByTestId('actions-div')).toEqual(packingListElement?.lastElementChild);
-	});
-
-	test('should render the select element value to description if user clicked the option', () => {
-		const dummyItem = [
+	beforeEach(() => {
+		const dummyItemsArray: ItemType[] = [
 			{
 				id: 1,
 				description: 'Passports',
@@ -60,62 +30,73 @@ describe('PackingList component test suite', () => {
 				id: 2,
 				description: 'Socks',
 				quantity: 12,
-				packed: false,
+				packed: true,
 			},
 		];
 
 		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>(dummyItem);
+			const [items, setItems] = useState<ItemType[]>(dummyItemsArray);
 			return { items, setItems };
 		});
 
-		const { getByTestId } = render(
+		const { getByTestId, container } = render(
 			<PackingList
 				items={result.current.items}
 				setItems={result.current.setItems}
 			/>
 		);
-		const selectElement = getByTestId('actions-select') as HTMLSelectElement;
 
-		fireEvent.change(selectElement, {
+		sutResult = result;
+		packingListElement = container.firstElementChild;
+		packingListDivElement = getByTestId('packingList') as HTMLDivElement;
+		packingListULElement = getByTestId('packing-list') as HTMLUListElement;
+		actionsDivElement = getByTestId('actions-div') as HTMLDivElement;
+		actionsSelectElement = getByTestId('actions-select') as HTMLSelectElement;
+		clearButtonElement = getByTestId('clear-btn') as HTMLButtonElement;
+	});
+
+	afterEach(() => {
+		cleanup();
+	});
+
+	test('should render the component correctly', () => {
+		expect(packingListDivElement).toBeInTheDocument();
+		expect(packingListULElement).toBeInTheDocument();
+		expect(actionsDivElement).toBeInTheDocument();
+		expect(actionsSelectElement).toBeInTheDocument();
+		expect(clearButtonElement).toBeInTheDocument();
+	});
+
+	test('should render the component elements in order', () => {
+		expect(packingListULElement).toEqual(packingListElement?.firstElementChild);
+		expect(actionsDivElement).toEqual(packingListElement?.lastElementChild);
+	});
+
+	test('should render the select element value to description if user clicked the option', () => {
+		fireEvent.change(actionsSelectElement, {
 			target: {
 				value: 'description',
 			},
 		});
 
-		expect(selectElement.value).toBe('description');
+		expect(actionsSelectElement.value).toBe('description');
 	});
 
 	test('should render the select element value to packed if user clicked the option', () => {
-		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>([]);
-			return { items, setItems };
-		});
-
-		const { getByTestId } = render(
-			<PackingList
-				items={result.current.items}
-				setItems={result.current.setItems}
-			/>
-		);
-		const selectElement = getByTestId('actions-select') as HTMLSelectElement;
-
-		fireEvent.change(selectElement, {
+		fireEvent.change(actionsSelectElement, {
 			target: {
 				value: 'packed',
 			},
 		});
 
-		expect(selectElement.value).toBe('packed');
+		expect(actionsSelectElement.value).toBe('packed');
 	});
 
 	test('should clear the list if user clicked the clear button', () => {
-		const { getByTestId, queryAllByTestId } = render(<App />);
-		const buttonElement = getByTestId('clear-btn') as HTMLButtonElement;
 		window.confirm = vi.fn(() => true);
 
 		fireEvent.click(
-			buttonElement,
+			clearButtonElement,
 			new MouseEvent('click', {
 				bubbles: true,
 				cancelable: true,
@@ -123,6 +104,6 @@ describe('PackingList component test suite', () => {
 		);
 
 		expect(window.confirm).toBeCalled();
-		expect(queryAllByTestId('packing-item')).toHaveLength(0);
+		expect(sutResult.current.items).toHaveLength(0);
 	});
 });
