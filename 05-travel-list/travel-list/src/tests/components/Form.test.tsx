@@ -1,29 +1,23 @@
 import { cleanup, fireEvent, render, renderHook } from '@testing-library/react';
 import { useState } from 'react';
-import { afterEach, describe, expect, test } from 'vitest';
-import App, { type ItemType } from '../../components/App.tsx';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import { type ItemType } from '../../components/App.tsx';
 import Form from '../../components/Form.tsx';
 
-describe('App component test suite', () => {
-	afterEach(() => {
-		cleanup();
-	});
+describe('Form component test suite', () => {
+	let formElement: Element | null;
+	let formHeading3Element: HTMLHeadingElement;
+	let formSelectElement: HTMLSelectElement;
+	let formInputElement: HTMLInputElement;
+	let formSubmitElement: HTMLButtonElement;
+	let sutResult: {
+		current: {
+			items: ItemType[];
+			setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
+		};
+	};
 
-	test('should render the component correctly', () => {
-		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>([]);
-			return { items, setItems };
-		});
-
-		const { getByTestId } = render(<Form setItems={result.current.setItems} />);
-
-		expect(getByTestId('form-h3')).toBeInTheDocument();
-		expect(getByTestId('form-select')).toBeInTheDocument();
-		expect(getByTestId('form-input')).toBeInTheDocument();
-		expect(getByTestId('form-submit')).toBeInTheDocument();
-	});
-
-	test('should render the component elements in order', () => {
+	beforeEach(() => {
 		const { result } = renderHook(() => {
 			const [items, setItems] = useState<ItemType[]>([]);
 			return { items, setItems };
@@ -33,81 +27,79 @@ describe('App component test suite', () => {
 			<Form setItems={result.current.setItems} />
 		);
 
-		const formElement = container.firstElementChild;
+		sutResult = result;
+		formElement = container.firstElementChild;
+		formHeading3Element = getByTestId('form-h3') as HTMLHeadingElement;
+		formSelectElement = getByTestId('form-select') as HTMLSelectElement;
+		formInputElement = getByTestId('form-input') as HTMLInputElement;
+		formSubmitElement = getByTestId('form-submit') as HTMLButtonElement;
+	});
 
-		expect(getByTestId('form-h3')).toEqual(formElement?.firstElementChild);
-		expect(getByTestId('form-select')).toEqual(formElement?.children[1]);
-		expect(getByTestId('form-input')).toEqual(formElement?.children[2]);
-		expect(getByTestId('form-submit')).toEqual(formElement?.lastElementChild);
+	afterEach(() => {
+		cleanup();
+	});
+
+	test('should render the component correctly', () => {
+		expect(formHeading3Element).toBeInTheDocument();
+		expect(formSelectElement).toBeInTheDocument();
+		expect(formInputElement).toBeInTheDocument();
+		expect(formSubmitElement).toBeInTheDocument();
+	});
+
+	test('should render the component elements in order', () => {
+		expect(formHeading3Element).toEqual(formElement?.firstElementChild);
+		expect(formSelectElement).toEqual(formElement?.children[1]);
+		expect(formInputElement).toEqual(formElement?.children[2]);
+		expect(formSubmitElement).toEqual(formElement?.lastElementChild);
 	});
 
 	test('should render the correct value of select item if user clicked an option', () => {
-		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>([]);
-			return { items, setItems };
-		});
-
-		const { getByTestId } = render(<Form setItems={result.current.setItems} />);
-		const selectElement = getByTestId('form-select') as HTMLSelectElement;
-
-		fireEvent.change(selectElement, {
+		// Simulating the user event to the formSelectElement.
+		fireEvent.change(formSelectElement, {
 			target: { value: 10 },
 		});
 
-		expect(selectElement.value).toBe('10');
+		expect(formSelectElement.value).toBe('10');
 	});
 
 	test('should render correct value if user enters an input', () => {
-		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>([]);
-			return { items, setItems };
-		});
-
-		const { getByTestId } = render(<Form setItems={result.current.setItems} />);
-		const inputElement = getByTestId('form-input') as HTMLInputElement;
-
-		fireEvent.change(inputElement, {
+		// Simulating the user event to the formInputElement.
+		fireEvent.change(formInputElement, {
 			target: { value: 'testing' },
 		});
 
-		expect(inputElement.value).toEqual('testing');
+		expect(formInputElement.value).toEqual('testing');
 	});
 
 	test('should exit the submit mock if the description state is falsy ', () => {
-		const { getByTestId, queryAllByTestId } = render(<App />);
-		const inputElement = getByTestId('form-input') as HTMLInputElement;
-		const buttonElement = getByTestId('form-submit') as HTMLButtonElement;
-
+		// Simulating the user event to the formSubmitElement.
 		fireEvent.click(
-			buttonElement,
+			formSubmitElement,
 			new MouseEvent('click', {
 				bubbles: true,
 				cancelable: true,
 			})
 		);
 
-		expect(inputElement.value).toEqual('');
-		expect(queryAllByTestId('packing-item')).toHaveLength(0);
+		expect(formInputElement.value).toEqual('');
+		expect(sutResult.current.items).toHaveLength(0);
 	});
 
 	test('should render correct changes in DOM when user clicks Add button ', () => {
-		const { getByTestId, queryAllByTestId } = render(<App />);
-		const inputElement = getByTestId('form-input') as HTMLInputElement;
-		const buttonElement = getByTestId('form-submit') as HTMLButtonElement;
-
-		fireEvent.change(inputElement, {
+		// Simulating the user events to the formElement.
+		fireEvent.change(formInputElement, {
 			target: { value: 'test' },
 		});
 
 		fireEvent.click(
-			buttonElement,
+			formSubmitElement,
 			new MouseEvent('click', {
 				bubbles: true,
 				cancelable: true,
 			})
 		);
 
-		expect(inputElement.value).toEqual('');
-		expect(queryAllByTestId('packing-item')).toHaveLength(1);
+		expect(formInputElement.value).toEqual('');
+		expect(sutResult.current.items).toHaveLength(1);
 	});
 });
