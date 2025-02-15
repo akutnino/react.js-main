@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import {
+	type WatchedMovieDataType,
+	type MovieDataType,
+} from '../types/components/types.ts';
 
-const tempMovieData = [
+const tempMovieData: MovieDataType[] = [
 	{
 		imdbID: 'tt1375666',
 		Title: 'Inception',
@@ -24,7 +28,7 @@ const tempMovieData = [
 	},
 ];
 
-const tempWatchedData = [
+const tempWatchedData: WatchedMovieDataType[] = [
 	{
 		imdbID: 'tt1375666',
 		Title: 'Inception',
