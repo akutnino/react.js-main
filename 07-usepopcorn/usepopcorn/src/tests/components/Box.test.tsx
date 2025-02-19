@@ -1,7 +1,7 @@
 import { cleanup } from '@testing-library/react';
 import { afterEach, describe, test } from 'vitest';
 
-describe('ListBox component test suite', () => {
+describe('Box component test suite', () => {
 	afterEach(() => {
 		cleanup();
 	});
