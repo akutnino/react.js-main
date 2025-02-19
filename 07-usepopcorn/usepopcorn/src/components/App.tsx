@@ -1,10 +1,15 @@
 import { useState } from 'react';
-import { type MovieDataType } from '../types/components/types.ts';
+import {
+	type WatchedMovieDataType,
+	type MovieDataType,
+} from '../types/components/types.ts';
 import NavBar from './NavBar.tsx';
 import MainSection from './MainSection.tsx';
 import NumResults from './NumResults.tsx';
-import ListBox from './ListBox.tsx';
 import MovieList from './MovieList.tsx';
+import Box from './Box.tsx';
+import WatchedSummary from './WatchedSummary.tsx';
+import WatchedMoviesList from './WatchedMoviesList.tsx';
 
 const tempMovieData: MovieDataType[] = [
 	{
@@ -30,8 +35,32 @@ const tempMovieData: MovieDataType[] = [
 	},
 ];
 
+const tempWatchedData: WatchedMovieDataType[] = [
+	{
+		imdbID: 'tt1375666',
+		Title: 'Inception',
+		Year: '2010',
+		Poster:
+			'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg',
+		runtime: 148,
+		imdbRating: 8.8,
+		userRating: 10,
+	},
+	{
+		imdbID: 'tt0088763',
+		Title: 'Back to the Future',
+		Year: '1985',
+		Poster:
+			'https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+		runtime: 116,
+		imdbRating: 8.5,
+		userRating: 9,
+	},
+];
+
 function App() {
 	const [movies, setMovies] = useState<MovieDataType[]>(tempMovieData);
+	const [watched, setWatched] = useState<WatchedMovieDataType[]>(tempWatchedData);
 
 	return (
 		<>
@@ -40,9 +69,14 @@ function App() {
 			</NavBar>
 
 			<MainSection>
-				<ListBox>
+				<Box>
 					<MovieList movies={movies} />
-				</ListBox>
+				</Box>
+
+				<Box>
+					<WatchedSummary watched={watched} />
+					<WatchedMoviesList watched={watched} />
+				</Box>
 			</MainSection>
 		</>
 	);
