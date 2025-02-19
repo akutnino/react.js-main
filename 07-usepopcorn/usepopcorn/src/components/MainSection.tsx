@@ -1,11 +1,10 @@
-import { type MovieDataType } from '../types/components/types.ts';
-import ListBox from './ListBox.tsx';
+import { type ReactNode } from 'react';
 import WatchedBox from './WatchedBox.tsx';
 
-function MainSection({ movies }: { movies: MovieDataType[] }) {
+function MainSection({ children }: { children: ReactNode }) {
 	return (
 		<main className='main'>
-			<ListBox movies={movies} />
+			{children}
 			<WatchedBox />
 		</main>
 	);

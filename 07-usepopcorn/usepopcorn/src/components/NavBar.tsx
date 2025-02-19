@@ -1,14 +1,13 @@
-import { type MovieDataType } from '../types/components/types.ts';
+import { type ReactNode } from 'react';
 import Logo from './Logo.tsx';
-import NumResults from './NumResults.tsx';
 import Search from './Search.tsx';
 
-function NavBar({ movies }: { movies: MovieDataType[] }) {
+function NavBar({ children }: { children: ReactNode }) {
 	return (
 		<nav className='nav-bar'>
 			<Logo />
 			<Search />
-			<NumResults movies={movies} />
+			{children}
 		</nav>
 	);
 }

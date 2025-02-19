@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { type MovieDataType } from '../types/components/types.ts';
 import NavBar from './NavBar.tsx';
 import MainSection from './MainSection.tsx';
+import NumResults from './NumResults.tsx';
+import ListBox from './ListBox.tsx';
+import MovieList from './MovieList.tsx';
 
 const tempMovieData: MovieDataType[] = [
 	{
@@ -32,8 +35,15 @@ function App() {
 
 	return (
 		<>
-			<NavBar movies={movies} />
-			<MainSection movies={movies} />
+			<NavBar>
+				<NumResults movies={movies} />
+			</NavBar>
+
+			<MainSection>
+				<ListBox>
+					<MovieList movies={movies} />
+				</ListBox>
+			</MainSection>
 		</>
 	);
 }

@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import { type MovieDataType } from '../types/components/types.ts';
-import MovieList from './MovieList.tsx';
+import { type ReactNode, useState } from 'react';
 
-function ListBox({ movies }: { movies: MovieDataType[] }) {
+function ListBox({ children }: { children: ReactNode }) {
 	const [isOpen1, setIsOpen1] = useState<boolean>(true);
 
 	return (
@@ -13,7 +11,7 @@ function ListBox({ movies }: { movies: MovieDataType[] }) {
 			>
 				{isOpen1 ? '–' : '+'}
 			</button>
-			{isOpen1 && <MovieList movies={movies} />}
+			{isOpen1 && children}
 		</div>
 	);
 }
