@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import Star from './Star.tsx';
+
 const containerStyle = {
 	display: 'flex',
 	alignItems: 'center',
@@ -6,7 +9,7 @@ const containerStyle = {
 
 const startContainerStyle = {
 	display: 'flex',
-	gap: '4px',
+	gap: '1px',
 };
 
 const textStyle = {
@@ -14,15 +17,27 @@ const textStyle = {
 	margin: '0',
 };
 
-function StarRating({ maxRating = 5 }: { maxRating?: number }) {
+function StarRating({ maxRating = 5 }: { maxRating: number }) {
+	const [rating, setRating] = useState<number>(0);
+
+	const handleClick = (rating: number) => {
+		return () => {
+			setRating(rating);
+		};
+	};
+
 	return (
 		<div style={containerStyle}>
 			<div style={startContainerStyle}>
 				{Array.from(Array(maxRating), (_, index) => (
-					<span key={index}>S{index + 1}</span>
+					<Star
+						isRating={rating < index + 1}
+						onClick={handleClick(index + 1)}
+						key={index}
+					/>
 				))}
 			</div>
-			<p style={textStyle}>10</p>
+			<p style={textStyle}>{rating || ''}</p>
 		</div>
 	);
 }
