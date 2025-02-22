@@ -5,13 +5,25 @@ const startStyle = {
 	cursor: 'pointer',
 };
 
-function Star({ isRating, onClick }: { isRating: boolean; onClick: () => void }) {
+function Star({
+	isRating,
+	onClick,
+	onMouseEnter,
+	onMouseLeave,
+}: {
+	isRating: boolean;
+	onClick: () => void;
+	onMouseEnter: () => void;
+	onMouseLeave: () => void;
+}) {
 	return (
 		<>
 			<span
 				role='button'
 				style={startStyle}
 				onClick={onClick}
+				onMouseEnter={onMouseEnter}
+				onMouseLeave={onMouseLeave}
 			>
 				{isRating ? (
 					<svg
