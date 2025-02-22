@@ -11,18 +11,37 @@ const startContainerStyle = {
 	display: 'flex',
 };
 
-const textStyle = {
-	lineHeight: '1',
-	margin: '0',
-};
-
-function StarRating({ maxRating = 5 }: { maxRating: number }) {
-	const [rating, setRating] = useState<number>(0);
+function StarRating({
+	maxRating = 5,
+	color = '#fcc419',
+	size = 48,
+	className = '',
+	messages = [],
+	defaultRating = 0,
+	onSetRating = () => {},
+}: {
+	maxRating: number;
+	color?: string;
+	size?: number;
+	className?: string;
+	messages?: string[];
+	defaultRating?: number;
+	onSetRating?: (rating: number) => void;
+}) {
+	const [rating, setRating] = useState<number>(defaultRating);
 	const [hoverRating, setHoverRating] = useState<number>(0);
+
+	const textStyle = {
+		lineHeight: '1',
+		margin: '0',
+		color,
+		fontSize: `${size}px`,
+	};
 
 	const handleClick = (rating: number) => {
 		return () => {
 			setRating(rating);
+			onSetRating(rating);
 		};
 	};
 
@@ -37,11 +56,16 @@ function StarRating({ maxRating = 5 }: { maxRating: number }) {
 	};
 
 	return (
-		<div style={containerStyle}>
+		<div
+			style={containerStyle}
+			className={className}
+		>
 			<div style={startContainerStyle}>
 				{Array.from(Array(maxRating), (_, index) => (
 					<Star
-						isRating={hoverRating ? hoverRating < index + 1 : rating < index + 1}
+						color={color}
+						size={size}
+						isRating={hoverRating ? hoverRating >= index + 1 : rating >= index + 1}
 						onClick={handleClick(index + 1)}
 						onMouseEnter={handleMouseEnter(index + 1)}
 						onMouseLeave={handleMouseLeave}
@@ -49,7 +73,11 @@ function StarRating({ maxRating = 5 }: { maxRating: number }) {
 					/>
 				))}
 			</div>
-			<p style={textStyle}>{hoverRating || rating || ''}</p>
+			<p style={textStyle}>
+				{messages.length === maxRating
+					? messages[hoverRating ? hoverRating - 1 : rating - 1]
+					: hoverRating || rating || ''}
+			</p>
 		</div>
 	);
 }
