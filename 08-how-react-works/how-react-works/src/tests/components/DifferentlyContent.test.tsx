@@ -6,5 +6,5 @@ describe('DifferentContent component test suite', () => {
 		cleanup();
 	});
 
-	test('should render the component correctly', () => {});
+	test.todo('should render the component correctly', () => {});
 });
