@@ -68,6 +68,7 @@ function App() {
 					selectedFriend={selectedFriend}
 					setFriendsArray={setFriendsArray}
 					setSelectedFriend={setSelectedFriend}
+					key={selectedFriend?.id}
 				/>
 			)}
 		</div>
