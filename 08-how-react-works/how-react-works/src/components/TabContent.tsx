@@ -13,6 +13,21 @@ function TabContent({ item }: { item: ContentItemType }) {
 		setShowDetails((currentBoolean) => !currentBoolean);
 	};
 
+	const handleUndo = () => {
+		setShowDetails(true);
+		setLikes(0);
+	};
+
+	const handleTripleIncrease = () => {
+		setLikes((currentLikes) => currentLikes + 1);
+		setLikes((currentLikes) => currentLikes + 1);
+		setLikes((currentLikes) => currentLikes + 1);
+	};
+
+	const handleUndoLater = () => {
+		setTimeout(handleUndo, 2000);
+	};
+
 	return (
 		<div className='tab-content'>
 			<h4>{item.summary}</h4>
@@ -24,13 +39,13 @@ function TabContent({ item }: { item: ContentItemType }) {
 				<div className='hearts-counter'>
 					<span>{likes} ❤️</span>
 					<button onClick={handleIncrease}>+</button>
-					<button>+++</button>
+					<button onClick={handleTripleIncrease}>+++</button>
 				</div>
 			</div>
 
 			<div className='tab-undo'>
-				<button>Undo</button>
-				<button>Undo in 2s</button>
+				<button onClick={handleUndo}>Undo</button>
+				<button onClick={handleUndoLater}>Undo in 2s</button>
 			</div>
 		</div>
 	);
