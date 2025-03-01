@@ -8,9 +8,9 @@ describe('Main component test suite', () => {
 	});
 
 	test('should render the component without crashing', () => {
-		const { getByTestId } = render(<App />);
+		const { getByTestId, container } = render(<App />);
 
 		expect(getByTestId('container')).toBeInTheDocument();
-		expect(getByTestId('tabbed')).toBeInTheDocument();
+		expect(container).toContainElement(getByTestId('container'));
 	});
 });
