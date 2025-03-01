@@ -8,7 +8,7 @@ function Tabbed({ content }: { content: ContentType }) {
 	const [activeTab, setActiveTab] = useState<number>(0);
 
 	return (
-		<div>
+		<div data-testid='tabbed'>
 			<div className='tabs'>
 				<Tab
 					num={0}

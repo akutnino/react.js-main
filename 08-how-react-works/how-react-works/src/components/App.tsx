@@ -21,7 +21,7 @@ const content: ContentType = [
 
 export default function App() {
 	return (
-		<div>
+		<div data-testid='container'>
 			<Tabbed content={content} />
 		</div>
 	);
