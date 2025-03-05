@@ -29,7 +29,10 @@ function TabContent({ item }: { item: ContentItemType }) {
 	};
 
 	return (
-		<div className='tab-content'>
+		<div
+			className='tab-content'
+			data-testid='tab-content'
+		>
 			<h4>{item.summary}</h4>
 			{showDetails && <p>{item.details}</p>}
 

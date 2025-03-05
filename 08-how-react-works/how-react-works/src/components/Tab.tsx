@@ -17,6 +17,7 @@ function Tab({
 		<button
 			className={activeTab === num ? 'tab active' : 'tab'}
 			onClick={handleClick}
+			data-testid='tab'
 		>
 			Tab {num + 1}
 		</button>
