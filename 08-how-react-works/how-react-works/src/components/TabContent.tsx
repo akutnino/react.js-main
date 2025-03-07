@@ -40,7 +40,7 @@ function TabContent({ item }: { item: ContentItemType }) {
 				<button onClick={handleToggle}>{showDetails ? 'Hide' : 'Show'} details</button>
 
 				<div className='hearts-counter'>
-					<span>{likes} ❤️</span>
+					<span data-testid='likes'>{likes} ❤️</span>
 					<button onClick={handleIncrease}>+</button>
 					<button onClick={handleTripleIncrease}>+++</button>
 				</div>
