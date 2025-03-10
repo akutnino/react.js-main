@@ -20,8 +20,6 @@ function Star({
 		cursor: 'pointer',
 	};
 
-	console.log(isRating);
-
 	return (
 		<>
 			<span
