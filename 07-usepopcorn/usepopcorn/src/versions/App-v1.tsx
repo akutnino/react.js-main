@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
 	type WatchedMovieDataType,
 	type MovieDataType,
 } from '../types/components/types.ts';
-import NavBar from './NavBar.tsx';
-import MainSection from './MainSection.tsx';
-import NumResults from './NumResults.tsx';
-import MovieList from './MovieList.tsx';
-import Box from './Box.tsx';
-import WatchedSummary from './WatchedSummary.tsx';
-import WatchedMoviesList from './WatchedMoviesList.tsx';
+import NavBar from '../components/NavBar.tsx';
+import MainSection from '../components/MainSection.tsx';
+import NumResults from '../components/NumResults.tsx';
+import MovieList from '../components/MovieList.tsx';
+import Box from '../components/Box.tsx';
+import WatchedSummary from '../components/WatchedSummary.tsx';
+import WatchedMoviesList from '../components/WatchedMoviesList.tsx';
 
 const tempMovieData: MovieDataType[] = [
 	{
@@ -58,25 +58,9 @@ const tempWatchedData: WatchedMovieDataType[] = [
 	},
 ];
 
-const KEY = '3494c38';
-
 function App() {
 	const [movies, setMovies] = useState<MovieDataType[]>(tempMovieData);
 	const [watched, setWatched] = useState<WatchedMovieDataType[]>(tempWatchedData);
-
-	useEffect(() => {
-		const fetchMovies = async () => {
-			const request = await fetch(
-				`http://www.omdbapi.com/?apikey=${KEY}&s="interstellar"`
-			);
-
-			const data = await request.json();
-
-			console.log(data.Search);
-		};
-
-		fetchMovies();
-	}, []);
 
 	return (
 		<>
