@@ -10,6 +10,7 @@ import MovieList from './MovieList.tsx';
 import Box from './Box.tsx';
 import WatchedSummary from './WatchedSummary.tsx';
 import WatchedMoviesList from './WatchedMoviesList.tsx';
+import Loader from './Loader.tsx';
 
 const tempMovieData: MovieDataType[] = [
 	{
@@ -63,16 +64,19 @@ const KEY = '3494c38';
 function App() {
 	const [movies, setMovies] = useState<MovieDataType[]>(tempMovieData);
 	const [watched, setWatched] = useState<WatchedMovieDataType[]>(tempWatchedData);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	useEffect(() => {
 		const fetchMovies = async () => {
+			setIsLoading(true);
 			const request = await fetch(
 				`http://www.omdbapi.com/?apikey=${KEY}&s="interstellar"`
 			);
 
 			const data = await request.json();
 
-			console.log(data.Search);
+			setMovies(data.Search);
+			setIsLoading(false);
 		};
 
 		fetchMovies();
@@ -85,9 +89,7 @@ function App() {
 			</NavBar>
 
 			<MainSection>
-				<Box>
-					<MovieList movies={movies} />
-				</Box>
+				<Box>{isLoading ? <Loader /> : <MovieList movies={movies} />}</Box>
 
 				<Box>
 					<WatchedSummary watched={watched} />
