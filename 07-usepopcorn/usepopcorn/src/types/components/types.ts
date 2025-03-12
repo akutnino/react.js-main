@@ -14,3 +14,22 @@ export type WatchedMovieDataType = {
 	imdbRating: number;
 	userRating: number;
 };
+
+type FailedResponseDataType = {
+	Response: 'False';
+	Error: string;
+};
+
+type SuccessResponseDataType = {
+	Response: 'True';
+	Search: {
+		imdbID: string;
+		Title: string;
+		Year: string;
+		Poster: string;
+		Type: string;
+	}[];
+	totalResults: string;
+};
+
+export type ResponseDataType = SuccessResponseDataType | FailedResponseDataType;
