@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
 	type WatchedMovieDataType,
 	type MovieDataType,
+	type ResponseDataType,
 } from '../types/components/types.ts';
 import NavBar from './NavBar.tsx';
 import MainSection from './MainSection.tsx';
@@ -11,6 +12,7 @@ import Box from './Box.tsx';
 import WatchedSummary from './WatchedSummary.tsx';
 import WatchedMoviesList from './WatchedMoviesList.tsx';
 import Loader from './Loader.tsx';
+import ErrorMessage from './ErrorMessage.tsx';
 
 const tempMovieData: MovieDataType[] = [
 	{
@@ -65,18 +67,35 @@ function App() {
 	const [movies, setMovies] = useState<MovieDataType[]>(tempMovieData);
 	const [watched, setWatched] = useState<WatchedMovieDataType[]>(tempWatchedData);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [fetchErrorMessage, setFetchErrorMessage] = useState<string>('');
+	const query = 'interstellar';
 
 	useEffect(() => {
 		const fetchMovies = async () => {
-			setIsLoading(true);
-			const request = await fetch(
-				`http://www.omdbapi.com/?apikey=${KEY}&s="interstellar"`
-			);
+			try {
+				setIsLoading(true);
 
-			const data = await request.json();
+				const fetchURL: RequestInfo = `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
+				const fetchOptions: RequestInit = {
+					method: 'GET',
+				};
 
-			setMovies(data.Search);
-			setIsLoading(false);
+				const response: Response = await fetch(fetchURL, fetchOptions);
+				if (!response.ok) throw new Error('Fetch Response Failed');
+
+				const data: ResponseDataType = await response.json();
+				if (data.Response === 'False') throw new Error(data.Error);
+
+				setMovies(data.Search);
+				setIsLoading(false);
+			} catch (error) {
+				if (error instanceof Error) {
+					setFetchErrorMessage(error.message);
+					setMovies([]);
+				}
+			} finally {
+				setIsLoading(false);
+			}
 		};
 
 		fetchMovies();
@@ -89,7 +108,11 @@ function App() {
 			</NavBar>
 
 			<MainSection>
-				<Box>{isLoading ? <Loader /> : <MovieList movies={movies} />}</Box>
+				<Box>
+					{isLoading && <Loader />}
+					{fetchErrorMessage && <ErrorMessage message={fetchErrorMessage} />}
+					{!fetchErrorMessage && !isLoading && <MovieList movies={movies} />}
+				</Box>
 
 				<Box>
 					<WatchedSummary watched={watched} />
