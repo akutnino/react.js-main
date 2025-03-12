@@ -1,7 +1,15 @@
-import { useState } from 'react';
+import { type ChangeEvent, type Dispatch } from 'react';
 
-function Search() {
-	const [query, setQuery] = useState<string>('');
+function Search({
+	query,
+	setQuery,
+}: {
+	query: string;
+	setQuery: Dispatch<React.SetStateAction<string>>;
+}) {
+	const handleQuery = (event: ChangeEvent<HTMLInputElement>) => {
+		setQuery(event.currentTarget.value);
+	};
 
 	return (
 		<input
@@ -9,7 +17,7 @@ function Search() {
 			type='text'
 			placeholder='Search movies...'
 			value={query}
-			onChange={(e) => setQuery(e.target.value)}
+			onChange={handleQuery}
 		/>
 	);
 }
