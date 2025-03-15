@@ -1,11 +1,19 @@
+import { type Dispatch } from 'react';
 import { type MovieDataType } from '../types/components/types.ts';
 import MovieListItem from './MovieListItem.tsx';
 
-function MovieList({ movies }: { movies: MovieDataType[] }) {
+function MovieList({
+	movies,
+	setSelectedMovieID,
+}: {
+	movies: MovieDataType[];
+	setSelectedMovieID: Dispatch<React.SetStateAction<string | null>>;
+}) {
 	return (
-		<ul className='list'>
+		<ul className='list list-movies'>
 			{movies?.map((movie: MovieDataType) => (
 				<MovieListItem
+					setSelectedMovieID={setSelectedMovieID}
 					movie={movie}
 					key={movie.imdbID}
 				/>
