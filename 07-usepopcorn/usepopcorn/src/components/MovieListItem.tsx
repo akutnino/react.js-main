@@ -1,8 +1,21 @@
+import { type Dispatch } from 'react';
 import { type MovieDataType } from '../types/components/types.ts';
 
-function MovieListItem({ movie }: { movie: MovieDataType }) {
+function MovieListItem({
+	movie,
+	setSelectedMovieID,
+}: {
+	movie: MovieDataType;
+	setSelectedMovieID: Dispatch<React.SetStateAction<string | null>>;
+}) {
+	const handleSelectMovie = (movieID: string) => {
+		return () => {
+			setSelectedMovieID((currentID) => (currentID === movieID ? null : movieID));
+		};
+	};
+
 	return (
-		<li>
+		<li onClick={handleSelectMovie(movie.imdbID)}>
 			<img
 				src={movie.Poster}
 				alt={`${movie.Title} poster`}
