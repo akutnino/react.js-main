@@ -14,6 +14,7 @@ import WatchedMoviesList from './WatchedMoviesList.tsx';
 import Loader from './Loader.tsx';
 import ErrorMessage from './ErrorMessage.tsx';
 import Search from './Search.tsx';
+import MovieDetails from './MovieDetails.tsx';
 
 const KEY = '3494c38';
 
@@ -23,6 +24,7 @@ function App() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [fetchErrorMessage, setFetchErrorMessage] = useState<string>('');
 	const [query, setQuery] = useState<string>('');
+	const [selectedMovieID, setSelectedMovieID] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchMovies = async () => {
@@ -76,12 +78,26 @@ function App() {
 				<Box>
 					{isLoading && <Loader />}
 					{fetchErrorMessage && <ErrorMessage message={fetchErrorMessage} />}
-					{!fetchErrorMessage && !isLoading && <MovieList movies={movies} />}
+					{!fetchErrorMessage && !isLoading && (
+						<MovieList
+							movies={movies}
+							setSelectedMovieID={setSelectedMovieID}
+						/>
+					)}
 				</Box>
 
 				<Box>
-					<WatchedSummary watched={watched} />
-					<WatchedMoviesList watched={watched} />
+					{selectedMovieID ? (
+						<MovieDetails
+							selectedMovieID={selectedMovieID}
+							setSelectedMovieID={setSelectedMovieID}
+						/>
+					) : (
+						<>
+							<WatchedSummary watched={watched} />
+							<WatchedMoviesList watched={watched} />
+						</>
+					)}
 				</Box>
 			</MainSection>
 		</>
