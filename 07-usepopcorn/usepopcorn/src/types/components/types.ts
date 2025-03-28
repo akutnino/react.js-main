@@ -20,7 +20,7 @@ type FailedResponseDataType = {
 	Error: string;
 };
 
-type SuccessResponseDataType = {
+type SuccessFetchMoviesResponseDataType = {
 	Response: 'True';
 	Search: {
 		imdbID: string;
@@ -32,4 +32,38 @@ type SuccessResponseDataType = {
 	totalResults: string;
 };
 
-export type ResponseDataType = SuccessResponseDataType | FailedResponseDataType;
+export type FetchMoviesResponseType =
+	| SuccessFetchMoviesResponseDataType
+	| FailedResponseDataType;
+
+export type SuccessFetchMoviesDetailsResponseType = {
+	Actors: string;
+	Awards: string;
+	Country: string;
+	Director: string;
+	Genre: string;
+	Language: string;
+	Metascore: string;
+	Plot: string;
+	Poster: string;
+	Rated: string;
+	Ratings: {
+		Source: string;
+		Value: string;
+	}[];
+	Released: string;
+	Response: 'True';
+	Runtime: string;
+	Title: string;
+	Type: string;
+	Writer: string;
+	Year: string;
+	imdbID: string;
+	imdbRating: string;
+	imdbVotes: string;
+	totalSeasons: string;
+};
+
+export type FetchMovieDetailsResponseType =
+	| SuccessFetchMoviesDetailsResponseType
+	| FailedResponseDataType;
