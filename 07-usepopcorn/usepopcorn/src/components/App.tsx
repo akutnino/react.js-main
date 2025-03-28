@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {
 	type WatchedMovieDataType,
 	type MovieDataType,
-	type ResponseDataType,
+	type FetchMoviesResponseType,
 } from '../types/components/types.ts';
 import NavBar from './NavBar.tsx';
 import MainSection from './MainSection.tsx';
@@ -40,11 +40,10 @@ function App() {
 				const response: Response = await fetch(fetchURL, fetchOptions);
 				if (!response.ok) throw new Error('Fetch Response Failed');
 
-				const data: ResponseDataType = await response.json();
+				const data: FetchMoviesResponseType = await response.json();
 				if (data.Response === 'False') throw new Error(data.Error);
 
 				setMovies(data.Search);
-				setIsLoading(false);
 			} catch (error) {
 				if (error instanceof Error) {
 					setFetchErrorMessage(error.message);
