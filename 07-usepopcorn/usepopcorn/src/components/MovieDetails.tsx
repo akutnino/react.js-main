@@ -1,6 +1,7 @@
 import { useEffect, useState, type Dispatch } from 'react';
 import {
 	SuccessFetchMoviesDetailsResponseType,
+	type WatchedMovieDataType,
 	type FetchMovieDetailsResponseType,
 } from '../types/components/types.ts';
 import StarRating from './StarRating.tsx';
@@ -12,16 +13,40 @@ const KEY = '3494c38';
 function MovieDetails({
 	selectedMovieID,
 	setSelectedMovieID,
+	setWatched,
 }: {
 	selectedMovieID: string | null;
 	setSelectedMovieID: Dispatch<React.SetStateAction<string | null>>;
+	setWatched: Dispatch<React.SetStateAction<WatchedMovieDataType[]>>;
 }) {
 	const [movie, setMovie] = useState<SuccessFetchMoviesDetailsResponseType | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [fetchErrorMessage, setFetchErrorMessage] = useState<string>('');
+	const [userRating, setUserRating] = useState<number>(0);
 
 	const handleCloseDetails = () => {
 		setSelectedMovieID(null);
+	};
+
+	const handleUserRating = (rating: number) => {
+		setUserRating(rating);
+	};
+
+	const handleSetRating = (rating: number) => {
+		return () => {
+			const newWatchedMovie = {
+				imdbID: movie?.imdbID,
+				imdbRating: Number(movie?.imdbRating),
+				Poster: movie?.Poster,
+				runtime: Number(movie?.Runtime.split(' ').at(0)),
+				Title: movie?.Title,
+				Year: movie?.Year,
+				userRating: rating,
+			} as WatchedMovieDataType;
+
+			setSelectedMovieID(null);
+			setWatched((currentWatched) => [...currentWatched, newWatchedMovie]);
+		};
 	};
 
 	useEffect(() => {
@@ -92,9 +117,21 @@ function MovieDetails({
 					<section>
 						<div className='rating'>
 							<StarRating
+								defaultRating={userRating}
+								onSetRating={handleUserRating}
 								maxRating={10}
 								size={24}
 							/>
+
+							{userRating > 0 && (
+								<button
+									type='button'
+									className='btn-add'
+									onClick={handleSetRating(userRating)}
+								>
+									Add to List
+								</button>
+							)}
 						</div>
 
 						<p>
