@@ -96,7 +96,10 @@ function App() {
 					) : (
 						<>
 							<WatchedSummary watched={watched} />
-							<WatchedMoviesList watched={watched} />
+							<WatchedMoviesList
+								watched={watched}
+								setWatched={setWatched}
+							/>
 						</>
 					)}
 				</Box>

@@ -1,6 +1,21 @@
+import { type Dispatch } from 'react';
 import { type WatchedMovieDataType } from '../types/components/types.ts';
 
-function WatchedMoviesListItem({ movie }: { movie: WatchedMovieDataType }) {
+function WatchedMoviesListItem({
+	movie,
+	setWatched,
+}: {
+	movie: WatchedMovieDataType;
+	setWatched: Dispatch<React.SetStateAction<WatchedMovieDataType[]>>;
+}) {
+	const handleDeleteWatchedMovie = (movieID: string) => {
+		return () => {
+			setWatched((currentWatched) =>
+				currentWatched.filter((watchedMovie) => watchedMovie.imdbID !== movieID)
+			);
+		};
+	};
+
 	return (
 		<li>
 			<img
@@ -21,6 +36,14 @@ function WatchedMoviesListItem({ movie }: { movie: WatchedMovieDataType }) {
 					<span>⏳</span>
 					<span>{movie.runtime} min</span>
 				</p>
+
+				<button
+					type='button'
+					className='btn-delete'
+					onClick={handleDeleteWatchedMovie(movie.imdbID)}
+				>
+					X
+				</button>
 			</div>
 		</li>
 	);
