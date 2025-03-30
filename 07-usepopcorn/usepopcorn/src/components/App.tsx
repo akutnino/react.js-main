@@ -90,6 +90,7 @@ function App() {
 						<MovieDetails
 							selectedMovieID={selectedMovieID}
 							setSelectedMovieID={setSelectedMovieID}
+							watched={watched}
 							setWatched={setWatched}
 						/>
 					) : (

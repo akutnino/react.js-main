@@ -12,10 +12,12 @@ const KEY = '3494c38';
 
 function MovieDetails({
 	selectedMovieID,
+	watched,
 	setSelectedMovieID,
 	setWatched,
 }: {
 	selectedMovieID: string | null;
+	watched: WatchedMovieDataType[];
 	setSelectedMovieID: Dispatch<React.SetStateAction<string | null>>;
 	setWatched: Dispatch<React.SetStateAction<WatchedMovieDataType[]>>;
 }) {
@@ -23,6 +25,13 @@ function MovieDetails({
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [fetchErrorMessage, setFetchErrorMessage] = useState<string>('');
 	const [userRating, setUserRating] = useState<number>(0);
+
+	const isMovieWatched: boolean = watched.reduce((acc, curr) => {
+		return curr.imdbID === selectedMovieID ? (acc = true) : acc;
+	}, false);
+	const watchedUserMovieRating: number = watched.reduce((acc, curr) => {
+		return curr.imdbID === selectedMovieID ? curr.userRating : acc;
+	}, 0);
 
 	const handleCloseDetails = () => {
 		setSelectedMovieID(null);
@@ -116,21 +125,27 @@ function MovieDetails({
 
 					<section>
 						<div className='rating'>
-							<StarRating
-								defaultRating={userRating}
-								onSetRating={handleUserRating}
-								maxRating={10}
-								size={24}
-							/>
+							{isMovieWatched ? (
+								<p>You Rated this Movie: {watchedUserMovieRating} / 10 ⭐</p>
+							) : (
+								<>
+									<StarRating
+										defaultRating={userRating}
+										onSetRating={handleUserRating}
+										maxRating={10}
+										size={24}
+									/>
 
-							{userRating > 0 && (
-								<button
-									type='button'
-									className='btn-add'
-									onClick={handleSetRating(userRating)}
-								>
-									Add to List
-								</button>
+									{userRating > 0 && (
+										<button
+											type='button'
+											className='btn-add'
+											onClick={handleSetRating(userRating)}
+										>
+											Add to List
+										</button>
+									)}
+								</>
 							)}
 						</div>
 
