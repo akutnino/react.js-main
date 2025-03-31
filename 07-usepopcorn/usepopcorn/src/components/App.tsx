@@ -64,12 +64,24 @@ function App() {
 			return;
 		}
 
+		setSelectedMovieID(null);
 		fetchMovies();
 
 		return () => {
 			controller.abort();
 		};
 	}, [query]);
+
+	useEffect(() => {
+		const handleKeydown = (event: KeyboardEvent) => {
+			if (event.code === 'Escape') setSelectedMovieID(null);
+		};
+
+		if (selectedMovieID) document.addEventListener('keydown', handleKeydown);
+		return () => {
+			document.removeEventListener('keydown', handleKeydown);
+		};
+	}, [selectedMovieID]);
 
 	return (
 		<>
