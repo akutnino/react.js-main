@@ -88,8 +88,30 @@ function MovieDetails({
 		if (selectedMovieID === null) return;
 		fetchMovieDetails();
 
-		return () => setMovie(null);
+		return () => {
+			setMovie(null);
+		};
 	}, [selectedMovieID]);
+
+	useEffect(() => {
+		const defaultAppName: string = 'usePopcorn';
+		const titleElement = document.querySelector('title') as HTMLTitleElement;
+
+		const updateToMovieTile = () => {
+			if (isLoading) {
+				titleElement.textContent = defaultAppName;
+			} else {
+				titleElement.textContent = `MOVIE: ${movie?.Title as string}`;
+			}
+		};
+
+		if (movie?.Title === null) return;
+		updateToMovieTile();
+
+		return () => {
+			titleElement.textContent = defaultAppName;
+		};
+	}, [movie, isLoading]);
 
 	return (
 		<div className='details'>
