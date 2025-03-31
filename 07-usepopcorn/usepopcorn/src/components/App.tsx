@@ -27,6 +27,8 @@ function App() {
 	const [selectedMovieID, setSelectedMovieID] = useState<string | null>(null);
 
 	useEffect(() => {
+		const controller: AbortController = new AbortController();
+
 		const fetchMovies = async () => {
 			try {
 				setFetchErrorMessage('');
@@ -35,6 +37,7 @@ function App() {
 				const fetchURL: RequestInfo = `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
 				const fetchOptions: RequestInit = {
 					method: 'GET',
+					signal: controller.signal,
 				};
 
 				const response: Response = await fetch(fetchURL, fetchOptions);
@@ -46,6 +49,7 @@ function App() {
 				setMovies(data.Search);
 			} catch (error) {
 				if (error instanceof Error) {
+					if (error.name === 'AbortError') return;
 					setFetchErrorMessage(error.message);
 					setMovies([]);
 				}
@@ -61,6 +65,10 @@ function App() {
 		}
 
 		fetchMovies();
+
+		return () => {
+			controller.abort();
+		};
 	}, [query]);
 
 	return (
