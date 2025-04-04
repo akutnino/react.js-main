@@ -1,6 +1,6 @@
 import { useEffect, useState, type Dispatch } from 'react';
 import {
-	SuccessFetchMoviesDetailsResponseType,
+	type SuccessFetchMoviesDetailsResponseType,
 	type WatchedMovieDataType,
 	type FetchMovieDetailsResponseType,
 } from '../types/components/types.ts';
