@@ -13,6 +13,8 @@ function WatchedMoviesListItem({
 			setWatched((currentWatched) =>
 				currentWatched.filter((watchedMovie) => watchedMovie.imdbID !== movieID)
 			);
+
+			localStorage.setItem('', '');
 		};
 	};
 
