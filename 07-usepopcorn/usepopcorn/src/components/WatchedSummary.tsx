@@ -1,6 +1,7 @@
 import { type WatchedMovieDataType } from '../types/components/types.ts';
 
-const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+const average = (array: number[]) =>
+	array.reduce((acc, curr, _, arr) => acc + curr / arr.length, 0);
 
 function WatchedSummary({ watched }: { watched: WatchedMovieDataType[] }) {
 	const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
