@@ -24,9 +24,10 @@ function App() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedMovieID, setSelectedMovieID] = useState<string | null>(null);
 	const [fetchErrorMessage, setFetchErrorMessage] = useState<string>('');
-	const [watched, setWatched] = useState<WatchedMovieDataType[]>(() =>
-		JSON.parse(localStorage.getItem('watched') as string)
-	);
+	const [watched, setWatched] = useState<WatchedMovieDataType[]>(() => {
+		localStorage.setItem('watched', JSON.stringify([]));
+		return JSON.parse(localStorage.getItem('watched') as string);
+	});
 
 	useEffect(() => {
 		const controller: AbortController = new AbortController();
@@ -84,10 +85,6 @@ function App() {
 			document.removeEventListener('keydown', handleKeydown);
 		};
 	}, [selectedMovieID]);
-
-	useEffect(() => {
-		localStorage.setItem('watched', JSON.stringify(watched));
-	}, [watched]);
 
 	return (
 		<>
