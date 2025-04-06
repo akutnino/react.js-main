@@ -15,13 +15,14 @@ function Search({
 
 	useEffect(() => {
 		const handleKeydown = (event: KeyboardEvent) => {
+			if (document.activeElement === inputElement.current) return;
+
 			if (event.code === 'Enter') {
 				inputElement.current?.focus();
 				setQuery('');
 			}
 		};
 
-		if (document.activeElement === inputElement.current) return;
 		document.addEventListener('keydown', handleKeydown);
 
 		return () => {
