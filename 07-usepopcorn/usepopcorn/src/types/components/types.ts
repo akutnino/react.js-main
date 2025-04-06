@@ -13,6 +13,7 @@ export type WatchedMovieDataType = {
 	runtime: number;
 	imdbRating: number;
 	userRating: number;
+	countRatingDecisions: number;
 };
 
 type FailedResponseDataType = {

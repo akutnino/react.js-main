@@ -1,4 +1,4 @@
-import { useEffect, useState, type Dispatch } from 'react';
+import { useEffect, useRef, useState, type Dispatch } from 'react';
 import {
 	type SuccessFetchMoviesDetailsResponseType,
 	type WatchedMovieDataType,
@@ -25,6 +25,7 @@ function MovieDetails({
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [fetchErrorMessage, setFetchErrorMessage] = useState<string>('');
 	const [userRating, setUserRating] = useState<number>(0);
+	const countRef = useRef<number>(0);
 
 	const isMovieWatched: boolean = watched.reduce((acc, curr) => {
 		return curr.imdbID === selectedMovieID ? (acc = true) : acc;
@@ -51,12 +52,17 @@ function MovieDetails({
 				Title: movie?.Title,
 				Year: movie?.Year,
 				userRating: rating,
+				countRatingDecisions: countRef.current,
 			} as WatchedMovieDataType;
 
 			setSelectedMovieID(null);
 			setWatched((currentWatched) => [...currentWatched, newWatchedMovie]);
 		};
 	};
+
+	useEffect(() => {
+		if (userRating) countRef.current = countRef.current + 1;
+	}, [userRating]);
 
 	useEffect(() => {
 		const fetchMovieDetails = async () => {
