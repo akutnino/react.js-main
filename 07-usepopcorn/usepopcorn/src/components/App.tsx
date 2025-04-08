@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMovies } from '../hooks/useMovies.ts';
-import { type WatchedMovieDataType } from '../types/components/types.ts';
+import { useLocalStorageState } from '../hooks/useLocalStorageState.ts';
 import NavBar from './NavBar.tsx';
 import MainSection from './MainSection.tsx';
 import NumResults from './NumResults.tsx';
@@ -15,10 +15,7 @@ import MovieDetails from './MovieDetails.tsx';
 
 function App() {
 	const [query, setQuery] = useState<string>('');
-	const [watched, setWatched] = useState<WatchedMovieDataType[]>(() => {
-		localStorage.setItem('watched', JSON.stringify([]));
-		return JSON.parse(localStorage.getItem('watched') as string);
-	});
+	const { watched, setWatched } = useLocalStorageState([], 'watched');
 	const { movies, isLoading, fetchErrorMessage, selectedMovieID, setSelectedMovieID } =
 		useMovies(query);
 
