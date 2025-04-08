@@ -1,5 +1,5 @@
-import { type Dispatch } from 'react';
 import { type WatchedMovieDataType } from '../types/components/types.ts';
+import { type SetWatchedType } from '../types/hooks/types.ts';
 import WatchedMoviesListItem from './WatchedMoviesListItem.tsx';
 
 function WatchedMoviesList({
@@ -7,7 +7,7 @@ function WatchedMoviesList({
 	setWatched,
 }: {
 	watched: WatchedMovieDataType[];
-	setWatched: Dispatch<React.SetStateAction<WatchedMovieDataType[]>>;
+	setWatched: SetWatchedType;
 }) {
 	return (
 		<ul className='list'>

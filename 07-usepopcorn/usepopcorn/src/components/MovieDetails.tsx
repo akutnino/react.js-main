@@ -4,6 +4,7 @@ import {
 	type WatchedMovieDataType,
 	type FetchMovieDetailsResponseType,
 } from '../types/components/types.ts';
+import { type SetWatchedType } from '../types/hooks/types.ts';
 import StarRating from './StarRating.tsx';
 import Loader from './Loader.tsx';
 import ErrorMessage from './ErrorMessage.tsx';
@@ -19,7 +20,7 @@ function MovieDetails({
 	selectedMovieID: string | null;
 	watched: WatchedMovieDataType[];
 	setSelectedMovieID: Dispatch<React.SetStateAction<string | null>>;
-	setWatched: Dispatch<React.SetStateAction<WatchedMovieDataType[]>>;
+	setWatched: SetWatchedType;
 }) {
 	const [movie, setMovie] = useState<SuccessFetchMoviesDetailsResponseType | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);

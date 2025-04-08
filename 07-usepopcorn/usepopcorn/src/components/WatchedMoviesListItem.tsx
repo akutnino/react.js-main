@@ -1,12 +1,12 @@
-import { type Dispatch } from 'react';
 import { type WatchedMovieDataType } from '../types/components/types.ts';
+import { type SetWatchedType } from '../types/hooks/types.ts';
 
 function WatchedMoviesListItem({
 	movie,
 	setWatched,
 }: {
 	movie: WatchedMovieDataType;
-	setWatched: Dispatch<React.SetStateAction<WatchedMovieDataType[]>>;
+	setWatched: SetWatchedType;
 }) {
 	const handleDeleteWatchedMovie = (movieID: string) => {
 		return () => {
