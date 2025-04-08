@@ -10,9 +10,14 @@ function WatchedMoviesListItem({
 }) {
 	const handleDeleteWatchedMovie = (movieID: string) => {
 		return () => {
-			setWatched((currentWatched) =>
-				currentWatched.filter((watchedMovie) => watchedMovie.imdbID !== movieID)
-			);
+			setWatched((currentWatched) => {
+				const updatedWatched: WatchedMovieDataType[] = currentWatched.filter(
+					(watchedMovie) => watchedMovie.imdbID !== movieID
+				);
+
+				if (updatedWatched.length === 0) localStorage.clear();
+				return currentWatched.filter((watchedMovie) => watchedMovie.imdbID !== movieID);
+			});
 		};
 	};
 
