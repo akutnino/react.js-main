@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
-import {
-	type WatchedMovieDataType,
-	type MovieDataType,
-	type FetchMoviesResponseType,
-} from '../types/components/types.ts';
+import { useMovies } from '../hooks/useMovies.ts';
+import { type WatchedMovieDataType } from '../types/components/types.ts';
 import NavBar from './NavBar.tsx';
 import MainSection from './MainSection.tsx';
 import NumResults from './NumResults.tsx';
@@ -16,64 +13,14 @@ import ErrorMessage from './ErrorMessage.tsx';
 import Search from './Search.tsx';
 import MovieDetails from './MovieDetails.tsx';
 
-const KEY = '3494c38';
-
 function App() {
 	const [query, setQuery] = useState<string>('');
-	const [movies, setMovies] = useState<MovieDataType[]>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [selectedMovieID, setSelectedMovieID] = useState<string | null>(null);
-	const [fetchErrorMessage, setFetchErrorMessage] = useState<string>('');
 	const [watched, setWatched] = useState<WatchedMovieDataType[]>(() => {
 		localStorage.setItem('watched', JSON.stringify([]));
 		return JSON.parse(localStorage.getItem('watched') as string);
 	});
-
-	useEffect(() => {
-		const controller: AbortController = new AbortController();
-
-		const fetchMovies = async () => {
-			try {
-				setFetchErrorMessage('');
-				setIsLoading(true);
-
-				const fetchURL: RequestInfo = `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`;
-				const fetchOptions: RequestInit = {
-					method: 'GET',
-					signal: controller.signal,
-				};
-
-				const response: Response = await fetch(fetchURL, fetchOptions);
-				if (!response.ok) throw new Error('Fetch Response Failed');
-
-				const data: FetchMoviesResponseType = await response.json();
-				if (data.Response === 'False') throw new Error(data.Error);
-
-				setMovies(data.Search);
-			} catch (error) {
-				if (error instanceof Error) {
-					if (error.name === 'AbortError') return;
-					setFetchErrorMessage(error.message);
-					setMovies([]);
-				}
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		if (query.length <= 3) {
-			setFetchErrorMessage('');
-			setMovies([]);
-			return;
-		}
-
-		setSelectedMovieID(null);
-		fetchMovies();
-
-		return () => {
-			controller.abort();
-		};
-	}, [query]);
+	const { movies, isLoading, fetchErrorMessage, selectedMovieID, setSelectedMovieID } =
+		useMovies(query);
 
 	useEffect(() => {
 		const handleKeydown = (event: KeyboardEvent) => {
@@ -84,7 +31,7 @@ function App() {
 		return () => {
 			document.removeEventListener('keydown', handleKeydown);
 		};
-	}, [selectedMovieID]);
+	}, [selectedMovieID, setSelectedMovieID]);
 
 	return (
 		<>
