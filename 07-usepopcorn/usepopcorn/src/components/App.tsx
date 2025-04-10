@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMovies } from '../hooks/useMovies.ts';
 import { useLocalStorageState } from '../hooks/useLocalStorageState.ts';
 import { useKey } from '../hooks/useKey.ts';
@@ -24,17 +24,6 @@ function App() {
 		if (selectedMovieID === null) return;
 		setSelectedMovieID(null);
 	});
-
-	// useEffect(() => {
-	// 	const handleKeydown = (event: KeyboardEvent) => {
-	// 		if (event.code === 'Escape') setSelectedMovieID(null);
-	// 	};
-
-	// 	if (selectedMovieID) document.addEventListener('keydown', handleKeydown);
-	// 	return () => {
-	// 		document.removeEventListener('keydown', handleKeydown);
-	// 	};
-	// }, [selectedMovieID, setSelectedMovieID]);
 
 	return (
 		<>

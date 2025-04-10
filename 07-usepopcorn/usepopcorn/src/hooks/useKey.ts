@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 export function useKey(keyCode: string, setter: () => void) {
 	useEffect(() => {
 		const handleKeydown = (event: KeyboardEvent) => {
-			if (event.code === keyCode) setter();
+			if (event.code.toLowerCase() === keyCode.toLowerCase()) setter();
 		};
 
 		document.addEventListener('keydown', handleKeydown);

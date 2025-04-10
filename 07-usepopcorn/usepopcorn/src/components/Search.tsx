@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ChangeEvent, type Dispatch } from 'react';
+import { useRef, type ChangeEvent, type Dispatch } from 'react';
 import { useKey } from '../hooks/useKey.ts';
 
 function Search({
@@ -19,23 +19,6 @@ function Search({
 		inputElement.current?.focus();
 		setQuery('');
 	});
-
-	// useEffect(() => {
-	// 	const handleKeydown = (event: KeyboardEvent) => {
-	// 		if (document.activeElement === inputElement.current) return;
-
-	// 		if (event.code === 'Enter') {
-	// 			inputElement.current?.focus();
-	// 			setQuery('');
-	// 		}
-	// 	};
-
-	// 	document.addEventListener('keydown', handleKeydown);
-
-	// 	return () => {
-	// 		document.removeEventListener('keydown', handleKeydown);
-	// 	};
-	// }, [setQuery]);
 
 	return (
 		<input
