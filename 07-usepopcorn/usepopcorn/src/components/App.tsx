@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useMovies } from '../hooks/useMovies.ts';
 import { useLocalStorageState } from '../hooks/useLocalStorageState.ts';
+import { useKey } from '../hooks/useKey.ts';
 import NavBar from './NavBar.tsx';
 import MainSection from './MainSection.tsx';
 import NumResults from './NumResults.tsx';
@@ -19,16 +20,21 @@ function App() {
 	const { movies, isLoading, fetchErrorMessage, selectedMovieID, setSelectedMovieID } =
 		useMovies(query);
 
-	useEffect(() => {
-		const handleKeydown = (event: KeyboardEvent) => {
-			if (event.code === 'Escape') setSelectedMovieID(null);
-		};
+	useKey('Escape', () => {
+		if (selectedMovieID === null) return;
+		setSelectedMovieID(null);
+	});
 
-		if (selectedMovieID) document.addEventListener('keydown', handleKeydown);
-		return () => {
-			document.removeEventListener('keydown', handleKeydown);
-		};
-	}, [selectedMovieID, setSelectedMovieID]);
+	// useEffect(() => {
+	// 	const handleKeydown = (event: KeyboardEvent) => {
+	// 		if (event.code === 'Escape') setSelectedMovieID(null);
+	// 	};
+
+	// 	if (selectedMovieID) document.addEventListener('keydown', handleKeydown);
+	// 	return () => {
+	// 		document.removeEventListener('keydown', handleKeydown);
+	// 	};
+	// }, [selectedMovieID, setSelectedMovieID]);
 
 	return (
 		<>

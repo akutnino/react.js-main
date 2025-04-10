@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ChangeEvent, type Dispatch } from 'react';
+import { useKey } from '../hooks/useKey.ts';
 
 function Search({
 	query,
@@ -13,22 +14,28 @@ function Search({
 		setQuery(event.currentTarget.value);
 	};
 
-	useEffect(() => {
-		const handleKeydown = (event: KeyboardEvent) => {
-			if (document.activeElement === inputElement.current) return;
+	useKey('Enter', () => {
+		if (document.activeElement === inputElement.current) return;
+		inputElement.current?.focus();
+		setQuery('');
+	});
 
-			if (event.code === 'Enter') {
-				inputElement.current?.focus();
-				setQuery('');
-			}
-		};
+	// useEffect(() => {
+	// 	const handleKeydown = (event: KeyboardEvent) => {
+	// 		if (document.activeElement === inputElement.current) return;
 
-		document.addEventListener('keydown', handleKeydown);
+	// 		if (event.code === 'Enter') {
+	// 			inputElement.current?.focus();
+	// 			setQuery('');
+	// 		}
+	// 	};
 
-		return () => {
-			document.removeEventListener('keydown', handleKeydown);
-		};
-	}, [setQuery]);
+	// 	document.addEventListener('keydown', handleKeydown);
+
+	// 	return () => {
+	// 		document.removeEventListener('keydown', handleKeydown);
+	// 	};
+	// }, [setQuery]);
 
 	return (
 		<input
