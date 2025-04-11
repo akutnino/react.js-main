@@ -59,6 +59,7 @@ function StarRating({
 		<div
 			style={containerStyle}
 			className={className}
+			data-testid='starRating'
 		>
 			<div style={startContainerStyle}>
 				{Array.from(Array(maxRating), (_, index) => (

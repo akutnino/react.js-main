@@ -15,7 +15,10 @@ function MovieListItem({
 	};
 
 	return (
-		<li onClick={handleSelectMovie(movie.imdbID)}>
+		<li
+			data-testid='movieListItem'
+			onClick={handleSelectMovie(movie.imdbID)}
+		>
 			<img
 				src={movie.Poster}
 				alt={`${movie.Title} poster`}

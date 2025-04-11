@@ -1,5 +1,12 @@
 function Loader() {
-	return <p className='loader'>Loading...</p>;
+	return (
+		<p
+			className='loader'
+			data-testid='loader'
+		>
+			Loading...
+		</p>
+	);
 }
 
 export default Loader;

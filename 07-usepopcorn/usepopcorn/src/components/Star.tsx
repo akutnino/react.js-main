@@ -28,6 +28,7 @@ function Star({
 				onClick={onClick}
 				onMouseEnter={onMouseEnter}
 				onMouseLeave={onMouseLeave}
+				data-testid='star'
 			>
 				{isRating ? (
 					<svg

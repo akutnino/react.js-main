@@ -28,6 +28,7 @@ function Search({
 			value={query}
 			onChange={handleQuery}
 			ref={inputElement}
+			data-testid='search'
 		/>
 	);
 }

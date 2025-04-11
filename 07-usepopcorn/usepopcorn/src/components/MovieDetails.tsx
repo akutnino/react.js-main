@@ -121,7 +121,10 @@ function MovieDetails({
 	}, [movie, isLoading]);
 
 	return (
-		<div className='details'>
+		<div
+			className='details'
+			data-testid='movieDetails'
+		>
 			{isLoading && <Loader />}
 
 			{fetchErrorMessage && <ErrorMessage message={fetchErrorMessage} />}

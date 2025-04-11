@@ -1,6 +1,9 @@
 function ErrorMessage({ message }: { message: string }) {
 	return (
-		<p className='error'>
+		<p
+			className='error'
+			data-testid='error'
+		>
 			<span>🛑</span>
 			{message}
 		</p>

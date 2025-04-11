@@ -9,7 +9,10 @@ function WatchedSummary({ watched }: { watched: WatchedMovieDataType[] }) {
 	const avgRuntime = average(watched.map((movie) => movie.runtime));
 
 	return (
-		<div className='summary'>
+		<div
+			className='summary'
+			data-testid='watchedSummary'
+		>
 			<h2>Movies you watched</h2>
 			<div>
 				<p>

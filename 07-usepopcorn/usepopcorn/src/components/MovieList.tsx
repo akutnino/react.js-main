@@ -10,7 +10,10 @@ function MovieList({
 	setSelectedMovieID: Dispatch<React.SetStateAction<string | null>>;
 }) {
 	return (
-		<ul className='list list-movies'>
+		<ul
+			className='list list-movies'
+			data-testid='movieList'
+		>
 			{movies?.map((movie: MovieDataType) => (
 				<MovieListItem
 					setSelectedMovieID={setSelectedMovieID}

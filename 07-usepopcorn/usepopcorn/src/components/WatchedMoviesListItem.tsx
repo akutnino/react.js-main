@@ -22,7 +22,7 @@ function WatchedMoviesListItem({
 	};
 
 	return (
-		<li>
+		<li data-testid='watchedMoviesListItem'>
 			<img
 				src={movie.Poster}
 				alt={`${movie.Title} poster`}

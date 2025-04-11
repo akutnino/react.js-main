@@ -10,7 +10,10 @@ function WatchedMoviesList({
 	setWatched: SetWatchedType;
 }) {
 	return (
-		<ul className='list'>
+		<ul
+			className='list'
+			data-testid='watchedMoviesList'
+		>
 			{watched.map((movie: WatchedMovieDataType) => (
 				<WatchedMoviesListItem
 					setWatched={setWatched}
