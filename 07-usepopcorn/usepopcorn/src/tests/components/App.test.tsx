@@ -20,6 +20,4 @@ describe('App component test suite', () => {
 		expect(getByTestId('watchedSummary')).toBeInTheDocument();
 		expect(getByTestId('watchedMoviesList')).toBeInTheDocument();
 	});
-
-	test('should render the user input correctly if user search for movie', () => {});
 });
