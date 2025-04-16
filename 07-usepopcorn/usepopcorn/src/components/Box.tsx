@@ -3,6 +3,10 @@ import { type ReactNode, useState } from 'react';
 function Box({ children }: { children: ReactNode }) {
 	const [isOpen, setIsOpen] = useState<boolean>(true);
 
+	const handleToggle = () => {
+		setIsOpen((currentBoolean) => !currentBoolean);
+	};
+
 	return (
 		<div
 			className='box'
@@ -10,7 +14,7 @@ function Box({ children }: { children: ReactNode }) {
 		>
 			<button
 				className='btn-toggle'
-				onClick={() => setIsOpen((open) => !open)}
+				onClick={handleToggle}
 			>
 				{isOpen ? '–' : '+'}
 			</button>
