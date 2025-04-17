@@ -31,15 +31,15 @@ function WatchedMoviesListItem({
 			<div>
 				<p>
 					<span>⭐️</span>
-					<span>{movie.imdbRating}</span>
+					<span data-testid='imdbRating'>{movie.imdbRating}</span>
 				</p>
 				<p>
 					<span>🌟</span>
-					<span>{movie.userRating}</span>
+					<span data-testid='userRating'>{movie.userRating}</span>
 				</p>
 				<p>
 					<span>⏳</span>
-					<span>{movie.runtime} min</span>
+					<span data-testid='runtime'>{movie.runtime} min</span>
 				</p>
 
 				<button
