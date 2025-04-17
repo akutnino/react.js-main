@@ -17,19 +17,19 @@ function WatchedSummary({ watched }: { watched: WatchedMovieDataType[] }) {
 			<div>
 				<p>
 					<span>#️⃣</span>
-					<span>{watched.length} movies</span>
+					<span data-testid='totalWatched'>{watched.length} movies</span>
 				</p>
 				<p>
 					<span>⭐️</span>
-					<span>{avgImdbRating.toFixed(2)}</span>
+					<span data-testid='avgImdbRating'>{avgImdbRating.toFixed(2)}</span>
 				</p>
 				<p>
 					<span>🌟</span>
-					<span>{avgUserRating.toFixed(2)}</span>
+					<span data-testid='avgUserRating'>{avgUserRating.toFixed(2)}</span>
 				</p>
 				<p>
 					<span>⏳</span>
-					<span>{avgRuntime} min</span>
+					<span data-testid='avgRuntime'>{avgRuntime} min</span>
 				</p>
 			</div>
 		</div>
