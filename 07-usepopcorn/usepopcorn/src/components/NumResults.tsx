@@ -6,7 +6,7 @@ function NumResults({ movies }: { movies: MovieDataType[] }) {
 			className='num-results'
 			data-testid='numResults'
 		>
-			Found <strong>{movies.length}</strong> results
+			Found <strong data-testid='totalLength'>{movies.length}</strong> results
 		</p>
 	);
 }
