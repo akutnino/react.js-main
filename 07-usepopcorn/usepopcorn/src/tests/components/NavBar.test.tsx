@@ -5,6 +5,7 @@ import NavBar from '../../components/NavBar.tsx';
 describe('NavBar component test suite', () => {
 	let navBarElement: HTMLElement;
 	let logoElement: HTMLDivElement;
+	let childrenElement: HTMLDivElement;
 
 	beforeEach(() => {
 		const { getByTestId } = render(
@@ -15,6 +16,7 @@ describe('NavBar component test suite', () => {
 
 		navBarElement = getByTestId('navbar') as HTMLElement;
 		logoElement = getByTestId('logo') as HTMLDivElement;
+		childrenElement = getByTestId('children') as HTMLDivElement;
 	});
 
 	afterEach(() => {
@@ -26,5 +28,8 @@ describe('NavBar component test suite', () => {
 		expect(logoElement).toBeInTheDocument();
 	});
 
-	test.todo('should render the components in order', () => {});
+	test('should render the components in order', () => {
+		expect(navBarElement.firstElementChild).toBe(logoElement);
+		expect(navBarElement.children[1]).toBe(childrenElement);
+	});
 });
