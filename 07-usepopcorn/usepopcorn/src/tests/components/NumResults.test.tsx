@@ -4,6 +4,7 @@ import { type MovieDataType } from '../../types/components/types.ts';
 import NumResults from '../../components/NumResults.tsx';
 
 describe('NumResults component test suite', () => {
+	const EMPTY_MOVIES_ARRAY: MovieDataType[] = [];
 	let numResultsElement: HTMLParagraphElement;
 	let totalLengthElement: HTMLElement;
 
@@ -14,7 +15,7 @@ describe('NumResults component test suite', () => {
 		];
 
 		if (exemptedTestName.includes(currentTestName)) return;
-		const { getByTestId } = render(<NumResults movies={[]} />);
+		const { getByTestId } = render(<NumResults movies={EMPTY_MOVIES_ARRAY} />);
 
 		numResultsElement = getByTestId('numResults') as HTMLParagraphElement;
 		totalLengthElement = getByTestId('totalLength') as HTMLElement;
