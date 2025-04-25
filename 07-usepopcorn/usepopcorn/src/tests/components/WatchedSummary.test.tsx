@@ -4,6 +4,7 @@ import { type WatchedMovieDataType } from '../../types/components/types.ts';
 import WatchedSummary from '../../components/WatchedSummary.tsx';
 
 describe('WatchedSummary component test suite', () => {
+	const EMPTY_WATCHED_ARRAY: WatchedMovieDataType[] = [];
 	let watchedSummaryElement: HTMLDivElement;
 	let totalWatchedElement: HTMLSpanElement;
 	let avgImdbRatingElement: HTMLSpanElement;
@@ -18,7 +19,7 @@ describe('WatchedSummary component test suite', () => {
 
 		if (exemptedTestNames.includes(currentTestName)) return;
 
-		const { getByTestId } = render(<WatchedSummary watched={[]} />);
+		const { getByTestId } = render(<WatchedSummary watched={EMPTY_WATCHED_ARRAY} />);
 
 		watchedSummaryElement = getByTestId('watchedSummary') as HTMLDivElement;
 		totalWatchedElement = getByTestId('totalWatched') as HTMLSpanElement;
