@@ -3,6 +3,7 @@ export type MovieDataType = {
 	Title: string;
 	Year: string;
 	Poster: string;
+	Type: string;
 };
 
 export type WatchedMovieDataType = {
