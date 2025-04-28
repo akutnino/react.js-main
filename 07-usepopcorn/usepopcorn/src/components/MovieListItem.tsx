@@ -27,7 +27,7 @@ function MovieListItem({
 			<div>
 				<p>
 					<span>🗓</span>
-					<span>{movie.Year}</span>
+					<span data-testid='movieYear'>{movie.Year}</span>
 				</p>
 			</div>
 		</li>
