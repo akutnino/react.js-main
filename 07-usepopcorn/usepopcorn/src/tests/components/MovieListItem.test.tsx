@@ -1,22 +1,38 @@
-import { cleanup, render, renderHook } from '@testing-library/react';
-import { afterEach, beforeEach, describe, test } from 'vitest';
+import { cleanup, fireEvent, render, renderHook } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { type MovieDataType } from '../../types/components/types.ts';
 import { useMovies } from '../../hooks/useMovies.ts';
 import MovieListItem from '../../components/MovieListItem.tsx';
 
 describe('MovieListItem component test suite', () => {
+	const MOVIE_POSTER_TEST_VALUE: string = 'test_Poster';
+	const MOVIE_TITLE_TEST_VALUE: string = 'test_Title';
+	const MOVIE_YEAR_TEST_VALUE: string = 'test_Year';
+	const MOVIE_IMDBID_TEST_VALUE: string = 'test_imdbID';
+
+	let movieListItemElement: HTMLLIElement;
+	let movieListItemImageElement: HTMLImageElement;
+	let movieListItemTitleElement: HTMLHeadingElement;
+	let movieListItemSpanElement: HTMLSpanElement;
+	let sutResult: {
+		current: {
+			selectedMovieID: string | null;
+			setSelectedMovieID: React.Dispatch<React.SetStateAction<string | null>>;
+		};
+	};
+
 	beforeEach(() => {
 		const dummyMovieObject: MovieDataType = {
-			Poster: 'test_Poster',
-			Title: 'test_Title',
-			Type: 'movie',
-			Year: 'test_Year',
-			imdbID: 'test_imdbID',
+			Poster: MOVIE_POSTER_TEST_VALUE,
+			Title: MOVIE_TITLE_TEST_VALUE,
+			Type: 'test_Type',
+			Year: MOVIE_YEAR_TEST_VALUE,
+			imdbID: MOVIE_IMDBID_TEST_VALUE,
 		};
 
 		const { result } = renderHook(() => {
-			const { setSelectedMovieID } = useMovies('');
-			return { setSelectedMovieID };
+			const { selectedMovieID, setSelectedMovieID } = useMovies('');
+			return { selectedMovieID, setSelectedMovieID };
 		});
 
 		const { getByTestId } = render(
@@ -25,15 +41,43 @@ describe('MovieListItem component test suite', () => {
 				setSelectedMovieID={result.current.setSelectedMovieID}
 			/>
 		);
+
+		sutResult = result;
+		movieListItemElement = getByTestId('movieListItem') as HTMLLIElement;
+		movieListItemImageElement = movieListItemElement.children[0] as HTMLImageElement;
+		movieListItemTitleElement = movieListItemElement.children[1] as HTMLHeadingElement;
+		movieListItemSpanElement = getByTestId('movieYear') as HTMLSpanElement;
 	});
 
 	afterEach(() => {
 		cleanup();
 	});
 
-	test.todo('should render the component correctly', () => {});
+	test('should render the component correctly', () => {
+		expect(movieListItemElement).toBeInTheDocument();
+	});
 
-	test.todo('should render the correct movie detials', () => {});
+	test('should render the correct movie detials', () => {
+		expect(movieListItemTitleElement.innerHTML).toBe(MOVIE_TITLE_TEST_VALUE);
+		expect(movieListItemSpanElement.innerHTML).toBe(MOVIE_YEAR_TEST_VALUE);
+		expect(movieListItemImageElement).toHaveAttribute('src', MOVIE_POSTER_TEST_VALUE);
+		expect(movieListItemImageElement).toHaveAttribute(
+			'alt',
+			`${MOVIE_TITLE_TEST_VALUE} poster`
+		);
+	});
 
-	test.todo('should set SelectedMovieID if the user clicks on MovieListItem', () => {});
+	test('should set SelectedMovieID if the user clicks on MovieListItem', () => {
+		expect(sutResult.current.selectedMovieID).toBe(null);
+
+		fireEvent.click(
+			movieListItemElement,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		expect(sutResult.current.selectedMovieID).toBe(MOVIE_IMDBID_TEST_VALUE);
+	});
 });
