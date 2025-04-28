@@ -50,6 +50,7 @@ describe('MovieList component test suite', () => {
 			{
 				imdbID: 'testID',
 				Poster: 'testPoster',
+				Type: 'testType',
 				Title: 'testTitle',
 				Year: 'testYear',
 			},
