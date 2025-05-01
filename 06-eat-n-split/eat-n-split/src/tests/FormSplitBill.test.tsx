@@ -4,7 +4,38 @@ import { useState } from 'react';
 import { type FriendObjectType } from '../types/components/types.ts';
 import FormSplitBill from '../components/FormSplitBill.tsx';
 
+type RenderHookResultType = {
+	current: {
+		friendsArray: FriendObjectType[];
+		selectedFriend: FriendObjectType | null;
+		setFriendsArray: React.Dispatch<React.SetStateAction<FriendObjectType[]>>;
+		setSelectedFriend: React.Dispatch<React.SetStateAction<FriendObjectType | null>>;
+	};
+};
+
 describe('FormSplitBill component test suite', () => {
+	const DUMMY_FRIEND_OBJECT_ARRAY: FriendObjectType[] = [
+		{
+			id: 118836,
+			name: 'Clark',
+			image: 'https://i.pravatar.cc/48?u=118836',
+			balance: -7,
+		},
+		{
+			id: 933372,
+			name: 'Sarah',
+			image: 'https://i.pravatar.cc/48?u=933372',
+			balance: 20,
+		},
+	];
+
+	const DUMMY_FRIEND_OBJECT: FriendObjectType | null = {
+		id: 118836,
+		name: 'Clark',
+		image: 'https://i.pravatar.cc/48?u=118836',
+		balance: -7,
+	};
+
 	let formSplitBillElement: HTMLFormElement;
 	let formHeaderElement: HTMLHeadingElement;
 	let friendExpenseElement: HTMLInputElement;
@@ -12,38 +43,17 @@ describe('FormSplitBill component test suite', () => {
 	let userExpenseInputElement: HTMLInputElement;
 	let billPayerValueElement: HTMLInputElement;
 	let submitButtonElement: HTMLButtonElement;
-
-	let sutResult: {
-		current: {
-			friendsArray: FriendObjectType[];
-			selectedFriend: FriendObjectType | null;
-			setFriendsArray: React.Dispatch<React.SetStateAction<FriendObjectType[]>>;
-			setSelectedFriend: React.Dispatch<React.SetStateAction<FriendObjectType | null>>;
-		};
-	};
+	let renderHookResult: RenderHookResultType;
 
 	beforeEach(() => {
 		const { result } = renderHook(() => {
-			const [friendsArray, setFriendsArray] = useState<FriendObjectType[]>([
-				{
-					id: 118836,
-					name: 'Clark',
-					image: 'https://i.pravatar.cc/48?u=118836',
-					balance: -7,
-				},
-				{
-					id: 933372,
-					name: 'Sarah',
-					image: 'https://i.pravatar.cc/48?u=933372',
-					balance: 20,
-				},
-			]);
-			const [selectedFriend, setSelectedFriend] = useState<FriendObjectType | null>({
-				id: 118836,
-				name: 'Clark',
-				image: 'https://i.pravatar.cc/48?u=118836',
-				balance: -7,
-			});
+			const [friendsArray, setFriendsArray] = useState<FriendObjectType[]>(
+				DUMMY_FRIEND_OBJECT_ARRAY
+			);
+
+			const [selectedFriend, setSelectedFriend] = useState<FriendObjectType | null>(
+				DUMMY_FRIEND_OBJECT
+			);
 
 			return {
 				friendsArray,
@@ -61,8 +71,7 @@ describe('FormSplitBill component test suite', () => {
 			/>
 		);
 
-		sutResult = result;
-
+		renderHookResult = result as RenderHookResultType;
 		formSplitBillElement = getByTestId('formSplitBill') as HTMLFormElement;
 		formHeaderElement = getByText('Split a bill with Clark') as HTMLHeadingElement;
 		friendExpenseElement = getByTestId('friendExpenseInput') as HTMLInputElement;
@@ -148,8 +157,8 @@ describe('FormSplitBill component test suite', () => {
 			})
 		);
 
-		expect(sutResult.current.selectedFriend).toBe(null);
-		expect(sutResult.current.friendsArray).toEqual([
+		expect(renderHookResult.current.selectedFriend).toBe(null);
+		expect(renderHookResult.current.friendsArray).toEqual([
 			{
 				id: 118836,
 				name: 'Clark',
@@ -189,8 +198,8 @@ describe('FormSplitBill component test suite', () => {
 			})
 		);
 
-		expect(sutResult.current.selectedFriend).toBe(null);
-		expect(sutResult.current.friendsArray).toEqual([
+		expect(renderHookResult.current.selectedFriend).toBe(null);
+		expect(renderHookResult.current.friendsArray).toEqual([
 			{
 				id: 118836,
 				name: 'Clark',
