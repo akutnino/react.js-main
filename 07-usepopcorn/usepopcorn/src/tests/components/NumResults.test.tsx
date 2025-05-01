@@ -5,6 +5,7 @@ import NumResults from '../../components/NumResults.tsx';
 
 describe('NumResults component test suite', () => {
 	const EMPTY_MOVIES_ARRAY: MovieDataType[] = [];
+
 	let numResultsElement: HTMLParagraphElement;
 	let totalLengthElement: HTMLElement;
 
@@ -34,7 +35,7 @@ describe('NumResults component test suite', () => {
 	});
 
 	test('should render the correct num result if the query is successful', () => {
-		const dummyMoviesArray: MovieDataType[] = [
+		const DUMMY_MOVIES_ARRAY: MovieDataType[] = [
 			{
 				imdbID: 'testID',
 				Poster: 'testPoster',
@@ -44,11 +45,11 @@ describe('NumResults component test suite', () => {
 			},
 		];
 
-		const { getByTestId } = render(<NumResults movies={dummyMoviesArray} />);
+		const { getByTestId } = render(<NumResults movies={DUMMY_MOVIES_ARRAY} />);
 
 		const totalLengthElement = getByTestId('totalLength') as HTMLElement;
 
 		expect(totalLengthElement.innerHTML).toBe('1');
-		expect(dummyMoviesArray).toHaveLength(1);
+		expect(DUMMY_MOVIES_ARRAY).toHaveLength(1);
 	});
 });
