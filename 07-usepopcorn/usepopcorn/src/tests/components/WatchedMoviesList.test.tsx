@@ -1,9 +1,30 @@
-import { cleanup, fireEvent, render, renderHook } from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	type Matcher,
+	type MatcherOptions,
+	render,
+	renderHook,
+} from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { useLocalStorageState } from '../../hooks/useLocalStorageState.ts';
 import { type WatchedMovieDataType } from '../../types/components/types.ts';
 import { type SetWatchedType } from '../../types/hooks/types.ts';
 import WatchedMoviesList from '../../components/WatchedMoviesList.tsx';
+
+type RenderRerenderType = (ui: React.ReactNode) => void;
+
+type RenderQueryAllByTestIdType = (
+	id: Matcher,
+	options?: MatcherOptions | undefined
+) => HTMLElement[];
+
+type RenderHookResultType = {
+	current: {
+		watched: WatchedMovieDataType[];
+		setWatched: SetWatchedType;
+	};
+};
 
 describe('WatchedMoviesList component test suite', () => {
 	const LOCALSTORAGE_INITIALSTATE: [] = [];
@@ -23,15 +44,10 @@ describe('WatchedMoviesList component test suite', () => {
 
 	let watchedMoviesListElement: HTMLUListElement;
 	let watchedMoviesListItemElement: HTMLLIElement;
-	let childrenElement: HTMLElement[];
 	let deleteButtonElement: HTMLButtonElement;
-	let sutRerender: (ui: React.ReactNode) => void;
-	let sutResult: {
-		current: {
-			watched: WatchedMovieDataType[];
-			setWatched: SetWatchedType;
-		};
-	};
+	let renderRerender: RenderRerenderType;
+	let renderQueryAllByTestId: RenderQueryAllByTestIdType;
+	let renderHookResult: RenderHookResultType;
 
 	beforeEach(() => {
 		const currentTestName = expect.getState().currentTestName as string;
@@ -61,11 +77,11 @@ describe('WatchedMoviesList component test suite', () => {
 			/>
 		);
 
-		sutResult = result;
-		sutRerender = rerender;
+		renderHookResult = result as RenderHookResultType;
+		renderRerender = rerender as RenderRerenderType;
+		renderQueryAllByTestId = queryAllByTestId as RenderQueryAllByTestIdType;
 		watchedMoviesListElement = getByTestId('watchedMoviesList') as HTMLUListElement;
 		watchedMoviesListItemElement = getByTestId('watchedMoviesListItem') as HTMLLIElement;
-		childrenElement = queryAllByTestId('watchedMoviesListItem') as HTMLElement[];
 		deleteButtonElement = getByText('X') as HTMLButtonElement;
 	});
 
@@ -81,12 +97,10 @@ describe('WatchedMoviesList component test suite', () => {
 	});
 
 	test('should render the WatchedMoviesListItem if the watched array is not empty', () => {
-		expect(childrenElement).toHaveLength(1);
+		expect(renderQueryAllByTestId('watchedMoviesListItem')).toHaveLength(1);
 	});
 
 	test('should delete WatchedMoviesListItem if the user clicked the delete button', () => {
-		console.log(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY_VALUE) as string));
-
 		fireEvent.click(
 			deleteButtonElement,
 			new MouseEvent('click', {
@@ -95,17 +109,14 @@ describe('WatchedMoviesList component test suite', () => {
 			})
 		);
 
-		sutRerender(
+		renderRerender(
 			<WatchedMoviesList
-				watched={sutResult.current.watched}
-				setWatched={sutResult.current.setWatched}
+				watched={renderHookResult.current.watched}
+				setWatched={renderHookResult.current.setWatched}
 			/>
 		);
-		localStorage.setItem(LOCALSTORAGE_KEY_VALUE, JSON.stringify([]));
 
-		console.log(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY_VALUE) as string));
-		console.log(sutResult.current.watched);
-		expect(childrenElement).toHaveLength(0);
+		expect(renderQueryAllByTestId('watchedMoviesListItem')).toHaveLength(0);
 	});
 
 	test('should check that MovieList is empty after initial render', () => {
