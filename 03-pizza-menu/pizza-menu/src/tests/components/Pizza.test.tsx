@@ -4,15 +4,16 @@ import { type PizzaDataType } from '../../components/Menu.tsx';
 import Pizza from '../../components/Pizza.tsx';
 
 describe('Pizza component test suite', () => {
-	let pizzaListItemElement: Element | null;
-	let listItemElement: HTMLLIElement;
-	const dummyPizza: PizzaDataType = {
+	const DUMMY_PIZZA: PizzaDataType = {
 		name: 'Pizza Name',
 		ingredients: 'Pizza Ingredients',
 		price: 10,
 		photoName: '/Pizza.jpg',
 		soldOut: false,
 	};
+
+	let pizzaListItemElement: Element | null;
+	let listItemElement: HTMLLIElement;
 
 	beforeEach(() => {
 		const currentTestName = expect.getState().currentTestName as string;
@@ -22,7 +23,7 @@ describe('Pizza component test suite', () => {
 
 		if (exemptedTestNames.includes(currentTestName)) return;
 
-		const { getByTestId, container } = render(<Pizza {...dummyPizza} />);
+		const { getByTestId, container } = render(<Pizza {...DUMMY_PIZZA} />);
 
 		pizzaListItemElement = container;
 		listItemElement = getByTestId('pizza') as HTMLLIElement;
@@ -34,30 +35,31 @@ describe('Pizza component test suite', () => {
 
 	test('should render Pizza component correcty', () => {
 		expect(listItemElement).toBeInTheDocument();
-		expectTypeOf(dummyPizza).toEqualTypeOf<PizzaDataType>();
+		expectTypeOf(DUMMY_PIZZA).toEqualTypeOf<PizzaDataType>();
 	});
 
 	test(`should render Pizza component with classname "sold-out" if it is not sold out`, () => {
 		expect(listItemElement).toBeInTheDocument();
-		expect(dummyPizza).toHaveProperty('soldOut');
-		expect(dummyPizza.soldOut).toBe(false);
+		expect(DUMMY_PIZZA).toHaveProperty('soldOut');
+		expect(DUMMY_PIZZA.soldOut).toBe(false);
 		expect(pizzaListItemElement).toHaveProperty('className');
 		expect(pizzaListItemElement?.firstChild).toHaveClass('pizza');
 	});
 
 	test(`should render Pizza component with classname "pizza sold-out" if it is sold out`, () => {
-		const dummyPizza: PizzaDataType = {
+		const DUMMY_PIZZA: PizzaDataType = {
 			name: 'Pizza Name',
 			ingredients: 'Pizza Ingredients',
 			price: 10,
 			photoName: '/Pizza.jpg',
 			soldOut: true,
 		};
-		const { getByTestId, container } = render(<Pizza {...dummyPizza} />);
+
+		const { getByTestId, container } = render(<Pizza {...DUMMY_PIZZA} />);
 
 		expect(getByTestId('pizza')).toBeInTheDocument();
-		expect(dummyPizza).toHaveProperty('soldOut');
-		expect(dummyPizza.soldOut).toBe(true);
+		expect(DUMMY_PIZZA).toHaveProperty('soldOut');
+		expect(DUMMY_PIZZA.soldOut).toBe(true);
 		expect(container).toHaveProperty('className');
 		expect(container.firstChild).toHaveClass('pizza sold-out');
 	});
