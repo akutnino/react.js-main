@@ -4,37 +4,39 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { type ItemType } from '../../components/App.tsx';
 import PackingItem from '../../components/PackingItem.tsx';
 
+type RenderHookResultType = {
+	current: {
+		items: ItemType[];
+		setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
+	};
+};
+
 describe('PackingItem component test suite', () => {
+	const DUMMY_ITEMS_ARRAY: ItemType[] = [
+		{
+			id: 1,
+			description: 'Passports',
+			quantity: 2,
+			packed: false,
+		},
+		{
+			id: 2,
+			description: 'Socks',
+			quantity: 12,
+			packed: false,
+		},
+	];
+
 	let packingItemElement: Element | null;
 	let listItemElement: HTMLLIElement;
 	let checkboxInputElement: HTMLInputElement;
 	let itemNameSpanElement: HTMLSpanElement;
 	let deleteButtonElement: HTMLButtonElement;
-	let sutResult: {
-		current: {
-			items: ItemType[];
-			setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
-		};
-	};
+	let renderHookResult: RenderHookResultType;
 
 	beforeEach(() => {
-		const dummyItemsArray: ItemType[] = [
-			{
-				id: 1,
-				description: 'Passports',
-				quantity: 2,
-				packed: false,
-			},
-			{
-				id: 2,
-				description: 'Socks',
-				quantity: 12,
-				packed: false,
-			},
-		];
-
 		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>(dummyItemsArray);
+			const [items, setItems] = useState<ItemType[]>(DUMMY_ITEMS_ARRAY);
 			return { items, setItems };
 		});
 
@@ -45,7 +47,7 @@ describe('PackingItem component test suite', () => {
 			/>
 		);
 
-		sutResult = result;
+		renderHookResult = result as RenderHookResultType;
 		packingItemElement = container.firstElementChild;
 		listItemElement = getByTestId('packing-item') as HTMLLIElement;
 		checkboxInputElement = getByTestId('checkbox-input') as HTMLInputElement;
@@ -98,6 +100,6 @@ describe('PackingItem component test suite', () => {
 			})
 		);
 
-		expect(sutResult.current.items).toHaveLength(1);
+		expect(renderHookResult.current.items).toHaveLength(1);
 	});
 });
