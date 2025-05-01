@@ -4,11 +4,7 @@ import { type ContentType } from '../../types/components/types.ts';
 import Tabbed from '../../components/Tabbed.tsx';
 
 describe('Tabbed component test suite', () => {
-	let tabbedElement: HTMLDivElement;
-	let tabElements: HTMLElement[];
-	let tabContentElement: HTMLDivElement;
-
-	const dummyContent: ContentType = [
+	const DUMMY_CONTENT: ContentType = [
 		{
 			summary: 'React is a library for building UIs',
 			details:
@@ -26,6 +22,10 @@ describe('Tabbed component test suite', () => {
 		},
 	];
 
+	let tabbedElement: HTMLDivElement;
+	let tabElements: HTMLElement[];
+	let tabContentElement: HTMLDivElement;
+
 	beforeEach(() => {
 		const currentTestName = expect.getState().currentTestName as string;
 		const exemptedTestNames: string[] = [
@@ -34,7 +34,7 @@ describe('Tabbed component test suite', () => {
 
 		if (exemptedTestNames.includes(currentTestName)) return;
 
-		const { getByTestId, queryAllByTestId } = render(<Tabbed content={dummyContent} />);
+		const { getByTestId, queryAllByTestId } = render(<Tabbed content={DUMMY_CONTENT} />);
 
 		tabbedElement = getByTestId('tabbed') as HTMLDivElement;
 		tabElements = queryAllByTestId('tab') as HTMLElement[];
@@ -73,7 +73,7 @@ describe('Tabbed component test suite', () => {
 	});
 
 	test('should render the DifferentContent component if the user clicks the last tab', () => {
-		const { getByTestId, queryAllByTestId } = render(<Tabbed content={dummyContent} />);
+		const { getByTestId, queryAllByTestId } = render(<Tabbed content={DUMMY_CONTENT} />);
 
 		const tabElements = queryAllByTestId('tab') as HTMLElement[];
 		const tabButtonElement: HTMLElement = tabElements[3];
