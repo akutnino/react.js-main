@@ -4,18 +4,20 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { type ItemType } from '../../components/App.tsx';
 import Form from '../../components/Form.tsx';
 
+type RenderHookResultType = {
+	current: {
+		items: ItemType[];
+		setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
+	};
+};
+
 describe('Form component test suite', () => {
 	let formElement: Element | null;
 	let formHeading3Element: HTMLHeadingElement;
 	let formSelectElement: HTMLSelectElement;
 	let formInputElement: HTMLInputElement;
 	let formSubmitElement: HTMLButtonElement;
-	let sutResult: {
-		current: {
-			items: ItemType[];
-			setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
-		};
-	};
+	let renderHookResult: RenderHookResultType;
 
 	beforeEach(() => {
 		const { result } = renderHook(() => {
@@ -27,7 +29,7 @@ describe('Form component test suite', () => {
 			<Form setItems={result.current.setItems} />
 		);
 
-		sutResult = result;
+		renderHookResult = result as RenderHookResultType;
 		formElement = container.firstElementChild;
 		formHeading3Element = getByTestId('form-h3') as HTMLHeadingElement;
 		formSelectElement = getByTestId('form-select') as HTMLSelectElement;
@@ -82,7 +84,7 @@ describe('Form component test suite', () => {
 		);
 
 		expect(formInputElement.value).toEqual('');
-		expect(sutResult.current.items).toHaveLength(0);
+		expect(renderHookResult.current.items).toHaveLength(0);
 	});
 
 	test('should render correct changes in DOM when user clicks Add button ', () => {
@@ -100,6 +102,6 @@ describe('Form component test suite', () => {
 		);
 
 		expect(formInputElement.value).toEqual('');
-		expect(sutResult.current.items).toHaveLength(1);
+		expect(renderHookResult.current.items).toHaveLength(1);
 	});
 });
