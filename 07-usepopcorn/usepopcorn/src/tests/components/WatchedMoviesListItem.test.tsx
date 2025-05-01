@@ -5,6 +5,17 @@ import { type WatchedMovieDataType } from '../../types/components/types.ts';
 import WatchedMoviesListItem from '../../components/WatchedMoviesListItem.tsx';
 
 describe('WatchedMoviesListItem component test suite', () => {
+	const DUMMY_WATCHED_OBJECT: WatchedMovieDataType = {
+		Poster: 'test_Poster',
+		Title: 'test_Title',
+		Year: 'test_Year',
+		countRatingDecisions: 1,
+		imdbID: 'test_imdbID',
+		imdbRating: 5,
+		runtime: 100,
+		userRating: 10,
+	};
+
 	let watchedMoviesListItemElement: HTMLLIElement;
 	let imdbRatingElement: HTMLSpanElement;
 	let userRatingElement: HTMLSpanElement;
@@ -12,17 +23,6 @@ describe('WatchedMoviesListItem component test suite', () => {
 	let deleteButtonElement: HTMLButtonElement;
 
 	beforeEach(() => {
-		const dummyWatchedObject: WatchedMovieDataType = {
-			Poster: 'test_Poster',
-			Title: 'test_Title',
-			Year: 'test_Year',
-			countRatingDecisions: 1,
-			imdbID: 'test_imdbID',
-			imdbRating: 5,
-			runtime: 100,
-			userRating: 10,
-		};
-
 		const { result } = renderHook(() => {
 			const { setWatched } = useLocalStorageState([], '');
 			return { setWatched };
@@ -30,7 +30,7 @@ describe('WatchedMoviesListItem component test suite', () => {
 
 		const { getByTestId, getByText } = render(
 			<WatchedMoviesListItem
-				movie={dummyWatchedObject}
+				movie={DUMMY_WATCHED_OBJECT}
 				setWatched={result.current.setWatched}
 			/>
 		);
