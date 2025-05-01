@@ -3,15 +3,19 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { useState } from 'react';
 import Search from '../../components/Search.tsx';
 
+type RenderRerenderType = (ui: React.ReactNode) => void;
+
+type RenderHookResultType = {
+	current: {
+		query: string;
+		setQuery: React.Dispatch<React.SetStateAction<string>>;
+	};
+};
+
 describe('Search component test suite', () => {
 	let searchElement: HTMLInputElement;
-	let sutRerender: (ui: React.ReactNode) => void;
-	let sutResult: {
-		current: {
-			query: string;
-			setQuery: React.Dispatch<React.SetStateAction<string>>;
-		};
-	};
+	let renderRerender: RenderRerenderType;
+	let renderHookResult: RenderHookResultType;
 
 	beforeEach(() => {
 		const { result } = renderHook(() => {
@@ -26,8 +30,8 @@ describe('Search component test suite', () => {
 			/>
 		);
 
-		sutResult = result;
-		sutRerender = rerender;
+		renderHookResult = result as RenderHookResultType;
+		renderRerender = rerender as RenderRerenderType;
 		searchElement = getByTestId('search') as HTMLInputElement;
 	});
 
@@ -53,10 +57,10 @@ describe('Search component test suite', () => {
 			target: { value: 'testing' },
 		});
 
-		sutRerender(
+		renderRerender(
 			<Search
-				query={sutResult.current.query}
-				setQuery={sutResult.current.setQuery}
+				query={renderHookResult.current.query}
+				setQuery={renderHookResult.current.setQuery}
 			/>
 		);
 
