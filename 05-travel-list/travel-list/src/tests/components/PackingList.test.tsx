@@ -4,38 +4,40 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { type ItemType } from '../../components/App.tsx';
 import PackingList from '../../components/PackingList.tsx';
 
+type RenderHookResultType = {
+	current: {
+		items: ItemType[];
+		setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
+	};
+};
+
 describe('PackingList component test suite', () => {
+	const DUMMY_ITEMS_ARRAY: ItemType[] = [
+		{
+			id: 1,
+			description: 'Passports',
+			quantity: 2,
+			packed: false,
+		},
+		{
+			id: 2,
+			description: 'Socks',
+			quantity: 12,
+			packed: true,
+		},
+	];
+
 	let packingListElement: Element | null;
 	let packingListDivElement: HTMLDivElement;
 	let packingListULElement: HTMLUListElement;
 	let actionsDivElement: HTMLDivElement;
 	let actionsSelectElement: HTMLSelectElement;
 	let clearButtonElement: HTMLButtonElement;
-	let sutResult: {
-		current: {
-			items: ItemType[];
-			setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
-		};
-	};
+	let renderHookResult: RenderHookResultType;
 
 	beforeEach(() => {
-		const dummyItemsArray: ItemType[] = [
-			{
-				id: 1,
-				description: 'Passports',
-				quantity: 2,
-				packed: false,
-			},
-			{
-				id: 2,
-				description: 'Socks',
-				quantity: 12,
-				packed: true,
-			},
-		];
-
 		const { result } = renderHook(() => {
-			const [items, setItems] = useState<ItemType[]>(dummyItemsArray);
+			const [items, setItems] = useState<ItemType[]>(DUMMY_ITEMS_ARRAY);
 			return { items, setItems };
 		});
 
@@ -46,7 +48,7 @@ describe('PackingList component test suite', () => {
 			/>
 		);
 
-		sutResult = result;
+		renderHookResult = result as RenderHookResultType;
 		packingListElement = container.firstElementChild;
 		packingListDivElement = getByTestId('packingList') as HTMLDivElement;
 		packingListULElement = getByTestId('packing-list') as HTMLUListElement;
@@ -107,6 +109,6 @@ describe('PackingList component test suite', () => {
 		);
 
 		expect(window.confirm).toBeCalled();
-		expect(sutResult.current.items).toHaveLength(0);
+		expect(renderHookResult.current.items).toHaveLength(0);
 	});
 });
