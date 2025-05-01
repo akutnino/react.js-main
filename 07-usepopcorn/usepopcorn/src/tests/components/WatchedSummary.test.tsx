@@ -48,7 +48,7 @@ describe('WatchedSummary component test suite', () => {
 	});
 
 	test('should render the correct watched summary stats if watchedMoviesList is not empty', () => {
-		const dummyWatchedArray: WatchedMovieDataType[] = [
+		const DUMMY_WATCHED_ARRAY: WatchedMovieDataType[] = [
 			{
 				Poster: 'test_Poster',
 				Title: 'test_Title',
@@ -60,7 +60,7 @@ describe('WatchedSummary component test suite', () => {
 				userRating: 10,
 			},
 		];
-		const { getByTestId } = render(<WatchedSummary watched={dummyWatchedArray} />);
+		const { getByTestId } = render(<WatchedSummary watched={DUMMY_WATCHED_ARRAY} />);
 
 		const totalWatchedElement = getByTestId('totalWatched') as HTMLSpanElement;
 		const avgImdbRatingElement = getByTestId('avgImdbRating') as HTMLSpanElement;
