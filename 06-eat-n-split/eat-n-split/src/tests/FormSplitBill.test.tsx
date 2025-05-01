@@ -29,7 +29,7 @@ describe('FormSplitBill component test suite', () => {
 		},
 	];
 
-	const DUMMY_FRIEND_OBJECT: FriendObjectType | null = {
+	const DUMMY_FRIEND_OBJECT: FriendObjectType = {
 		id: 118836,
 		name: 'Clark',
 		image: 'https://i.pravatar.cc/48?u=118836',
