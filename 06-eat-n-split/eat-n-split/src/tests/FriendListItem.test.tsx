@@ -5,25 +5,22 @@ import { type FriendObjectType } from '../types/components/types.ts';
 import FriendListItem from '../components/FriendListItem.tsx';
 
 describe('FriendListItem component test suite', () => {
+	const DUMMY_FRIEND_OBJECT: FriendObjectType = {
+		id: 118836,
+		name: 'Clark',
+		image: 'https://i.pravatar.cc/48?u=118836',
+		balance: -7,
+	};
+
 	let friendListItemElement: HTMLLIElement;
 	let selectButtonElement: HTMLButtonElement;
 
 	beforeEach(() => {
-		const friendDummyObject = {
-			id: 118836,
-			name: 'Clark',
-			image: 'https://i.pravatar.cc/48?u=118836',
-			balance: -7,
-		};
-
 		const { result } = renderHook(() => {
 			const [toggleFormAddFriend, setToggleFormAddFriend] = useState<boolean>(true);
-			const [selectedFriend, setSelectedFriend] = useState<FriendObjectType | null>({
-				id: 118836,
-				name: 'Clark',
-				image: 'https://i.pravatar.cc/48?u=118836',
-				balance: -7,
-			});
+			const [selectedFriend, setSelectedFriend] = useState<FriendObjectType | null>(
+				DUMMY_FRIEND_OBJECT
+			);
 
 			return {
 				toggleFormAddFriend,
@@ -38,7 +35,7 @@ describe('FriendListItem component test suite', () => {
 				selectedFriend={result.current.selectedFriend}
 				setSelectedFriend={result.current.setSelectedFriend}
 				setToggleFormAddFriend={result.current.setToggleFormAddFriend}
-				friend={friendDummyObject}
+				friend={DUMMY_FRIEND_OBJECT}
 			/>
 		);
 
