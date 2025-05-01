@@ -4,6 +4,12 @@ import { type ContentItemType } from '../../types/components/types.ts';
 import TabContent from '../../components/TabContent.tsx';
 
 describe('TabContent component test suite', () => {
+	const DUMMY_ITEM: ContentItemType = {
+		summary: 'React is a library for building UIs',
+		details:
+			'Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+	};
+
 	let tabContentElement: HTMLDivElement;
 	let toggleButton: HTMLButtonElement;
 	let likeSpanElement: HTMLSpanElement;
@@ -11,12 +17,6 @@ describe('TabContent component test suite', () => {
 	let tripleIncrease: HTMLButtonElement;
 	let undoButton: HTMLButtonElement;
 	let undoLaterButton: HTMLButtonElement;
-
-	const dummyItem: ContentItemType = {
-		summary: 'React is a library for building UIs',
-		details:
-			'Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-	};
 
 	beforeEach(() => {
 		const currentTestName = expect.getState().currentTestName as string;
@@ -26,7 +26,7 @@ describe('TabContent component test suite', () => {
 
 		if (exemptedTestNames.includes(currentTestName)) return;
 
-		const { getByTestId, getByText } = render(<TabContent item={dummyItem} />);
+		const { getByTestId, getByText } = render(<TabContent item={DUMMY_ITEM} />);
 
 		tabContentElement = getByTestId('tab-content') as HTMLDivElement;
 		toggleButton = getByText('Hide details') as HTMLButtonElement;
@@ -52,7 +52,7 @@ describe('TabContent component test suite', () => {
 	});
 
 	test('should render the correct button text if the user clicks the toggle button', () => {
-		const { getByText } = render(<TabContent item={dummyItem} />);
+		const { getByText } = render(<TabContent item={DUMMY_ITEM} />);
 
 		const toggleHideButton = getByText('Hide details') as HTMLButtonElement;
 		expect(toggleHideButton).toBeInTheDocument();
