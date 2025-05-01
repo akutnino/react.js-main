@@ -9,9 +9,9 @@ describe('Stats component test suite', () => {
 	});
 
 	test('should show that the component has zero items on the list', () => {
-		const dummyItem: ItemType[] = [];
+		const DUMMMY_ITEM: ItemType[] = [];
 
-		const { getByTestId } = render(<Stats items={dummyItem} />);
+		const { getByTestId } = render(<Stats items={DUMMMY_ITEM} />);
 		const emElement = getByTestId('stats-em');
 
 		expect(emElement.innerHTML).toEqual(
@@ -20,11 +20,11 @@ describe('Stats component test suite', () => {
 	});
 
 	test('should show that the component has one item on the list', () => {
-		const dummyItem: ItemType[] = [
+		const DUMMMY_ITEM: ItemType[] = [
 			{ id: 1, description: 'Passports', quantity: 2, packed: false },
 		];
 
-		const { getByTestId } = render(<Stats items={dummyItem} />);
+		const { getByTestId } = render(<Stats items={DUMMMY_ITEM} />);
 		const emElement = getByTestId('stats-em');
 
 		expect(emElement.innerHTML).toEqual(
@@ -33,11 +33,11 @@ describe('Stats component test suite', () => {
 	});
 
 	test('should show that the component has all items packed', () => {
-		const dummyItem: ItemType[] = [
+		const DUMMMY_ITEM: ItemType[] = [
 			{ id: 1, description: 'Passports', quantity: 2, packed: true },
 		];
 
-		const { getByTestId } = render(<Stats items={dummyItem} />);
+		const { getByTestId } = render(<Stats items={DUMMMY_ITEM} />);
 		const emElement = getByTestId('stats-em');
 
 		expect(emElement.innerHTML).toEqual('You got everything! Ready to go!');
