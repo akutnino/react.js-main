@@ -6,5 +6,8 @@ describe('Star component test suite', () => {
 		cleanup();
 	});
 
-	test.todo('should render the component correctly', () => {});
+	test('should render the component correctly', () => {});
+
+	// prettier-ignore
+	test.todo('should render the component correctly based on the props provided', () => {});
 });
