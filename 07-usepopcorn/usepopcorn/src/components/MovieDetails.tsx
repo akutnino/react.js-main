@@ -131,7 +131,7 @@ function MovieDetails({
 
 			{!fetchErrorMessage && !isLoading && (
 				<>
-					<header>
+					<header data-testid='detailsHeader'>
 						<button
 							className='btn-back'
 							onClick={handleCloseDetails}
@@ -142,8 +142,12 @@ function MovieDetails({
 							src={movie?.Poster}
 							alt={`Poster of: ${movie?.Title}`}
 							srcSet={movie?.Poster}
+							data-testid='moviePoster'
 						/>
-						<div className='details-overview'>
+						<div
+							className='details-overview'
+							data-testid='detailsOverview'
+						>
 							<h2>{movie?.Title}</h2>
 							<p>
 								{movie?.Released} &bull; {movie?.Runtime}
@@ -155,7 +159,7 @@ function MovieDetails({
 						</div>
 					</header>
 
-					<section>
+					<section data-testid='detailsSection'>
 						<div className='rating'>
 							{isMovieWatched ? (
 								<p>You Rated this Movie: {watchedUserMovieRating} / 10 ⭐</p>
@@ -173,6 +177,7 @@ function MovieDetails({
 											type='button'
 											className='btn-add'
 											onClick={handleSetRating(userRating)}
+											data-testid='addButton'
 										>
 											Add to List
 										</button>
