@@ -9,7 +9,7 @@ const config: ViteUserConfig = defineConfig({
 			provider: 'v8',
 			reporter: ['text', 'html', 'clover', 'json'],
 			include: ['**/src/**', '**\\/*{.,-}{test,spec}?(-d).?(c|m)[jt]s?(x)'],
-			exclude: [...configDefaults.exclude, './src/components/Main.tsx'],
+			exclude: [...configDefaults.exclude, './src/components/Main.tsx', './src/versions'],
 			reportOnFailure: true,
 		},
 		globals: true,
