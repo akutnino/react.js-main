@@ -58,6 +58,10 @@ export type SuccessFetchMoviesDetailsResponseType = {
 	Runtime: string;
 	Title: string;
 	Type: string;
+	DVD: string;
+	BoxOffice: string;
+	Production: string;
+	Website: string;
 	Writer: string;
 	Year: string;
 	imdbID: string;
