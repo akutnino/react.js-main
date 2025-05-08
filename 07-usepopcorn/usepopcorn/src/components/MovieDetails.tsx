@@ -142,12 +142,8 @@ function MovieDetails({
 							src={movie?.Poster}
 							alt={`Poster of: ${movie?.Title}`}
 							srcSet={movie?.Poster}
-							data-testid='moviePoster'
 						/>
-						<div
-							className='details-overview'
-							data-testid='detailsOverview'
-						>
+						<div className='details-overview'>
 							<h2>{movie?.Title}</h2>
 							<p>
 								{movie?.Released} &bull; {movie?.Runtime}
@@ -162,7 +158,9 @@ function MovieDetails({
 					<section data-testid='detailsSection'>
 						<div className='rating'>
 							{isMovieWatched ? (
-								<p>You Rated this Movie: {watchedUserMovieRating} / 10 ⭐</p>
+								<p data-testid='watchedMovieRating'>
+									You Rated this Movie: {watchedUserMovieRating} / 10 ⭐
+								</p>
 							) : (
 								<>
 									<StarRating
