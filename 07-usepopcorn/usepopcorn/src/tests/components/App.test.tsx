@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import App from '../../components/App.tsx';
 
 describe('App component test suite', () => {
-	let logoElement;
+	let logoElement: HTMLDivElement;
 	let searchElement;
 	let numResultsElement;
 	let mainSectionElement;
@@ -15,6 +15,9 @@ describe('App component test suite', () => {
 		const { getByTestId, queryAllByTestId } = render(<App />);
 
 		const boxElement: HTMLElement[] = queryAllByTestId('box');
+
+		logoElement = getByTestId('logo') as HTMLDivElement;
+		searchElement = getByTestId('search') as HTMLInputElement;
 	});
 
 	afterEach(() => {
