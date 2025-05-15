@@ -26,10 +26,19 @@ type RenderFindByTestIdType = (
 	waitForElementOptions?: waitForOptions | undefined
 ) => Promise<HTMLElement>;
 
+type RenderGetByTestIdType = (
+	id: Matcher,
+	options?: MatcherOptions | undefined
+) => HTMLElement;
+
 describe('App component test suite', () => {
+	const DUMMY_VALID_MOVIE_TITLE: string = 'test';
+
+	let renderGetByTestId: RenderGetByTestIdType;
 	let renderFindByTestId: RenderFindByTestIdType;
 	let renderFindAllByTestId: RenderFindAllByTestIdType;
 	let renderQueryAllByTestId: RenderQueryAllByTestIdType;
+
 	let logoElement: HTMLDivElement;
 	let searchElement: HTMLInputElement;
 	let numResultsElement: HTMLParagraphElement;
@@ -43,9 +52,11 @@ describe('App component test suite', () => {
 			<App />
 		);
 
+		renderGetByTestId = getByTestId as RenderGetByTestIdType;
 		renderFindByTestId = findByTestId as RenderFindByTestIdType;
 		renderFindAllByTestId = findAllByTestId as RenderFindAllByTestIdType;
 		renderQueryAllByTestId = queryAllByTestId as RenderQueryAllByTestIdType;
+
 		logoElement = getByTestId('logo') as HTMLDivElement;
 		searchElement = getByTestId('search') as HTMLInputElement;
 		numResultsElement = getByTestId('numResults') as HTMLParagraphElement;
@@ -72,7 +83,6 @@ describe('App component test suite', () => {
 
 	// integration testing
 	test('should render MovieListItem components if the user query is valid', async () => {
-		const DUMMY_VALID_MOVIE_TITLE: string = 'test';
 		expect(searchElement.value).toBe('');
 
 		fireEvent.change(searchElement, {
@@ -83,7 +93,7 @@ describe('App component test suite', () => {
 		expect(await renderFindAllByTestId('movieListItem')).toHaveLength(10);
 	});
 
-	test.only('should render correct ErrorMessage if the user query is invalid', async () => {
+	test('should render correct ErrorMessage if the user query is invalid', async () => {
 		const DUMMY_INVALID_MOVIE_TITLE: string = '     ';
 		expect(searchElement.value).toBe('');
 
@@ -93,6 +103,33 @@ describe('App component test suite', () => {
 
 		expect(searchElement.value).toBe(DUMMY_INVALID_MOVIE_TITLE);
 		expect((await renderFindByTestId('error')).textContent).toBe('🛑Incorrect IMDb ID.');
+	});
+
+	test('should render MovieDetails component if the user click a MovieListItem component', async () => {
+		expect(searchElement.value).toBe('');
+
+		fireEvent.change(searchElement, {
+			target: { value: DUMMY_VALID_MOVIE_TITLE },
+		});
+
+		expect(searchElement.value).toBe(DUMMY_VALID_MOVIE_TITLE);
+
+		// prettier-ignore
+		const movieListItemElement: HTMLElement[] = await renderFindAllByTestId('movieListItem');
+		expect(movieListItemElement).toHaveLength(10);
+
+		fireEvent.click(
+			movieListItemElement[0],
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		const movieDetailsElement = await renderFindByTestId('movieDetails', undefined, {
+			timeout: 5000,
+		});
+		expect(movieDetailsElement).toBeInTheDocument();
 	});
 
 	test.todo('WatchedMoviesListItem delete button', () => {});
