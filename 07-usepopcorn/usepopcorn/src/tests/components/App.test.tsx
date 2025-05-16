@@ -83,6 +83,7 @@ describe('App component test suite', () => {
 	});
 
 	afterEach(() => {
+		localStorage.clear();
 		cleanup();
 	});
 
@@ -196,5 +197,59 @@ describe('App component test suite', () => {
 		expect(renderGetByTestId('watchedMoviesListItem')).toBeInTheDocument();
 	});
 
-	test('WatchedMoviesListItem delete button', () => {});
+	test('should remove WatchedMoviesListItem component if the user clicked its delete button', async () => {
+		expect(searchElement.value).toBe('');
+
+		fireEvent.change(searchElement, {
+			target: { value: DUMMY_VALID_MOVIE_TITLE },
+		});
+
+		expect(searchElement.value).toBe(DUMMY_VALID_MOVIE_TITLE);
+
+		// prettier-ignore
+		const movieListItemElement: HTMLElement[] = await renderFindAllByTestId('movieListItem');
+		expect(movieListItemElement).toHaveLength(10);
+
+		fireEvent.click(
+			movieListItemElement[0],
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		const starElement: HTMLElement[] = await renderFindAllByTestId('star');
+
+		fireEvent.click(
+			starElement[0],
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		const addButtonElement = renderGetByTestId('addButton') as HTMLButtonElement;
+
+		fireEvent.click(
+			addButtonElement,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		expect(renderGetByTestId('watchedMoviesListItem')).toBeInTheDocument();
+		const deleteButtonElement = renderGetByTestId('watchedMoviesListItem').children[2]
+			.lastElementChild as HTMLButtonElement;
+
+		fireEvent.click(
+			deleteButtonElement,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		expect(renderQueryByTestId('watchedMoviesListItem')).toBe(null);
+	});
 });
