@@ -26,15 +26,9 @@ type RenderFindByTestIdType = (
 	waitForElementOptions?: waitForOptions | undefined
 ) => Promise<HTMLElement>;
 
-type RenderGetByTestIdType = (
-	id: Matcher,
-	options?: MatcherOptions | undefined
-) => HTMLElement;
-
 describe('App component test suite', () => {
 	const DUMMY_VALID_MOVIE_TITLE: string = 'test';
 
-	let renderGetByTestId: RenderGetByTestIdType;
 	let renderFindByTestId: RenderFindByTestIdType;
 	let renderFindAllByTestId: RenderFindAllByTestIdType;
 	let renderQueryAllByTestId: RenderQueryAllByTestIdType;
@@ -49,10 +43,12 @@ describe('App component test suite', () => {
 
 	beforeEach(() => {
 		const { getByTestId, queryAllByTestId, findAllByTestId, findByTestId } = render(
-			<App />
+			<>
+				<title>usePopcorn</title>
+				<App />
+			</>
 		);
 
-		renderGetByTestId = getByTestId as RenderGetByTestIdType;
 		renderFindByTestId = findByTestId as RenderFindByTestIdType;
 		renderFindAllByTestId = findAllByTestId as RenderFindAllByTestIdType;
 		renderQueryAllByTestId = queryAllByTestId as RenderQueryAllByTestIdType;
@@ -126,10 +122,32 @@ describe('App component test suite', () => {
 			})
 		);
 
-		const movieDetailsElement = await renderFindByTestId('movieDetails', undefined, {
-			timeout: 5000,
-		});
+		const movieDetailsElement = await renderFindByTestId('movieDetails');
 		expect(movieDetailsElement).toBeInTheDocument();
+	});
+
+	test('should render WatchedMoviesListItem component if the user rated and added a movie', async () => {
+		expect(searchElement.value).toBe('');
+
+		fireEvent.change(searchElement, {
+			target: { value: DUMMY_VALID_MOVIE_TITLE },
+		});
+
+		expect(searchElement.value).toBe(DUMMY_VALID_MOVIE_TITLE);
+
+		// prettier-ignore
+		const movieListItemElement: HTMLElement[] = await renderFindAllByTestId('movieListItem');
+		expect(movieListItemElement).toHaveLength(10);
+
+		fireEvent.click(
+			movieListItemElement[0],
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		const starElement: HTMLElement[] = await renderFindAllByTestId('star');
 	});
 
 	test.todo('WatchedMoviesListItem delete button', () => {});
