@@ -26,12 +26,24 @@ type RenderFindByTestIdType = (
 	waitForElementOptions?: waitForOptions | undefined
 ) => Promise<HTMLElement>;
 
+type RenderGetByTestIdType = (
+	id: Matcher,
+	options?: MatcherOptions | undefined
+) => HTMLElement;
+
+type RenderQueryByTestIdType = (
+	id: Matcher,
+	options?: MatcherOptions | undefined
+) => HTMLElement | null;
+
 describe('App component test suite', () => {
 	const DUMMY_VALID_MOVIE_TITLE: string = 'test';
 
+	let renderGetByTestId: RenderGetByTestIdType;
 	let renderFindByTestId: RenderFindByTestIdType;
 	let renderFindAllByTestId: RenderFindAllByTestIdType;
 	let renderQueryAllByTestId: RenderQueryAllByTestIdType;
+	let renderQueryByTestId: RenderQueryByTestIdType;
 
 	let logoElement: HTMLDivElement;
 	let searchElement: HTMLInputElement;
@@ -42,13 +54,21 @@ describe('App component test suite', () => {
 	let watchedMoviesListElement: HTMLUListElement;
 
 	beforeEach(() => {
-		const { getByTestId, queryAllByTestId, findAllByTestId, findByTestId } = render(
+		const {
+			getByTestId,
+			queryAllByTestId,
+			queryByTestId,
+			findAllByTestId,
+			findByTestId,
+		} = render(
 			<>
 				<title>usePopcorn</title>
 				<App />
 			</>
 		);
 
+		renderQueryByTestId = queryByTestId as RenderQueryByTestIdType;
+		renderGetByTestId = getByTestId as RenderGetByTestIdType;
 		renderFindByTestId = findByTestId as RenderFindByTestIdType;
 		renderFindAllByTestId = findAllByTestId as RenderFindAllByTestIdType;
 		renderQueryAllByTestId = queryAllByTestId as RenderQueryAllByTestIdType;
@@ -124,6 +144,12 @@ describe('App component test suite', () => {
 
 		const movieDetailsElement = await renderFindByTestId('movieDetails');
 		expect(movieDetailsElement).toBeInTheDocument();
+
+		fireEvent.keyDown(document.body, {
+			key: 'Escape',
+			code: 'Escape',
+		});
+		expect(renderQueryByTestId('movieDetails')).toBe(null);
 	});
 
 	test('should render WatchedMoviesListItem component if the user rated and added a movie', async () => {
@@ -148,7 +174,27 @@ describe('App component test suite', () => {
 		);
 
 		const starElement: HTMLElement[] = await renderFindAllByTestId('star');
+
+		fireEvent.click(
+			starElement[0],
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		const addButtonElement = renderGetByTestId('addButton') as HTMLButtonElement;
+
+		fireEvent.click(
+			addButtonElement,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		expect(renderGetByTestId('watchedMoviesListItem')).toBeInTheDocument();
 	});
 
-	test.todo('WatchedMoviesListItem delete button', () => {});
+	test('WatchedMoviesListItem delete button', () => {});
 });
