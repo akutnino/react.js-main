@@ -98,7 +98,8 @@ describe('App component test suite', () => {
 		expect(watchedMoviesListElement).toBeInTheDocument();
 	});
 
-	// integration testing
+	// Integration Testing
+
 	test('should render MovieListItem components if the user query is valid', async () => {
 		expect(searchElement.value).toBe('');
 
