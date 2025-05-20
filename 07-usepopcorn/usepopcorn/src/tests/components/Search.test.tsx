@@ -74,6 +74,12 @@ describe('Search component test suite', () => {
 			code: 'Enter',
 		});
 
+		// Double clicking the Enter key to touch both outcomes of line 18.
+		fireEvent.keyDown(searchElement, {
+			key: 'Enter',
+			code: 'Enter',
+		});
+
 		expect(document.activeElement === searchElement).toBe(true);
 		expect(searchElement.value).toEqual('');
 	});
