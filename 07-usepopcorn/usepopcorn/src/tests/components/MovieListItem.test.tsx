@@ -71,6 +71,24 @@ describe('MovieListItem component test suite', () => {
 	test('should set SelectedMovieID if the user clicks on MovieListItem', () => {
 		expect(renderHookResult.current.selectedMovieID).toBe(null);
 
+		// Simulating the user event to the movieListItemElement.
+		fireEvent.click(
+			movieListItemElement,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		// Triple clicking the movieListItemElement to touch both outcomes of line 13.
+		fireEvent.click(
+			movieListItemElement,
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
 		fireEvent.click(
 			movieListItemElement,
 			new MouseEvent('click', {
