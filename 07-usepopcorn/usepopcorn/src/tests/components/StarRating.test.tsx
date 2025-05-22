@@ -43,6 +43,7 @@ describe('StarRating component test suite', () => {
 	test('should render the correct hover rating if the user hover the cursur to a star component', () => {
 		expect(ratingElement.innerHTML).toBe('');
 
+		// Simulating the user event to the starElement.
 		fireEvent.mouseEnter(
 			starElement,
 			new MouseEvent('mouseenter', {
@@ -67,6 +68,7 @@ describe('StarRating component test suite', () => {
 	test('should render the correct rating if the user clicks a star component', () => {
 		expect(ratingElement.innerHTML).toBe('');
 
+		// Simulating the user event to the starElement.
 		fireEvent.mouseEnter(
 			starElement,
 			new MouseEvent('mouseenter', {
@@ -113,6 +115,7 @@ describe('StarRating component test suite', () => {
 
 		expect(ratingElement.innerHTML).toBe('');
 
+		// Simulating the user event to the starElement.
 		fireEvent.click(
 			starElement,
 			new MouseEvent('click', {
