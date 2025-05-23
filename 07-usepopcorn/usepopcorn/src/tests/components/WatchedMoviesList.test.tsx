@@ -101,6 +101,7 @@ describe('WatchedMoviesList component test suite', () => {
 	});
 
 	test('should delete WatchedMoviesListItem if the user clicked the delete button', () => {
+		// Simulating the user event to the deleteButtonElement.
 		fireEvent.click(
 			deleteButtonElement,
 			new MouseEvent('click', {
