@@ -84,6 +84,7 @@ describe('Star component test suite', () => {
 	test('should render the correct hover rating if the user hovers over the star component', () => {
 		expect(renderHookResult.current.hoverRating).toBe(DEFAULT_RATING);
 
+		// Simulating the user event to the starElement.
 		fireEvent.mouseEnter(
 			starElement,
 			new MouseEvent('mouseenter', {
