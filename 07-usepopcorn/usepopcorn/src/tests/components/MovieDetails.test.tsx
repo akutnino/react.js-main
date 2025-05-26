@@ -127,6 +127,7 @@ describe('MovieDetails component test suite', () => {
 
 		expect(renderHookResult.current.selectedMovieID).toBe(DUMMY_SELECTEDMOVIEID);
 
+		// Simulating the user event to the closeButtonElement.
 		fireEvent.click(
 			closeButtonElement,
 			new MouseEvent('click', {
@@ -145,6 +146,7 @@ describe('MovieDetails component test suite', () => {
 
 		expect(renderQueryByTestId('addButton')).toBe(null);
 
+		// Simulating the user event to the starElement.
 		fireEvent.click(
 			starElement,
 			new MouseEvent('click', {
@@ -161,6 +163,7 @@ describe('MovieDetails component test suite', () => {
 		const starElement = starRatingElement.firstElementChild
 			?.firstElementChild as HTMLSpanElement;
 
+		// Simulating the user event to the starElement.
 		fireEvent.click(
 			starElement,
 			new MouseEvent('click', {
@@ -174,6 +177,7 @@ describe('MovieDetails component test suite', () => {
 		expect(renderHookResult.current.selectedMovieID).toBe(DUMMY_SELECTEDMOVIEID);
 		expect(renderHookResult.current.watched).toEqual([]);
 
+		// Simulating the user event to the addButtonElement.
 		fireEvent.click(
 			addButtonElement,
 			new MouseEvent('click', {
