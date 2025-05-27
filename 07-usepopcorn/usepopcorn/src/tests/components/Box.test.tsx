@@ -51,6 +51,7 @@ describe('Box component test suite', () => {
 		const toggleButtonElement = getByTestId('box').firstElementChild as HTMLButtonElement;
 		expect(toggleButtonElement.innerHTML).toBe('–');
 
+		// Simulating the user event to the toggleButtonElement.
 		fireEvent.click(
 			toggleButtonElement,
 			new MouseEvent('click', {
