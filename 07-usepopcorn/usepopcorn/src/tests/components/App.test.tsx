@@ -103,6 +103,7 @@ describe('App component test suite', () => {
 	test('should render MovieListItem components if the user query is valid', async () => {
 		expect(searchElement.value).toBe('');
 
+		// Simulating the user event to the searchElement.
 		fireEvent.change(searchElement, {
 			target: { value: DUMMY_VALID_MOVIE_TITLE },
 		});
@@ -115,6 +116,7 @@ describe('App component test suite', () => {
 		const DUMMY_INVALID_MOVIE_TITLE: string = '     ';
 		expect(searchElement.value).toBe('');
 
+		// Simulating the user event to the searchElement.
 		fireEvent.change(searchElement, {
 			target: { value: DUMMY_INVALID_MOVIE_TITLE },
 		});
@@ -126,6 +128,7 @@ describe('App component test suite', () => {
 	test('should render MovieDetails component if the user click a MovieListItem component', async () => {
 		expect(searchElement.value).toBe('');
 
+		// Simulating the user event to the searchElement.
 		fireEvent.change(searchElement, {
 			target: { value: DUMMY_VALID_MOVIE_TITLE },
 		});
@@ -136,6 +139,7 @@ describe('App component test suite', () => {
 		const movieListItemElement: HTMLElement[] = await renderFindAllByTestId('movieListItem');
 		expect(movieListItemElement).toHaveLength(10);
 
+		// Simulating the user event to the movieListItemElement.
 		fireEvent.click(
 			movieListItemElement[0],
 			new MouseEvent('click', {
@@ -147,6 +151,7 @@ describe('App component test suite', () => {
 		const movieDetailsElement = await renderFindByTestId('movieDetails');
 		expect(movieDetailsElement).toBeInTheDocument();
 
+		// Simulating the user event to the document.body.
 		fireEvent.keyDown(document.body, {
 			key: 'Escape',
 			code: 'Escape',
@@ -157,6 +162,7 @@ describe('App component test suite', () => {
 	test('should render WatchedMoviesListItem component if the user rated and added a movie', async () => {
 		expect(searchElement.value).toBe('');
 
+		// Simulating the user event to the searchElement.
 		fireEvent.change(searchElement, {
 			target: { value: DUMMY_VALID_MOVIE_TITLE },
 		});
@@ -167,6 +173,7 @@ describe('App component test suite', () => {
 		const movieListItemElement: HTMLElement[] = await renderFindAllByTestId('movieListItem');
 		expect(movieListItemElement).toHaveLength(10);
 
+		// Simulating the user event to the movieListItemElement.
 		fireEvent.click(
 			movieListItemElement[0],
 			new MouseEvent('click', {
@@ -177,6 +184,7 @@ describe('App component test suite', () => {
 
 		const starElement: HTMLElement[] = await renderFindAllByTestId('star');
 
+		// Simulating the user event to the starElement.
 		fireEvent.click(
 			starElement[0],
 			new MouseEvent('click', {
@@ -187,6 +195,7 @@ describe('App component test suite', () => {
 
 		const addButtonElement = renderGetByTestId('addButton') as HTMLButtonElement;
 
+		// Simulating the user event to the addButtonElement.
 		fireEvent.click(
 			addButtonElement,
 			new MouseEvent('click', {
@@ -201,6 +210,7 @@ describe('App component test suite', () => {
 	test('should remove WatchedMoviesListItem component if the user clicked its delete button', async () => {
 		expect(searchElement.value).toBe('');
 
+		// Simulating the user event to the searchElement.
 		fireEvent.change(searchElement, {
 			target: { value: DUMMY_VALID_MOVIE_TITLE },
 		});
@@ -211,6 +221,7 @@ describe('App component test suite', () => {
 		const movieListItemElement: HTMLElement[] = await renderFindAllByTestId('movieListItem');
 		expect(movieListItemElement).toHaveLength(10);
 
+		// Simulating the user event to the movieListItemElement.
 		fireEvent.click(
 			movieListItemElement[0],
 			new MouseEvent('click', {
@@ -221,6 +232,7 @@ describe('App component test suite', () => {
 
 		const starElement: HTMLElement[] = await renderFindAllByTestId('star');
 
+		// Simulating the user event to the starElement.
 		fireEvent.click(
 			starElement[0],
 			new MouseEvent('click', {
@@ -231,6 +243,7 @@ describe('App component test suite', () => {
 
 		const addButtonElement = renderGetByTestId('addButton') as HTMLButtonElement;
 
+		// Simulating the user event to the addButtonElement.
 		fireEvent.click(
 			addButtonElement,
 			new MouseEvent('click', {
@@ -243,6 +256,7 @@ describe('App component test suite', () => {
 		const deleteButtonElement = renderGetByTestId('watchedMoviesListItem').children[2]
 			.lastElementChild as HTMLButtonElement;
 
+		// Simulating the user event to the deleteButtonElement.
 		fireEvent.click(
 			deleteButtonElement,
 			new MouseEvent('click', {
