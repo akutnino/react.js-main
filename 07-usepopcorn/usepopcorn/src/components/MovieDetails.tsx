@@ -5,6 +5,7 @@ import {
 	type FetchMovieDetailsResponseType,
 } from '../types/components/types.ts';
 import { type SetWatchedType } from '../types/hooks/types.ts';
+
 import StarRating from './StarRating.tsx';
 import Loader from './Loader.tsx';
 import ErrorMessage from './ErrorMessage.tsx';
