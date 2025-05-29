@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMovies } from '../hooks/useMovies.ts';
 import { useLocalStorageState } from '../hooks/useLocalStorageState.ts';
 import { useKey } from '../hooks/useKey.ts';
+
 import NavBar from './NavBar.tsx';
 import MainSection from './MainSection.tsx';
 import NumResults from './NumResults.tsx';
