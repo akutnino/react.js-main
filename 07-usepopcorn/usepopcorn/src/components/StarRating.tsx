@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import Star from './Star.tsx';
 
 const containerStyle = {
