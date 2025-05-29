@@ -1,5 +1,6 @@
 import { type WatchedMovieDataType } from '../types/components/types.ts';
 import { type SetWatchedType } from '../types/hooks/types.ts';
+
 import WatchedMoviesListItem from './WatchedMoviesListItem.tsx';
 
 function WatchedMoviesList({
