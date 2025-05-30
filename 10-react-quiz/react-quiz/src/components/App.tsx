@@ -1,9 +1,15 @@
-import DateCounter from './DateCounter.tsx';
+import Header from './Header.tsx';
+import MainContent from './MainContent.tsx';
 
 function App() {
 	return (
-		<div>
-			<DateCounter />
+		<div className='app'>
+			<Header />
+
+			<MainContent>
+				<p>1/15</p>
+				<p>Questions</p>
+			</MainContent>
 		</div>
 	);
 }
