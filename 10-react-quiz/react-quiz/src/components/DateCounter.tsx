@@ -1,70 +1,13 @@
 import { useReducer, type ChangeEvent } from 'react';
-
-type CountActionType = {
-	type: 'decreasing' | 'increasing';
-};
-
-type SettingActionType = {
-	type: 'setCount' | 'setStep';
-	payload: number;
-};
-
-type ResetActionType = {
-	type: 'reset';
-};
-
-type ActionType = CountActionType | SettingActionType | ResetActionType;
-
-type InitalStateType = {
-	count: number;
-	step: number;
-};
-
-const INITIAL_STATE: InitalStateType = {
-	count: 0,
-	step: 1,
-};
-
-function reducer(currentState: InitalStateType, action: ActionType): InitalStateType {
-	console.log(currentState, action);
-
-	switch (action.type) {
-		case 'setCount': {
-			return {
-				...currentState,
-				count: action.payload,
-			};
-		}
-		case 'setStep': {
-			return {
-				...currentState,
-				step: action.payload,
-			};
-		}
-		case 'decreasing': {
-			return {
-				...currentState,
-				count: currentState.count - currentState.step,
-			};
-		}
-		case 'increasing': {
-			return {
-				...currentState,
-				count: currentState.count + currentState.step,
-			};
-		}
-		case 'reset': {
-			return INITIAL_STATE;
-		}
-		default: {
-			return currentState;
-		}
-	}
-}
+import type { InitalDateCounterStateType } from '../types/components/types.ts';
+import {
+	dateCounterReducer,
+	INITIAL_DATE_COUNTER_STATE,
+} from '../reducers/dateCounterReducer.ts';
 
 function DateCounter() {
-	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-	const { count, step }: InitalStateType = state;
+	const [state, dispatch] = useReducer(dateCounterReducer, INITIAL_DATE_COUNTER_STATE);
+	const { count, step }: InitalDateCounterStateType = state;
 
 	// This mutates the date object.
 	const date = new Date('june 21 2027');
