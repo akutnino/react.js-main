@@ -17,3 +17,30 @@ export type InitalDateCounterStateType = {
 	count: number;
 	step: number;
 };
+
+export type QuestionsArrayType = {
+	question: string;
+	options: string[];
+	correctOption: number;
+	points: number;
+	id: string;
+}[];
+
+export type InitalReactQuizType = {
+	questions: QuestionsArrayType;
+	status: 'loading' | 'error' | 'ready' | 'active' | 'finished';
+};
+
+type ReactQuizDataFailedActionType = {
+	type: 'dataFailed';
+	payload: string;
+};
+
+type ReactQuizDataReceivedActionType = {
+	type: 'dataReceived';
+	payload: QuestionsArrayType;
+};
+
+export type ReactQuizActionType =
+	| ReactQuizDataReceivedActionType
+	| ReactQuizDataFailedActionType;
