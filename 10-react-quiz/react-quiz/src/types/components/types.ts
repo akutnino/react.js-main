@@ -11,7 +11,7 @@ type ResetActionType = {
 	type: 'reset';
 };
 
-export type ActionType = CountActionType | SettingActionType | ResetActionType;
+export type DateCounterActionType = CountActionType | SettingActionType | ResetActionType;
 
 export type InitalDateCounterStateType = {
 	count: number;

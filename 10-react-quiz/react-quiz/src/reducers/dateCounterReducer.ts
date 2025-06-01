@@ -1,5 +1,5 @@
 import type {
-	ActionType,
+	DateCounterActionType,
 	InitalDateCounterStateType,
 } from '../types/components/types.ts';
 
@@ -10,7 +10,7 @@ export const INITIAL_DATE_COUNTER_STATE: InitalDateCounterStateType = {
 
 function dateCounterReducer(
 	currentState: InitalDateCounterStateType,
-	action: ActionType
+	action: DateCounterActionType
 ): InitalDateCounterStateType {
 	console.log(currentState, action);
 
