@@ -1,0 +1,35 @@
+import type {
+	InitalReactQuizType,
+	ReactQuizActionType,
+} from '../types/components/types.ts';
+
+export const INITIAL_REACT_QUIZ_STATE: InitalReactQuizType = {
+	questions: [],
+	status: 'loading',
+};
+
+function reactQuizReducer(
+	currentState: InitalReactQuizType,
+	action: ReactQuizActionType
+): InitalReactQuizType {
+	switch (action.type) {
+		case 'dataReceived': {
+			return {
+				...currentState,
+				questions: action.payload,
+				status: 'ready',
+			};
+		}
+		case 'dataFailed': {
+			return {
+				...currentState,
+				status: 'error',
+			};
+		}
+		default: {
+			return currentState;
+		}
+	}
+}
+
+export { reactQuizReducer };
