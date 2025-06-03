@@ -26,6 +26,12 @@ function reactQuizReducer(
 				status: 'error',
 			};
 		}
+		case 'startQuiz': {
+			return {
+				...currentState,
+				status: 'active',
+			};
+		}
 		default: {
 			return currentState;
 		}
