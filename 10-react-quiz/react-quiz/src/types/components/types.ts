@@ -18,17 +18,20 @@ export type InitalDateCounterStateType = {
 	step: number;
 };
 
-export type QuestionsArrayType = {
+export type QuestionType = {
 	question: string;
 	options: string[];
 	correctOption: number;
 	points: number;
 	id: string;
-}[];
+};
+
+export type QuestionsArrayType = QuestionType[];
 
 export type InitalReactQuizType = {
 	questions: QuestionsArrayType;
 	status: 'loading' | 'error' | 'ready' | 'active' | 'finished';
+	questionIndex: number;
 };
 
 type ReactQuizDataFailedActionType = {
