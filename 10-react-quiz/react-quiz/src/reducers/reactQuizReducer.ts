@@ -6,6 +6,7 @@ import type {
 export const INITIAL_REACT_QUIZ_STATE: InitalReactQuizType = {
 	questions: [],
 	status: 'loading',
+	questionIndex: 0,
 };
 
 function reactQuizReducer(
