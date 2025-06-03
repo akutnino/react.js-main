@@ -41,6 +41,11 @@ type ReactQuizDataReceivedActionType = {
 	payload: QuestionsArrayType;
 };
 
+type ReactQuizStartQuizActionType = {
+	type: 'startQuiz';
+};
+
 export type ReactQuizActionType =
 	| ReactQuizDataReceivedActionType
-	| ReactQuizDataFailedActionType;
+	| ReactQuizDataFailedActionType
+	| ReactQuizStartQuizActionType;
