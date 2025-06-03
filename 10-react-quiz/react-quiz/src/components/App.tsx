@@ -13,6 +13,7 @@ import MainContent from './MainContent.tsx';
 import Loader from './Loader.tsx';
 import ErrorMessage from './ErrorMessage.tsx';
 import StartScreen from './StartScreen.tsx';
+import Question from './Question.tsx';
 
 function App() {
 	const [state, dispatch] = useReducer(reactQuizReducer, INITIAL_REACT_QUIZ_STATE);
@@ -58,7 +59,13 @@ function App() {
 
 			<MainContent>
 				{status === 'loading' && <Loader />}
-				{status === 'ready' && <StartScreen totalQuestions={totalQuestions} />}
+				{status === 'ready' && (
+					<StartScreen
+						totalQuestions={totalQuestions}
+						dispatch={dispatch}
+					/>
+				)}
+				{status === 'active' && <Question />}
 				{status === 'error' && <ErrorMessage />}
 			</MainContent>
 		</div>
