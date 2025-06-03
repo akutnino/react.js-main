@@ -4,6 +4,7 @@ import {
 	reactQuizReducer,
 } from '../reducers/reactQuizReducer.ts';
 import type { QuestionsArrayType } from '../types/components/types.ts';
+
 import Header from './Header.tsx';
 import MainContent from './MainContent.tsx';
 
@@ -39,6 +40,7 @@ function App() {
 				}
 			}
 		};
+
 		fetchQuestions();
 	}, []);
 
