@@ -3,13 +3,21 @@ import {
 	INITIAL_REACT_QUIZ_STATE,
 	reactQuizReducer,
 } from '../reducers/reactQuizReducer.ts';
-import type { QuestionsArrayType } from '../types/components/types.ts';
+import type {
+	InitalReactQuizType,
+	QuestionsArrayType,
+} from '../types/components/types.ts';
 
 import Header from './Header.tsx';
 import MainContent from './MainContent.tsx';
+import Loader from './Loader.tsx';
+import ErrorMessage from './ErrorMessage.tsx';
+import StartScreen from './StartScreen.tsx';
 
 function App() {
 	const [state, dispatch] = useReducer(reactQuizReducer, INITIAL_REACT_QUIZ_STATE);
+	const { questions, status }: InitalReactQuizType = state;
+	const totalQuestions: number = questions.length;
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
@@ -49,8 +57,9 @@ function App() {
 			<Header />
 
 			<MainContent>
-				<p>1/15</p>
-				<p>Questions</p>
+				{status === 'loading' && <Loader />}
+				{status === 'ready' && <StartScreen totalQuestions={totalQuestions} />}
+				{status === 'error' && <ErrorMessage />}
 			</MainContent>
 		</div>
 	);
