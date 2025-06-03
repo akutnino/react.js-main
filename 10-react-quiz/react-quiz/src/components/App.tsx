@@ -17,7 +17,8 @@ import Question from './Question.tsx';
 
 function App() {
 	const [state, dispatch] = useReducer(reactQuizReducer, INITIAL_REACT_QUIZ_STATE);
-	const { questions, status, questionIndex }: InitalReactQuizType = state;
+	const { questions, status, questionIndex, userAnswerIndex }: InitalReactQuizType =
+		state;
 	const totalQuestions: number = questions.length;
 
 	useEffect(() => {
@@ -65,7 +66,13 @@ function App() {
 						dispatch={dispatch}
 					/>
 				)}
-				{status === 'active' && <Question question={questions[questionIndex]} />}
+				{status === 'active' && (
+					<Question
+						question={questions[questionIndex]}
+						userAnswerIndex={userAnswerIndex}
+						dispatch={dispatch}
+					/>
+				)}
 				{status === 'error' && <ErrorMessage />}
 			</MainContent>
 		</div>
