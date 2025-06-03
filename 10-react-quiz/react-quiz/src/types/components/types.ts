@@ -28,10 +28,13 @@ export type QuestionType = {
 
 export type QuestionsArrayType = QuestionType[];
 
+export type UserAnswerIndexType = null | number;
+
 export type InitalReactQuizType = {
 	questions: QuestionsArrayType;
 	status: 'loading' | 'error' | 'ready' | 'active' | 'finished';
 	questionIndex: number;
+	userAnswerIndex: UserAnswerIndexType;
 };
 
 type ReactQuizDataFailedActionType = {
@@ -48,7 +51,13 @@ type ReactQuizStartQuizActionType = {
 	type: 'startQuiz';
 };
 
+type ReactQuizUserAnswerActionType = {
+	type: 'userAnswer';
+	payload: number;
+};
+
 export type ReactQuizActionType =
 	| ReactQuizDataReceivedActionType
 	| ReactQuizDataFailedActionType
-	| ReactQuizStartQuizActionType;
+	| ReactQuizStartQuizActionType
+	| ReactQuizUserAnswerActionType;
