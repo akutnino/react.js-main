@@ -7,6 +7,7 @@ export const INITIAL_REACT_QUIZ_STATE: InitalReactQuizType = {
 	questions: [],
 	status: 'loading',
 	questionIndex: 0,
+	userAnswerIndex: null,
 };
 
 function reactQuizReducer(
@@ -31,6 +32,12 @@ function reactQuizReducer(
 			return {
 				...currentState,
 				status: 'active',
+			};
+		}
+		case 'userAnswer': {
+			return {
+				...currentState,
+				userAnswerIndex: action.payload,
 			};
 		}
 		default: {
