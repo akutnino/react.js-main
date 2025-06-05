@@ -15,6 +15,8 @@ function Options({
 	userAnswerIndex: UserAnswerIndexType;
 	dispatch: ActionDispatch<[action: ReactQuizActionType]>;
 }) {
+	const IS_INTEGER: boolean = Number.isInteger(userAnswerIndex);
+
 	const handleAnswer = (answerIndex: number) => {
 		return () => {
 			dispatch({
@@ -31,8 +33,8 @@ function Options({
 					<button
 						type='button'
 						className={`btn btn-option ${index === userAnswerIndex ? 'answer' : ''} 
-            ${index === correctOption && userAnswerIndex && 'correct'} 
-            ${index !== correctOption && userAnswerIndex && 'wrong'}`}
+            ${index === correctOption && IS_INTEGER && 'correct'} 
+            ${index !== correctOption && IS_INTEGER && 'wrong'}`}
 						disabled={userAnswerIndex !== null}
 						onClick={handleAnswer(index)}
 						key={index}
