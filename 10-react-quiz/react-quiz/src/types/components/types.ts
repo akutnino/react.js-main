@@ -35,6 +35,7 @@ export type InitalReactQuizType = {
 	status: 'loading' | 'error' | 'ready' | 'active' | 'finished';
 	questionIndex: number;
 	userAnswerIndex: UserAnswerIndexType;
+	userTotalPoints: number;
 };
 
 type ReactQuizDataFailedActionType = {
