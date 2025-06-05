@@ -14,12 +14,15 @@ import Loader from './Loader.tsx';
 import ErrorMessage from './ErrorMessage.tsx';
 import StartScreen from './StartScreen.tsx';
 import Question from './Question.tsx';
+import NextButton from './NextButton.tsx';
 
 function App() {
 	const [state, dispatch] = useReducer(reactQuizReducer, INITIAL_REACT_QUIZ_STATE);
 	const { questions, status, questionIndex, userAnswerIndex }: InitalReactQuizType =
 		state;
 	const totalQuestions: number = questions.length;
+	const isQuestionAnswered: boolean =
+		userAnswerIndex !== null && Number.isInteger(userAnswerIndex);
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
@@ -67,11 +70,15 @@ function App() {
 					/>
 				)}
 				{status === 'active' && (
-					<Question
-						question={questions[questionIndex]}
-						userAnswerIndex={userAnswerIndex}
-						dispatch={dispatch}
-					/>
+					<>
+						<Question
+							question={questions[questionIndex]}
+							userAnswerIndex={userAnswerIndex}
+							dispatch={dispatch}
+						/>
+
+						{isQuestionAnswered && <NextButton dispatch={dispatch} />}
+					</>
 				)}
 				{status === 'error' && <ErrorMessage />}
 			</MainContent>
