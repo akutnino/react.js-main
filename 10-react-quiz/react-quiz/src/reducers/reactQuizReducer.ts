@@ -53,6 +53,13 @@ function reactQuizReducer(
 				userTotalPoints: updatedUserTotalPoints,
 			};
 		}
+		case 'nextQuestion': {
+			return {
+				...currentState,
+				questionIndex: currentState.questionIndex + 1,
+				userAnswerIndex: null,
+			};
+		}
 		default: {
 			return currentState;
 		}
