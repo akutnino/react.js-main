@@ -57,8 +57,13 @@ type ReactQuizUserAnswerActionType = {
 	payload: number;
 };
 
+type ReactQuizNextQuestionActionType = {
+	type: 'nextQuestion';
+};
+
 export type ReactQuizActionType =
 	| ReactQuizDataReceivedActionType
 	| ReactQuizDataFailedActionType
 	| ReactQuizStartQuizActionType
-	| ReactQuizUserAnswerActionType;
+	| ReactQuizUserAnswerActionType
+	| ReactQuizNextQuestionActionType;
