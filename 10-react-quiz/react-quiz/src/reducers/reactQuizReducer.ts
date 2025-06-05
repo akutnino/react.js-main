@@ -1,5 +1,6 @@
 import type {
 	InitalReactQuizType,
+	QuestionType,
 	ReactQuizActionType,
 } from '../types/components/types.ts';
 
@@ -8,6 +9,7 @@ export const INITIAL_REACT_QUIZ_STATE: InitalReactQuizType = {
 	status: 'loading',
 	questionIndex: 0,
 	userAnswerIndex: null,
+	userTotalPoints: 0,
 };
 
 function reactQuizReducer(
@@ -35,9 +37,20 @@ function reactQuizReducer(
 			};
 		}
 		case 'userAnswer': {
+			const currentQuestionIndex: QuestionType =
+				currentState.questions[currentState.questionIndex];
+
+			const currentQuestionPoints: number = currentQuestionIndex.points;
+
+			const updatedUserTotalPoints: number =
+				currentQuestionIndex.correctOption === action.payload
+					? currentState.userTotalPoints + currentQuestionPoints
+					: currentState.userTotalPoints;
+
 			return {
 				...currentState,
 				userAnswerIndex: action.payload,
+				userTotalPoints: updatedUserTotalPoints,
 			};
 		}
 		default: {
