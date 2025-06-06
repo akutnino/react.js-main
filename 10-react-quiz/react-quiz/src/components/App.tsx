@@ -6,6 +6,7 @@ import {
 import type {
 	InitalReactQuizType,
 	QuestionsArrayType,
+	QuestionType,
 } from '../types/components/types.ts';
 
 import Header from './Header.tsx';
@@ -15,14 +16,24 @@ import ErrorMessage from './ErrorMessage.tsx';
 import StartScreen from './StartScreen.tsx';
 import Question from './Question.tsx';
 import NextButton from './NextButton.tsx';
+import Progress from './Progress.tsx';
 
 function App() {
 	const [state, dispatch] = useReducer(reactQuizReducer, INITIAL_REACT_QUIZ_STATE);
-	const { questions, status, questionIndex, userAnswerIndex }: InitalReactQuizType =
-		state;
+	const {
+		questions,
+		status,
+		questionIndex,
+		userAnswerIndex,
+		userTotalPoints,
+	}: InitalReactQuizType = state;
 	const totalQuestions: number = questions.length;
 	const isQuestionAnswered: boolean =
 		userAnswerIndex !== null && Number.isInteger(userAnswerIndex);
+	const maxPossiblePoints: number = questions.reduce(
+		(acc: number, curr: QuestionType) => curr.points + acc,
+		0
+	);
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
@@ -71,6 +82,14 @@ function App() {
 				)}
 				{status === 'active' && (
 					<>
+						<Progress
+							questionIndex={questionIndex}
+							totalQuestions={totalQuestions}
+							userTotalPoints={userTotalPoints}
+							maxPossiblePoints={maxPossiblePoints}
+							userAnswerIndex={userAnswerIndex}
+						/>
+
 						<Question
 							question={questions[questionIndex]}
 							userAnswerIndex={userAnswerIndex}
