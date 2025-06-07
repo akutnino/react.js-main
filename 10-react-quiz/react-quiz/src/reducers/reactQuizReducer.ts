@@ -10,6 +10,7 @@ export const INITIAL_REACT_QUIZ_STATE: InitalReactQuizType = {
 	questionIndex: 0,
 	userAnswerIndex: null,
 	userTotalPoints: 0,
+	userHighscore: 0,
 };
 
 function reactQuizReducer(
@@ -58,6 +59,20 @@ function reactQuizReducer(
 				...currentState,
 				questionIndex: currentState.questionIndex + 1,
 				userAnswerIndex: null,
+			};
+		}
+		case 'finishQuiz': {
+			const updatedUserHighscore: number =
+				currentState.userTotalPoints > currentState.userHighscore
+					? currentState.userTotalPoints
+					: currentState.userHighscore;
+
+			return {
+				...currentState,
+				status: 'finished',
+				userAnswerIndex: null,
+				questionIndex: 0,
+				userHighscore: updatedUserHighscore,
 			};
 		}
 		default: {
