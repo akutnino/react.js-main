@@ -38,14 +38,14 @@ export type InitalReactQuizType = {
 	userTotalPoints: number;
 };
 
-type ReactQuizDataFailedActionType = {
-	type: 'dataFailed';
-	payload: string;
-};
-
 type ReactQuizDataReceivedActionType = {
 	type: 'dataReceived';
 	payload: QuestionsArrayType;
+};
+
+type ReactQuizDataFailedActionType = {
+	type: 'dataFailed';
+	payload: string;
 };
 
 type ReactQuizStartQuizActionType = {
