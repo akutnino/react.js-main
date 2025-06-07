@@ -36,6 +36,7 @@ export type InitalReactQuizType = {
 	questionIndex: number;
 	userAnswerIndex: UserAnswerIndexType;
 	userTotalPoints: number;
+	userHighscore: number;
 };
 
 type ReactQuizDataReceivedActionType = {
@@ -61,9 +62,14 @@ type ReactQuizNextQuestionActionType = {
 	type: 'nextQuestion';
 };
 
+type ReactQuizFinishQuizActionType = {
+	type: 'finishQuiz';
+};
+
 export type ReactQuizActionType =
 	| ReactQuizDataReceivedActionType
 	| ReactQuizDataFailedActionType
 	| ReactQuizStartQuizActionType
 	| ReactQuizUserAnswerActionType
-	| ReactQuizNextQuestionActionType;
+	| ReactQuizNextQuestionActionType
+	| ReactQuizFinishQuizActionType;
