@@ -75,6 +75,13 @@ function reactQuizReducer(
 				userHighscore: updatedUserHighscore,
 			};
 		}
+		case 'resetQuiz': {
+			return {
+				...currentState,
+				status: 'ready',
+				userTotalPoints: 0,
+			};
+		}
 		default: {
 			return currentState;
 		}
