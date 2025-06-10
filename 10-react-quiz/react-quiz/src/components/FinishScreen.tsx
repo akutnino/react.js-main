@@ -1,11 +1,17 @@
+import type { ActionDispatch } from 'react';
+import type { ReactQuizActionType } from '../types/components/types.ts';
+import Button from './Button.tsx';
+
 function FinishScreen({
 	userTotalPoints,
 	maxPossiblePoints,
 	userHighscore,
+	dispatch,
 }: {
 	userTotalPoints: number;
 	maxPossiblePoints: number;
 	userHighscore: number;
+	dispatch: ActionDispatch<[action: ReactQuizActionType]>;
 }) {
 	const totalScorePercentage: number = (userTotalPoints / maxPossiblePoints) * 100;
 
@@ -16,6 +22,7 @@ function FinishScreen({
 				{Math.ceil(totalScorePercentage)}%)
 			</p>
 			<p className='highscore'>(Highscore: {userHighscore} points)</p>
+			<Button dispatch={}>Restart Quiz</Button>
 		</>
 	);
 }
