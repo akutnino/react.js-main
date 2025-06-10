@@ -38,6 +38,18 @@ function App() {
 	);
 	const isLastQuestion: boolean = questionIndex + 1 === totalQuestions;
 
+	const handleClick = () => {
+		if (isLastQuestion) {
+			dispatch({
+				type: 'finishQuiz',
+			});
+		} else {
+			dispatch({
+				type: 'nextQuestion',
+			});
+		}
+	};
+
 	useEffect(() => {
 		const fetchQuestions = async () => {
 			try {
@@ -100,10 +112,7 @@ function App() {
 						/>
 
 						{isQuestionAnswered && (
-							<Button
-								isLastQuestion={isLastQuestion}
-								dispatch={dispatch}
-							>
+							<Button onClick={handleClick}>
 								{isLastQuestion ? 'Finish Quiz' : 'Next'}
 							</Button>
 						)}
@@ -114,6 +123,8 @@ function App() {
 						userTotalPoints={userTotalPoints}
 						maxPossiblePoints={maxPossiblePoints}
 						userHighscore={userHighscore}
+						questions={questions}
+						dispatch={dispatch}
 					/>
 				)}
 				{status === 'error' && <ErrorMessage />}
