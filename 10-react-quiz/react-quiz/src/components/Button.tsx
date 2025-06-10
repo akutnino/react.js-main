@@ -1,32 +1,11 @@
-import type { ActionDispatch, ReactNode } from 'react';
-import type { ReactQuizActionType } from '../types/components/types.ts';
+import type { ReactNode } from 'react';
 
-function Button({
-	isLastQuestion,
-	dispatch,
-	children,
-}: {
-	isLastQuestion: boolean;
-	dispatch: ActionDispatch<[action: ReactQuizActionType]>;
-	children: ReactNode;
-}) {
-	const handleClick = () => {
-		if (isLastQuestion) {
-			dispatch({
-				type: 'finishQuiz',
-			});
-		} else {
-			dispatch({
-				type: 'nextQuestion',
-			});
-		}
-	};
-
+function Button({ children, onClick }: { children: ReactNode; onClick: () => void }) {
 	return (
 		<button
 			type='button'
 			className='btn btn-ui'
-			onClick={handleClick}
+			onClick={onClick}
 		>
 			{children}
 		</button>
