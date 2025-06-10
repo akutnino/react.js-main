@@ -123,7 +123,6 @@ function App() {
 						userTotalPoints={userTotalPoints}
 						maxPossiblePoints={maxPossiblePoints}
 						userHighscore={userHighscore}
-						questions={questions}
 						dispatch={dispatch}
 					/>
 				)}
