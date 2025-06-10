@@ -15,8 +15,9 @@ import Loader from './Loader.tsx';
 import ErrorMessage from './ErrorMessage.tsx';
 import StartScreen from './StartScreen.tsx';
 import Question from './Question.tsx';
-import NextButton from './NextButton.tsx';
+import Button from './Button.tsx';
 import Progress from './Progress.tsx';
+import FinishScreen from './FinishScreen.tsx';
 
 function App() {
 	const [state, dispatch] = useReducer(reactQuizReducer, INITIAL_REACT_QUIZ_STATE);
@@ -26,6 +27,7 @@ function App() {
 		questionIndex,
 		userAnswerIndex,
 		userTotalPoints,
+		userHighscore,
 	}: InitalReactQuizType = state;
 	const totalQuestions: number = questions.length;
 	const isQuestionAnswered: boolean =
@@ -34,6 +36,7 @@ function App() {
 		(acc: number, curr: QuestionType) => curr.points + acc,
 		0
 	);
+	const isLastQuestion: boolean = questionIndex + 1 === totalQuestions;
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
@@ -96,8 +99,22 @@ function App() {
 							dispatch={dispatch}
 						/>
 
-						{isQuestionAnswered && <NextButton dispatch={dispatch} />}
+						{isQuestionAnswered && (
+							<Button
+								isLastQuestion={isLastQuestion}
+								dispatch={dispatch}
+							>
+								{isLastQuestion ? 'Finish Quiz' : 'Next'}
+							</Button>
+						)}
 					</>
+				)}
+				{status === 'finished' && (
+					<FinishScreen
+						userTotalPoints={userTotalPoints}
+						maxPossiblePoints={maxPossiblePoints}
+						userHighscore={userHighscore}
+					/>
 				)}
 				{status === 'error' && <ErrorMessage />}
 			</MainContent>
