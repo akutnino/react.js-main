@@ -1,29 +1,23 @@
 import type { ActionDispatch } from 'react';
 import Button from './Button.tsx';
-import type {
-	QuestionsArrayType,
-	ReactQuizActionType,
-} from '../types/components/types.ts';
+import type { ReactQuizActionType } from '../types/components/types.ts';
 
 function FinishScreen({
 	userTotalPoints,
 	maxPossiblePoints,
 	userHighscore,
-	questions,
 	dispatch,
 }: {
 	userTotalPoints: number;
 	maxPossiblePoints: number;
 	userHighscore: number;
-	questions: QuestionsArrayType;
 	dispatch: ActionDispatch<[action: ReactQuizActionType]>;
 }) {
 	const totalScorePercentage: number = (userTotalPoints / maxPossiblePoints) * 100;
 
 	const handleClick = () => {
 		dispatch({
-			type: 'dataReceived',
-			payload: questions,
+			type: 'resetQuiz',
 		});
 	};
 
