@@ -66,10 +66,15 @@ type ReactQuizFinishQuizActionType = {
 	type: 'finishQuiz';
 };
 
+type ReactQuizResetQuizActionType = {
+	type: 'resetQuiz';
+};
+
 export type ReactQuizActionType =
 	| ReactQuizDataReceivedActionType
 	| ReactQuizDataFailedActionType
 	| ReactQuizStartQuizActionType
 	| ReactQuizUserAnswerActionType
 	| ReactQuizNextQuestionActionType
-	| ReactQuizFinishQuizActionType;
+	| ReactQuizFinishQuizActionType
+	| ReactQuizResetQuizActionType;
