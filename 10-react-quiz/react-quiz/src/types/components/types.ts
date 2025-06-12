@@ -37,6 +37,7 @@ export type InitalReactQuizType = {
 	userAnswerIndex: UserAnswerIndexType;
 	userTotalPoints: number;
 	userHighscore: number;
+	quizTimeRemaining: UserAnswerIndexType;
 };
 
 type ReactQuizDataReceivedActionType = {
@@ -70,6 +71,10 @@ type ReactQuizResetQuizActionType = {
 	type: 'resetQuiz';
 };
 
+type ReactQuizUpdateQuizTimeActionType = {
+	type: 'updateQuizTime';
+};
+
 export type ReactQuizActionType =
 	| ReactQuizDataReceivedActionType
 	| ReactQuizDataFailedActionType
@@ -77,4 +82,5 @@ export type ReactQuizActionType =
 	| ReactQuizUserAnswerActionType
 	| ReactQuizNextQuestionActionType
 	| ReactQuizFinishQuizActionType
-	| ReactQuizResetQuizActionType;
+	| ReactQuizResetQuizActionType
+	| ReactQuizUpdateQuizTimeActionType;
