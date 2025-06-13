@@ -11,7 +11,10 @@ export const INITIAL_REACT_QUIZ_STATE: InitalReactQuizType = {
 	userAnswerIndex: null,
 	userTotalPoints: 0,
 	userHighscore: 0,
+	quizTimeRemaining: null,
 };
+
+const SECONDS_PER_QUESTION: number = 30;
 
 function reactQuizReducer(
 	currentState: InitalReactQuizType,
@@ -35,6 +38,7 @@ function reactQuizReducer(
 			return {
 				...currentState,
 				status: 'active',
+				quizTimeRemaining: currentState.questions.length * SECONDS_PER_QUESTION,
 			};
 		}
 		case 'userAnswer': {
@@ -80,6 +84,12 @@ function reactQuizReducer(
 				...currentState,
 				status: 'ready',
 				userTotalPoints: 0,
+			};
+		}
+		case 'updateQuizTime': {
+			return {
+				...currentState,
+				quizTimeRemaining: currentState.quizTimeRemaining! - 1,
 			};
 		}
 		default: {
