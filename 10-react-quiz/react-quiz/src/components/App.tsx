@@ -18,6 +18,8 @@ import Question from './Question.tsx';
 import Button from './Button.tsx';
 import Progress from './Progress.tsx';
 import FinishScreen from './FinishScreen.tsx';
+import Footer from './Footer.tsx';
+import Timer from './Timer.tsx';
 
 function App() {
 	const [state, dispatch] = useReducer(reactQuizReducer, INITIAL_REACT_QUIZ_STATE);
@@ -28,6 +30,7 @@ function App() {
 		userAnswerIndex,
 		userTotalPoints,
 		userHighscore,
+		quizTimeRemaining,
 	}: InitalReactQuizType = state;
 	const totalQuestions: number = questions.length;
 	const isQuestionAnswered: boolean =
@@ -111,11 +114,18 @@ function App() {
 							dispatch={dispatch}
 						/>
 
-						{isQuestionAnswered && (
-							<Button onClick={handleClick}>
-								{isLastQuestion ? 'Finish Quiz' : 'Next'}
-							</Button>
-						)}
+						<Footer>
+							<Timer
+								quizTimeRemaining={quizTimeRemaining}
+								dispatch={dispatch}
+							/>
+
+							{isQuestionAnswered && (
+								<Button onClick={handleClick}>
+									{isLastQuestion ? 'Finish Quiz' : 'Next'}
+								</Button>
+							)}
+						</Footer>
 					</>
 				)}
 				{status === 'finished' && (
