@@ -1,7 +1,7 @@
 import { cleanup } from '@testing-library/react';
 import { afterEach, describe, test } from 'vitest';
 
-describe('Header component test suite', () => {
+describe('Options component test suite', () => {
 	afterEach(() => {
 		cleanup();
 	});
