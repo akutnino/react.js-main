@@ -87,7 +87,10 @@ function App() {
 	}, []);
 
 	return (
-		<div className='app'>
+		<div
+			className='app'
+			data-testid='container'
+		>
 			<Header />
 
 			<MainContent>
