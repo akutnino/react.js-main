@@ -6,6 +6,7 @@ function Button({ children, onClick }: { children: ReactNode; onClick: () => voi
 			type='button'
 			className='btn btn-ui'
 			onClick={onClick}
+			data-testid='button'
 		>
 			{children}
 		</button>
