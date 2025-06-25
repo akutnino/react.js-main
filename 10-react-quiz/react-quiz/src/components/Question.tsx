@@ -4,6 +4,7 @@ import type {
 	ReactQuizActionType,
 	UserAnswerIndexType,
 } from '../types/components/types.ts';
+
 import Options from './Options.tsx';
 
 function Question({

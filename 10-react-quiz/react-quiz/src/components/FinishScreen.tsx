@@ -1,6 +1,7 @@
 import type { ActionDispatch } from 'react';
-import Button from './Button.tsx';
 import type { ReactQuizActionType } from '../types/components/types.ts';
+
+import Button from './Button.tsx';
 
 function FinishScreen({
 	userTotalPoints,

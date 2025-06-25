@@ -69,4 +69,5 @@ function DateCounter() {
 		</div>
 	);
 }
+
 export default DateCounter;
