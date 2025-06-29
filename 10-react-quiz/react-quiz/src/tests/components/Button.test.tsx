@@ -7,4 +7,11 @@ describe('Button component test suite', () => {
 	});
 
 	test.todo('should render the component correctly', () => {});
+
+	test.todo('should check if the children is mounted by defualt', () => {});
+
+	test.todo(
+		'should check if the callback is called when the button was clicked',
+		() => {}
+	);
 });
