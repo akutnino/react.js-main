@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 function Footer({ children }: { children: ReactNode }) {
-	return <footer>{children}</footer>;
+	return <footer data-testid='footer'>{children}</footer>;
 }
 
 export default Footer;
