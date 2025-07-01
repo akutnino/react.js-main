@@ -7,4 +7,6 @@ describe('MainContent component test suite', () => {
 	});
 
 	test.todo('should render the component correctly', () => {});
+
+	test.todo('should check if the children is mounted by defualt', () => {});
 });
