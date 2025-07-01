@@ -7,4 +7,8 @@ describe('Question component test suite', () => {
 	});
 
 	test.todo('should render the component correctly', () => {});
+
+	test.todo('should check that userAnswerIndex is null by default', () => {});
+
+	test.todo('should render the quiz question correctly', () => {});
 });
