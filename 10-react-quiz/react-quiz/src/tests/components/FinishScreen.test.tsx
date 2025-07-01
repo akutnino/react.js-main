@@ -7,4 +7,11 @@ describe('FinishScreen component test suite', () => {
 	});
 
 	test.todo('should render the component correctly', () => {});
+
+	test.todo('should render the user quiz results correctly', () => {});
+
+	test.todo(
+		'should render the StartScreen if the Reset Quiz button is clicked',
+		() => {}
+	);
 });
