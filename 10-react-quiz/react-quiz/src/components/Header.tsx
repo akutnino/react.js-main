@@ -1,6 +1,9 @@
 function Header() {
 	return (
-		<header className='app-header'>
+		<header
+			className='app-header'
+			data-testid='header'
+		>
 			<img
 				src='logo512.png'
 				alt='React logo'
