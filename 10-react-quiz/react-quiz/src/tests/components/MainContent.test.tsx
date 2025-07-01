@@ -37,7 +37,8 @@ describe('MainContent component test suite', () => {
 	test('should check if the children is mounted by defualt', () => {
 		const testElement = renderGetByTestId('main').firstElementChild as HTMLDivElement;
 
-		expect(renderGetByTestId('main')).toContainElement(testElement);
+		expect(testElement).toBeInTheDocument();
 		expect(testElement).toHaveTextContent('Test');
+		expect(renderGetByTestId('main')).toContainElement(testElement);
 	});
 });
