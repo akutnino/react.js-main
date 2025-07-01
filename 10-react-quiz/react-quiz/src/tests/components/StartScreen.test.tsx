@@ -7,4 +7,8 @@ describe('StartScreen component test suite', () => {
 	});
 
 	test.todo('should render the component correctly', () => {});
+
+	test.todo('should total questions value correctly', () => {});
+
+	test.todo('should start the quiz if the Start button is clicked', () => {});
 });
