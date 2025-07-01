@@ -7,4 +7,6 @@ describe('Progress component test suite', () => {
 	});
 
 	test.todo('should render the component correctly', () => {});
+
+	test.todo('should render the correct progress values', () => {});
 });
