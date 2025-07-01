@@ -7,4 +7,11 @@ describe('Options component test suite', () => {
 	});
 
 	test.todo('should render the component correctly', () => {});
+
+	test.todo(
+		'should check if the button is disabled if the user has chosen an answer',
+		() => {}
+	);
+
+	test.todo('should render the option values correctly', () => {});
 });
