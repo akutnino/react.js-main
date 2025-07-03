@@ -14,7 +14,13 @@ function FinishScreen({
 	userHighscore: number;
 	dispatch: ActionDispatch<[action: ReactQuizActionType]>;
 }) {
-	const totalScorePercentage: number = (userTotalPoints / maxPossiblePoints) * 100;
+	const totalScorePercentage: number = Math.ceil(
+		(userTotalPoints / maxPossiblePoints) * 100
+	);
+
+	const finalResult: number = Number.isNaN(totalScorePercentage)
+		? 0
+		: totalScorePercentage;
 
 	const handleClick = () => {
 		dispatch({
@@ -24,11 +30,19 @@ function FinishScreen({
 
 	return (
 		<>
-			<p className='result'>
+			<p
+				className='result'
+				data-testid='result'
+			>
 				You scored <strong>{userTotalPoints}</strong> out of {maxPossiblePoints} (
-				{Math.ceil(totalScorePercentage)}%)
+				{finalResult}%)
 			</p>
-			<p className='highscore'>(Highscore: {userHighscore} points)</p>
+			<p
+				className='highscore'
+				data-testid='highscore'
+			>
+				(Highscore: {userHighscore} points)
+			</p>
 			<Button onClick={handleClick}>Reset Quiz</Button>
 		</>
 	);
