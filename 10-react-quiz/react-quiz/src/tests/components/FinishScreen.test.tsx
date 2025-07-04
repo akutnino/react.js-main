@@ -63,6 +63,7 @@ describe('FinishScreen component test suite', () => {
 	});
 
 	afterEach(() => {
+		mockDispatch.mockClear();
 		cleanup();
 	});
 
