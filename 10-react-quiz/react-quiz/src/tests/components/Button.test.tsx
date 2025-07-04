@@ -23,6 +23,7 @@ describe('Button component test suite', () => {
 	});
 
 	afterEach(() => {
+		mockOnClick.mockClear();
 		cleanup();
 	});
 
