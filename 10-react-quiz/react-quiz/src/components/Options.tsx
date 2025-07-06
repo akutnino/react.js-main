@@ -27,7 +27,10 @@ function Options({
 	};
 
 	return (
-		<div className='options'>
+		<div
+			className='options'
+			data-testid='options'
+		>
 			{options.map((option: string, index: number) => {
 				return (
 					<button
