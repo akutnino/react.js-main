@@ -1,19 +1,62 @@
-import { cleanup, render } from '@testing-library/react';
-import { afterEach, beforeEach, describe, test } from 'vitest';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	type Matcher,
+	type MatcherOptions,
+} from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import StartScreen from '../../components/StartScreen.tsx';
 
+type RenderGetByTestIdType = (
+	id: Matcher,
+	options?: MatcherOptions | undefined
+) => HTMLElement;
+
 describe('StartScreen component test suite', () => {
+	let renderGetByTestId: RenderGetByTestIdType;
+	const mockDispatch = vi.fn();
+	const DUMMY_TOTALQUESTIONS: number = 15;
+
 	beforeEach(() => {
-		const {} = render(<StartScreen />);
+		const { getByTestId } = render(
+			<StartScreen
+				dispatch={mockDispatch}
+				totalQuestions={DUMMY_TOTALQUESTIONS}
+			/>
+		);
+
+		renderGetByTestId = getByTestId as RenderGetByTestIdType;
 	});
 
 	afterEach(() => {
 		cleanup();
 	});
 
-	test.todo('should render the component correctly', () => {});
+	test('should render the component correctly', () => {
+		expect(renderGetByTestId('start')).toBeInTheDocument();
+		expect(renderGetByTestId('start').children).toHaveLength(3);
+	});
 
-	test.todo('should total questions value correctly', () => {});
+	test('should total questions value correctly', () => {
+		expect(renderGetByTestId('start').firstElementChild).toHaveTextContent(
+			'Welcome to The React Quiz!'
+		);
+		expect(renderGetByTestId('start').children[1]).toHaveTextContent(
+			'15 questions to test your React mastery'
+		);
+		expect(renderGetByTestId('start').lastElementChild).toHaveTextContent(`Let's Start`);
+	});
 
-	test.todo('should start the quiz if the Start button is clicked', () => {});
+	test('should start the quiz if the Start button is clicked', () => {
+		fireEvent.click(
+			renderGetByTestId('start').lastElementChild as HTMLElement,
+			new MouseEvent('click', {
+				cancelable: true,
+				bubbles: true,
+			})
+		);
+
+		expect(mockDispatch).toHaveBeenCalledOnce();
+	});
 });
