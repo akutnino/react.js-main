@@ -17,7 +17,10 @@ function Progress({
 		userAnswerIndex !== null ? questionIndex + 1 : questionIndex;
 
 	return (
-		<header className='progress'>
+		<header
+			className='progress'
+			data-testid='progress'
+		>
 			<progress
 				max={totalQuestions}
 				value={progressValue}
