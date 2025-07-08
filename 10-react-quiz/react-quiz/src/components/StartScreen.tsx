@@ -15,7 +15,10 @@ function StartScreen({
 	};
 
 	return (
-		<div className='start'>
+		<div
+			className='start'
+			data-testid='start'
+		>
 			<h2>Welcome to The React Quiz!</h2>
 			<h3>{totalQuestions} questions to test your React mastery</h3>
 			<button
