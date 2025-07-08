@@ -1,7 +1,12 @@
-import { cleanup } from '@testing-library/react';
-import { afterEach, describe, test } from 'vitest';
+import { cleanup, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, test } from 'vitest';
+import StartScreen from '../../components/StartScreen.tsx';
 
 describe('StartScreen component test suite', () => {
+	beforeEach(() => {
+		const {} = render(<StartScreen />);
+	});
+
 	afterEach(() => {
 		cleanup();
 	});
