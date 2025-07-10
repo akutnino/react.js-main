@@ -19,7 +19,7 @@ function Question({
 	const { question: quizQuestion, options, correctOption }: QuestionType = question;
 
 	return (
-		<div>
+		<div data-testid='question'>
 			<h4>{quizQuestion}</h4>
 			<Options
 				options={options}
