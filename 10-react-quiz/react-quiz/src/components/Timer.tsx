@@ -35,7 +35,10 @@ function Timer({
 
 	// prettier-ignore
 	return (
-		<div className='timer'>
+		<div
+			className='timer'
+			data-testid='timer'
+		>
 			{MINUTES < 10 ? '0' : ''}
 			{MINUTES}:
       {SECONDS < 10 ? '0' : ''}
