@@ -30,6 +30,7 @@ describe('StartScreen component test suite', () => {
 	});
 
 	afterEach(() => {
+		mockDispatch.mockClear();
 		cleanup();
 	});
 
