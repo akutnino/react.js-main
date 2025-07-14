@@ -39,6 +39,7 @@ describe('Question component test suite', () => {
 	});
 
 	afterEach(() => {
+		mockDispatch.mockClear();
 		cleanup();
 	});
 
