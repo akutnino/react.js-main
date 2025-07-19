@@ -72,6 +72,9 @@ describe('App component test suite', () => {
 
 	test('should render the Progress, Question, and Footer components if the status is active', async () => {
 		expect(await renderFindByTestId('start', undefined, undefined)).toBeInTheDocument();
+		expect(renderGetByTestId('start').firstElementChild).toHaveTextContent(
+			'Welcome to The React Quiz!'
+		);
 
 		fireEvent.click(
 			renderGetByText(`Let's Start`),
@@ -86,10 +89,67 @@ describe('App component test suite', () => {
 		expect(renderGetByTestId('footer')).toBeInTheDocument();
 	});
 
-	test.todo(
-		'should render the FinishScreen component if the status is finished',
-		() => {}
-	);
+	test('should render the FinishScreen component if the status is finished', async () => {
+		expect(await renderFindByTestId('start', undefined, undefined)).toBeInTheDocument();
 
-	test.todo('should render the ErrorMessage component if the status is error', () => {});
+		fireEvent.click(
+			renderGetByText(`Let's Start`),
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		expect(renderGetByTestId('options')).toBeInTheDocument();
+
+		while (true) {
+			fireEvent.click(
+				renderGetByTestId('options').firstElementChild as HTMLElement,
+				new MouseEvent('click', {
+					bubbles: true,
+					cancelable: true,
+				})
+			);
+
+			const buttonTextContent = renderGetByTestId('footer').lastElementChild
+				?.textContent as string;
+
+			if (buttonTextContent === 'Finish Quiz') break;
+
+			fireEvent.click(
+				renderGetByText('Next'),
+				new MouseEvent('click', {
+					bubbles: true,
+					cancelable: true,
+				})
+			);
+		}
+
+		fireEvent.click(
+			renderGetByText('Finish Quiz'),
+			new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+			})
+		);
+
+		expect(renderGetByTestId('result')).toBeInTheDocument();
+		expect(renderGetByTestId('result')).toHaveTextContent(
+			'You scored 50 out of 280 (18%)'
+		);
+		expect(renderGetByTestId('highscore')).toHaveTextContent('(Highscore: 50 points)');
+	});
+
+	test('should render the ErrorMessage component if the status is error', async () => {
+		await vi.waitFor(() => {
+			expect(renderGetByTestId('loader')).toBeInTheDocument();
+			expect(renderGetByTestId('loader')).toHaveTextContent('Loading questions...');
+
+			vi.spyOn(globalThis, 'fetch').mockImplementation(() => {
+				throw new Error('Failed Fetch Request');
+			});
+		});
+
+		expect(renderGetByTestId('error')).toBeInTheDocument();
+	});
 });
