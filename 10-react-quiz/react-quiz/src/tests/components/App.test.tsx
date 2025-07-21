@@ -32,6 +32,13 @@ describe('App component test suite', () => {
 	let renderGetByText: RenderGetByTextType;
 
 	beforeEach(() => {
+		const currentTestName = expect.getState().currentTestName as string;
+		const exemptedTestNames: string[] = [
+			'App component test suite > should render the ErrorMessage component if the status is error',
+		];
+
+		if (exemptedTestNames.includes(currentTestName)) return;
+
 		const { getByTestId, getByText, findByTestId } = render(<App />);
 
 		renderGetByTestId = getByTestId as RenderGetByTestIdType;
@@ -141,15 +148,30 @@ describe('App component test suite', () => {
 	});
 
 	test('should render the ErrorMessage component if the status is error', async () => {
-		await vi.waitFor(() => {
-			expect(renderGetByTestId('loader')).toBeInTheDocument();
-			expect(renderGetByTestId('loader')).toHaveTextContent('Loading questions...');
-
-			vi.spyOn(globalThis, 'fetch').mockImplementation(() => {
-				throw new Error('Failed Fetch Request');
-			});
+		const mocks = vi.hoisted(() => {
+			return {
+				default: { key: <App /> },
+			};
 		});
 
-		expect(renderGetByTestId('error')).toBeInTheDocument();
+		vi.mock('../../components/App.tsx', () => {
+			return {
+				default: mocks.default,
+			};
+		});
+
+		const { getByTestId } = render(<App />);
+		// const { getByTestId, getByText, findByTestId } = render(<App />);
+
+		await vi.waitFor(() => {
+			expect(getByTestId('loader')).toBeInTheDocument();
+			expect(getByTestId('loader')).toHaveTextContent('Loading questions...');
+
+			// vi.spyOn(globalThis, 'fetch').mockImplementation(() => {
+			// 	throw new Error('Failed Fetch Request');
+			// });
+		});
+
+		expect(getByTestId('error')).toBeInTheDocument();
 	});
 });
