@@ -21,7 +21,7 @@ import FinishScreen from './FinishScreen.tsx';
 import Footer from './Footer.tsx';
 import Timer from './Timer.tsx';
 
-function App() {
+function App({ secretURL }: { secretURL: string }) {
 	const [state, dispatch] = useReducer(reactQuizReducer, INITIAL_REACT_QUIZ_STATE);
 	const {
 		questions,
@@ -56,7 +56,7 @@ function App() {
 	useEffect(() => {
 		const fetchQuestions = async () => {
 			try {
-				const fetchURL: string = `http://localhost:8000/questions`;
+				const fetchURL: string = secretURL;
 				const fetchOptions: RequestInit = {
 					method: 'GET',
 					headers: {
@@ -84,7 +84,7 @@ function App() {
 		};
 
 		fetchQuestions();
-	}, []);
+	}, [secretURL]);
 
 	return (
 		<div
