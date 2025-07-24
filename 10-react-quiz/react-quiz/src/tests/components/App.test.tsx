@@ -26,6 +26,8 @@ type RenderGetByTextType = (
 	options?: SelectorMatcherOptions | undefined
 ) => HTMLElement;
 
+const SECRET_URL: string = 'http://localhost:8000/questions';
+
 describe('App component test suite', () => {
 	let renderGetByTestId: RenderGetByTestIdType;
 	let renderFindByTestId: RenderFindByTestIdType;
@@ -39,7 +41,9 @@ describe('App component test suite', () => {
 
 		if (exemptedTestNames.includes(currentTestName)) return;
 
-		const { getByTestId, getByText, findByTestId } = render(<App />);
+		const { getByTestId, getByText, findByTestId } = render(
+			<App secretURL={SECRET_URL} />
+		);
 
 		renderGetByTestId = getByTestId as RenderGetByTestIdType;
 		renderFindByTestId = findByTestId as RenderFindByTestIdType;
