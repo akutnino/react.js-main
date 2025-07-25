@@ -26,14 +26,13 @@ type RenderGetByTextType = (
 	options?: SelectorMatcherOptions | undefined
 ) => HTMLElement;
 
-const SECRET_URL: string = 'http://localhost:8000/questions';
-
 describe('App component test suite', () => {
 	let renderGetByTestId: RenderGetByTestIdType;
 	let renderFindByTestId: RenderFindByTestIdType;
 	let renderGetByText: RenderGetByTextType;
 
 	beforeEach(() => {
+		const SECRET_URL: string = 'http://localhost:8000/questions';
 		const currentTestName = expect.getState().currentTestName as string;
 		const exemptedTestNames: string[] = [
 			'App component test suite > should render the ErrorMessage component if the status is error',
@@ -152,9 +151,10 @@ describe('App component test suite', () => {
 	});
 
 	test('should render the ErrorMessage component if the status is error', async () => {
+		const DUMMY_SECRET_URL: string = 'http://localhost:8000/xyz';
 		const mocks = vi.hoisted(() => {
 			return {
-				default: { key: <App /> },
+				default: { key: <App secretURL={DUMMY_SECRET_URL} /> },
 			};
 		});
 
@@ -164,7 +164,7 @@ describe('App component test suite', () => {
 			};
 		});
 
-		const { getByTestId } = render(<App />);
+		const { getByTestId } = render(<App secretURL={DUMMY_SECRET_URL} />);
 		// const { getByTestId, getByText, findByTestId } = render(<App />);
 
 		await vi.waitFor(() => {
