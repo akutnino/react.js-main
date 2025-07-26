@@ -152,30 +152,30 @@ describe('App component test suite', () => {
 
 	test('should render the ErrorMessage component if the status is error', async () => {
 		const DUMMY_SECRET_URL: string = 'http://localhost:8000/xyz';
-		const mocks = vi.hoisted(() => {
-			return {
-				default: { key: <App secretURL={DUMMY_SECRET_URL} /> },
-			};
-		});
+		// const mocks = vi.hoisted(() => {
+		// 	return {
+		// 		default: { key: <App secretURL={DUMMY_SECRET_URL} /> },
+		// 	};
+		// });
 
-		vi.mock('../../components/App.tsx', () => {
-			return {
-				default: mocks.default,
-			};
-		});
+		// vi.mock('../../components/App.tsx', () => {
+		// 	return {
+		// 		default: mocks.default,
+		// 	};
+		// });
 
-		const { getByTestId } = render(<App secretURL={DUMMY_SECRET_URL} />);
+		const { getByTestId, findByTestId } = render(<App secretURL={DUMMY_SECRET_URL} />);
 		// const { getByTestId, getByText, findByTestId } = render(<App />);
 
 		await vi.waitFor(() => {
 			expect(getByTestId('loader')).toBeInTheDocument();
 			expect(getByTestId('loader')).toHaveTextContent('Loading questions...');
-
+			return;
 			// vi.spyOn(globalThis, 'fetch').mockImplementation(() => {
 			// 	throw new Error('Failed Fetch Request');
 			// });
 		});
 
-		expect(getByTestId('error')).toBeInTheDocument();
+		expect(await findByTestId('error')).toBeInTheDocument();
 	});
 });
