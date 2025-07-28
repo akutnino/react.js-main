@@ -150,6 +150,63 @@ describe('App component test suite', () => {
 		expect(renderGetByTestId('highscore')).toHaveTextContent('(Highscore: 50 points)');
 	});
 
+	test('render the StartScreen component if the user clicks the ResetQuiz button', async () => {
+		expect(await renderFindByTestId('start', undefined, undefined)).toBeInTheDocument();
+
+		fireEvent.click(
+			renderGetByText(`Let's Start`),
+			new MouseEvent('click', {
+				cancelable: true,
+				bubbles: true,
+			})
+		);
+
+		expect(renderGetByTestId('options')).toBeInTheDocument();
+
+		while (true) {
+			fireEvent.click(
+				renderGetByTestId('options').firstElementChild as HTMLElement,
+				new MouseEvent('click', {
+					cancelable: true,
+					bubbles: true,
+				})
+			);
+
+			const buttonTextContent = renderGetByTestId('footer').lastElementChild
+				?.textContent as string;
+
+			if (buttonTextContent === 'Finish Quiz') break;
+
+			fireEvent.click(
+				renderGetByText('Next'),
+				new MouseEvent('click', {
+					cancelable: true,
+					bubbles: true,
+				})
+			);
+		}
+
+		fireEvent.click(
+			renderGetByText('Finish Quiz'),
+			new MouseEvent('click', {
+				cancelable: true,
+				bubbles: true,
+			})
+		);
+
+		expect(renderGetByText('Reset Quiz')).toBeInTheDocument();
+
+		fireEvent.click(
+			renderGetByText('Reset Quiz'),
+			new MouseEvent('click', {
+				cancelable: true,
+				bubbles: true,
+			})
+		);
+
+		expect(renderGetByTestId('start')).toBeInTheDocument();
+	});
+
 	test('should render the ErrorMessage component if the status is error', async () => {
 		const DUMMY_SECRET_URL: string = 'http://localhost:8000/xyz';
 
