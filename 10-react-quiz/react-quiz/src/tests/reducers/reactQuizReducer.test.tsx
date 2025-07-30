@@ -44,5 +44,6 @@ describe('reactQuizReducer test suite', () => {
 
 		expect(mockHandler).toHaveBeenCalledOnce();
 		expect(result.current.state).toBe(DUMMY_INITIAL_REACT_QUIZ_STATE);
+		mockHandler.mockClear();
 	});
 });
