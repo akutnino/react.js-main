@@ -8,7 +8,8 @@ describe('Main component test suite', () => {
 	});
 
 	test('should render the component without crashing', () => {
-		const { container, getByTestId } = render(<App />);
+		const SECRET_URL: string = 'http://localhost:8000/questions';
+		const { container, getByTestId } = render(<App secretURL={SECRET_URL} />);
 
 		expect(getByTestId('container')).toBeInTheDocument();
 		expect(container).toContainElement(getByTestId('container'));
