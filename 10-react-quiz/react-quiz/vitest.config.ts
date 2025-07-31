@@ -17,6 +17,7 @@ const config: ViteUserConfig = defineConfig({
 			],
 			reportOnFailure: true,
 		},
+		clearMocks: true,
 		globals: true,
 		watch: false,
 		dir: './src/tests',
