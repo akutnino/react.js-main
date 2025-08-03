@@ -11,6 +11,7 @@ const config: ViteUserConfig = defineConfig({
 			reporter: ['text', 'html', 'clover', 'json'],
 			reportOnFailure: true,
 		},
+		clearMocks: true,
 		watch: false,
 		globals: true,
 		environment: 'jsdom',
