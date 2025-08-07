@@ -12,6 +12,7 @@ const config: ViteUserConfig = defineConfig({
 			exclude: [...configDefaults.include, './src/components/Main.tsx'],
 			reportOnFailure: true,
 		},
+		clearMocks: true,
 		globals: true,
 		watch: false,
 		dir: './src/tests',
