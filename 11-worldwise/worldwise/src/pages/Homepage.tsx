@@ -1,5 +1,13 @@
+import PageNav from '../components/PageNav.tsx';
+
 function Homepage() {
-	return <div>Homepage</div>;
+	return (
+		<div>
+			<PageNav />
+
+			<h1>Homepage</h1>
+		</div>
+	);
 }
 
 export default Homepage;
