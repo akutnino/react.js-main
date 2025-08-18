@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import Product from '../pages/Product.tsx';
 import Pricing from '../pages/Pricing.tsx';
 import Homepage from '../pages/Homepage.tsx';
+import AppLayout from '../pages/AppLayout.tsx';
 import PageNotFound from '../pages/PageNotFound.tsx';
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
 				<Route
 					path='pricing'
 					element={<Pricing />}
+				/>
+				<Route
+					path='app'
+					element={<AppLayout />}
 				/>
 				<Route
 					path='*'
