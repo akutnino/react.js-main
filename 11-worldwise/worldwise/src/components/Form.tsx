@@ -1,22 +1,25 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useState } from 'react';
-
+import { useState, type ChangeEvent } from 'react';
 import styles from '../styles/components/Form.module.scss';
 
-export function convertToEmoji(countryCode) {
-	const codePoints = countryCode
-		.toUpperCase()
-		.split('')
-		.map((char) => 127397 + char.charCodeAt());
-	return String.fromCodePoint(...codePoints);
-}
-
 function Form() {
-	const [cityName, setCityName] = useState('');
-	const [country, setCountry] = useState('');
-	const [date, setDate] = useState(new Date());
-	const [notes, setNotes] = useState('');
+	const [cityName, setCityName] = useState<string>('');
+	// const [country, setCountry] = useState<string>('');
+	const [date, setDate] = useState<Date | string>(new Date());
+	const [notes, setNotes] = useState<string>('');
+
+	const handleCityNameInput = (event: ChangeEvent<HTMLInputElement>) => {
+		setCityName(event.target.value);
+	};
+
+	const handleDateInput = (event: ChangeEvent<HTMLInputElement>) => {
+		setDate(event.target.value);
+	};
+
+	const handleNotesInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
+		setNotes(event.target.value);
+	};
 
 	return (
 		<form className={styles.form}>
@@ -24,7 +27,7 @@ function Form() {
 				<label htmlFor='cityName'>City name</label>
 				<input
 					id='cityName'
-					onChange={(e) => setCityName(e.target.value)}
+					onChange={handleCityNameInput}
 					value={cityName}
 				/>
 				{/* <span className={styles.flag}>{emoji}</span> */}
@@ -34,8 +37,8 @@ function Form() {
 				<label htmlFor='date'>When did you go to {cityName}?</label>
 				<input
 					id='date'
-					onChange={(e) => setDate(e.target.value)}
-					value={date}
+					onChange={handleDateInput}
+					value={date as string}
 				/>
 			</div>
 
@@ -43,7 +46,7 @@ function Form() {
 				<label htmlFor='notes'>Notes about your trip to {cityName}</label>
 				<textarea
 					id='notes'
-					onChange={(e) => setNotes(e.target.value)}
+					onChange={handleNotesInput}
 					value={notes}
 				/>
 			</div>
