@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent } from 'react';
 import styles from '../styles/pages/Login.module.scss';
+import PageNav from '../components/PageNav.tsx';
 
 function Login() {
 	// PRE-FILL FOR DEV PURPOSES
@@ -16,6 +17,8 @@ function Login() {
 
 	return (
 		<main className={styles.login}>
+			<PageNav />
+
 			<form className={styles.form}>
 				<div className={styles.row}>
 					<label htmlFor='email'>Email address</label>

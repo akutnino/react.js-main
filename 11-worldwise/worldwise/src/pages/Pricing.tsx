@@ -1,9 +1,12 @@
 // Uses the same styles as Product
 import styles from '../styles/pages/Product.module.scss';
+import PageNav from '../components/PageNav.tsx';
 
 function Product() {
 	return (
 		<main className={styles.product}>
+			<PageNav />
+
 			<section>
 				<div>
 					<h2>
