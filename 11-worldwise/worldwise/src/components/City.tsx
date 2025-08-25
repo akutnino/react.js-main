@@ -1,4 +1,5 @@
 import styles from '../styles/components/City.module.scss';
+import type { CurrentCityType } from '../types/components/types.ts';
 
 const formatDate = (date: string | null) => {
 	if (date === null) return null;
@@ -10,16 +11,16 @@ const formatDate = (date: string | null) => {
 	}).format(new Date(date));
 };
 
-function City() {
-	// TEMP DATA
-	const currentCity = {
-		cityName: 'Lisbon',
-		emoji: '🇵🇹',
-		date: '2027-10-31T15:59:59.138Z',
-		notes: 'My favorite city so far!',
-	};
+// TEMP DATA
+const currentCity: CurrentCityType = {
+	cityName: 'Lisbon',
+	emoji: '🇵🇹',
+	date: '2027-10-31T15:59:59.138Z',
+	notes: 'My favorite city so far!',
+};
 
-	const { cityName, emoji, date, notes } = currentCity;
+function City() {
+	const { cityName, emoji, date, notes }: CurrentCityType = currentCity;
 
 	return (
 		<div className={styles.city}>
