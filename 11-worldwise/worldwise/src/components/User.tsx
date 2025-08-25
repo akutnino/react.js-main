@@ -1,6 +1,7 @@
 import styles from '../styles/components/User.module.scss';
+import type { UserType } from '../types/components/types.ts';
 
-const FAKE_USER = {
+const FAKE_USER: UserType = {
 	name: 'Jack',
 	email: 'jack@example.com',
 	password: 'qwerty',
@@ -8,9 +9,9 @@ const FAKE_USER = {
 };
 
 function User() {
-	const user = FAKE_USER;
+	const user: UserType = FAKE_USER;
 
-	function handleClick() {}
+	const handleClick = () => {};
 
 	return (
 		<div className={styles.user}>
