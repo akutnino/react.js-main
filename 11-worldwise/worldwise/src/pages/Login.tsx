@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import styles from '../styles/pages/Login.module.scss';
 
 function Login() {
 	// PRE-FILL FOR DEV PURPOSES
-	const [email, setEmail] = useState('jack@example.com');
-	const [password, setPassword] = useState('qwerty');
+	const [email, setEmail] = useState<string>('jack@example.com');
+	const [password, setPassword] = useState<string>('qwerty');
+
+	const handleEmailInput = (event: ChangeEvent<HTMLInputElement>) => {
+		setEmail(event.target.value);
+	};
+
+	const handlePasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
+		setPassword(event.target.value);
+	};
 
 	return (
 		<main className={styles.login}>
@@ -14,7 +22,7 @@ function Login() {
 					<input
 						type='email'
 						id='email'
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={handleEmailInput}
 						value={email}
 					/>
 				</div>
@@ -24,7 +32,7 @@ function Login() {
 					<input
 						type='password'
 						id='password'
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={handlePasswordInput}
 						value={password}
 					/>
 				</div>
