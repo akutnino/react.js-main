@@ -11,3 +11,18 @@ export type CurrentCityType = {
 	date: string;
 	notes: string;
 };
+
+type CityPositionType = {
+	lat: number;
+	lng: number;
+};
+
+export type CityDataType = {
+	cityName: string;
+	country: string;
+	emoji: string;
+	date: string;
+	notes: string;
+	position: CityPositionType;
+	id: number;
+};
