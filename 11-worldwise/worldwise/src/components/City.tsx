@@ -1,15 +1,6 @@
 import styles from '../styles/components/City.module.scss';
 import type { CurrentCityType } from '../types/components/types.ts';
-
-const formatDate = (date: string | null) => {
-	if (date === null) return null;
-	return new Intl.DateTimeFormat('en', {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric',
-		weekday: 'long',
-	}).format(new Date(date));
-};
+import { formatDate } from '../functions/formatDate.ts';
 
 // TEMP DATA
 const currentCity: CurrentCityType = {
