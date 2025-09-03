@@ -8,6 +8,7 @@ import Pricing from '../pages/Pricing.tsx';
 import Login from '../pages/Login.tsx';
 import AppLayout from '../pages/AppLayout.tsx';
 import CityList from './CityList.tsx';
+import CountryList from './CountryList.tsx';
 import PageNotFound from '../pages/PageNotFound.tsx';
 
 function App() {
@@ -89,7 +90,7 @@ function App() {
 					/>
 					<Route
 						path='countries'
-						element={<p>List of Countries</p>}
+						element={<CountryList cities={cities} />}
 					/>
 					<Route
 						path='form'
