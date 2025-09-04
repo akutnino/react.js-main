@@ -90,7 +90,12 @@ function App() {
 					/>
 					<Route
 						path='countries'
-						element={<CountryList cities={cities} />}
+						element={
+							<CountryList
+								cities={cities}
+								isLoading={isLoading}
+							/>
+						}
 					/>
 					<Route
 						path='form'
