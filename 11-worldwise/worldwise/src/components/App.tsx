@@ -10,6 +10,7 @@ import AppLayout from '../pages/AppLayout.tsx';
 import CityList from './CityList.tsx';
 import CountryList from './CountryList.tsx';
 import PageNotFound from '../pages/PageNotFound.tsx';
+import City from './City.tsx';
 
 function App() {
 	const [cities, setCities] = useState<CityDataType[]>([]);
@@ -87,6 +88,10 @@ function App() {
 								isLoading={isLoading}
 							/>
 						}
+					/>
+					<Route
+						path='cities/:id'
+						element={<City />}
 					/>
 					<Route
 						path='countries'
