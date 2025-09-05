@@ -1,3 +1,4 @@
+import { useParams, type Params } from 'react-router';
 import type { CurrentCityType } from '../types/components/types.ts';
 import { formatDate } from '../functions/formatDate.ts';
 import styles from '../styles/components/City.module.scss';
@@ -14,6 +15,8 @@ const currentCity: CurrentCityType = {
 
 function City() {
 	const { cityName, emoji, date, notes }: CurrentCityType = currentCity;
+	const { id }: Readonly<Params<string>> = useParams();
+	console.log(id);
 
 	return (
 		<div className={styles.city}>
