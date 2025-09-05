@@ -1,6 +1,8 @@
-import styles from '../styles/components/City.module.scss';
 import type { CurrentCityType } from '../types/components/types.ts';
 import { formatDate } from '../functions/formatDate.ts';
+import styles from '../styles/components/City.module.scss';
+
+import CountryIcon from './CountryIcon.tsx';
 
 // TEMP DATA
 const currentCity: CurrentCityType = {
@@ -18,7 +20,10 @@ function City() {
 			<div className={styles.row}>
 				<h6>City name</h6>
 				<h3>
-					<span>{emoji}</span> {cityName}
+					<span>
+						<CountryIcon countryCode={emoji} />
+					</span>
+					{cityName}
 				</h3>
 			</div>
 
