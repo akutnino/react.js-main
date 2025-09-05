@@ -1,5 +1,5 @@
-import styles from '../styles/components/User.module.scss';
 import type { UserType } from '../types/components/types.ts';
+import styles from '../styles/components/User.module.scss';
 
 const FAKE_USER: UserType = {
 	name: 'Jack',

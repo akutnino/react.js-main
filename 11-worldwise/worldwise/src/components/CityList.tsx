@@ -1,5 +1,5 @@
-import styles from '../styles/components/CityList.module.scss';
 import type { CityDataType } from '../types/components/types.ts';
+import styles from '../styles/components/CityList.module.scss';
 
 import CityItem from './CityItem.tsx';
 import Message from './Message.tsx';
