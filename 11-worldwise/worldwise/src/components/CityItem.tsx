@@ -6,13 +6,13 @@ import styles from '../styles/components/CityItem.module.scss';
 import CountryIcon from './CountryIcon.tsx';
 
 function CityItem({ cityObject }: { cityObject: CityDataType }) {
-	const { cityName, emoji, date, id }: CityDataType = cityObject;
+	const { cityName, emoji, date, id, position }: CityDataType = cityObject;
 
 	return (
 		<li>
 			<Link
 				className={styles.cityItem}
-				to={`${id}`}
+				to={`${id}?lat=${position.lat}&lng=${position.lng}`}
 			>
 				<span className={styles.emoji}>
 					<CountryIcon countryCode={emoji} />
