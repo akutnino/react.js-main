@@ -1,3 +1,5 @@
+import type { SetURLSearchParams } from 'react-router';
+
 export type UserType = {
 	name: string;
 	email: string;
@@ -26,3 +28,5 @@ export type CityDataType = {
 	position: CityPositionType;
 	id: number;
 };
+
+export type UseSearchParamsType = [URLSearchParams, SetURLSearchParams];
