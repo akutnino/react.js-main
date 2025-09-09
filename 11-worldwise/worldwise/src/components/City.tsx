@@ -1,5 +1,5 @@
-import { useParams, type Params } from 'react-router';
-import type { CurrentCityType } from '../types/components/types.ts';
+import { useParams, useSearchParams, type Params } from 'react-router';
+import type { CurrentCityType, UseSearchParamsType } from '../types/components/types.ts';
 import { formatDate } from '../functions/formatDate.ts';
 import styles from '../styles/components/City.module.scss';
 
@@ -16,7 +16,11 @@ const currentCity: CurrentCityType = {
 function City() {
 	const { cityName, emoji, date, notes }: CurrentCityType = currentCity;
 	const { id }: Readonly<Params<string>> = useParams();
-	console.log(id);
+	const [searchParams, setSearchParams]: UseSearchParamsType = useSearchParams();
+	const lat: string | null = searchParams.get('lat');
+	const lng: string | null = searchParams.get('lng');
+
+	console.log(id, lng, lat);
 
 	return (
 		<div className={styles.city}>
