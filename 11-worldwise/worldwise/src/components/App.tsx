@@ -11,6 +11,7 @@ import CityList from './CityList.tsx';
 import CountryList from './CountryList.tsx';
 import PageNotFound from '../pages/PageNotFound.tsx';
 import City from './City.tsx';
+import Form from './Form.tsx';
 
 function App() {
 	const [cities, setCities] = useState<CityDataType[]>([]);
@@ -104,7 +105,7 @@ function App() {
 					/>
 					<Route
 						path='form'
-						element={<p>Form</p>}
+						element={<Form />}
 					/>
 				</Route>
 				<Route
