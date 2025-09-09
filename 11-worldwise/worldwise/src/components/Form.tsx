@@ -1,9 +1,13 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type MouseEvent } from 'react';
+import { useNavigate, type NavigateFunction } from 'react-router';
 import styles from '../styles/components/Form.module.scss';
 
+import Button from './Button.tsx';
+
 function Form() {
+	const navigate: NavigateFunction = useNavigate();
 	const [cityName, setCityName] = useState<string>('');
 	// const [country, setCountry] = useState<string>('');
 	const [date, setDate] = useState<Date | string>(new Date());
@@ -19,6 +23,11 @@ function Form() {
 
 	const handleNotesInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		setNotes(event.target.value);
+	};
+
+	const handleBack = (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		navigate(-1);
 	};
 
 	return (
@@ -52,8 +61,13 @@ function Form() {
 			</div>
 
 			<div className={styles.buttons}>
-				<button>Add</button>
-				<button>&larr; Back</button>
+				<Button type='primary'>Add</Button>
+				<Button
+					type='back'
+					onClick={handleBack}
+				>
+					&larr; Back
+				</Button>
 			</div>
 		</form>
 	);
