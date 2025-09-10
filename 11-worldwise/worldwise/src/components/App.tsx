@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { useEffect, useState } from 'react';
 import type { CityDataType } from '../types/components/types.ts';
 
@@ -75,9 +75,9 @@ function App() {
 					<Route
 						index={true}
 						element={
-							<CityList
-								cities={cities}
-								isLoading={isLoading}
+							<Navigate
+								replace={true}
+								to={'cities'}
 							/>
 						}
 					/>
