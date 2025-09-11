@@ -31,8 +31,8 @@ function Archive({ setPosts }) {
 
 			{showArchive && (
 				<ul>
-					{posts.map((post, i) => (
-						<li key={i}>
+					{posts.map((post, index) => (
+						<li key={index}>
 							<p>
 								<strong>{post.title}:</strong> {post.body}
 							</p>

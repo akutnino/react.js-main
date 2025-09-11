@@ -1,8 +1,8 @@
 function List({ posts }) {
 	return (
 		<ul>
-			{posts.map((post, i) => (
-				<li key={i}>
+			{posts.map((post, index) => (
+				<li key={index}>
 					<h3>{post.title}</h3>
 					<p>{post.body}</p>
 				</li>

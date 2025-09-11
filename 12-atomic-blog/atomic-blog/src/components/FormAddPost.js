@@ -12,16 +12,24 @@ function FormAddPost({ setPosts }) {
 		setBody('');
 	};
 
+	const handleTitleInput = (event) => {
+		setTitle(event.target.value);
+	};
+
+	const handleBodyInput = (event) => {
+		setBody(event.target.value);
+	};
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<input
 				value={title}
-				onChange={(e) => setTitle(e.target.value)}
+				onChange={handleTitleInput}
 				placeholder='Post title'
 			/>
 			<textarea
 				value={body}
-				onChange={(e) => setBody(e.target.value)}
+				onChange={handleBodyInput}
 				placeholder='Post body'
 			/>
 			<button>Add post</button>
