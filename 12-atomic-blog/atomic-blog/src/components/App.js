@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { createRandomPost } from '../functions/createRandomPost.js';
 
 import Footer from './Footer.js';
 import Archive from './Archive.js';
 import Main from './Main.js';
 import Header from './Header.js';
+
+const PostContext = createContext();
 
 function App() {
 	const [posts, setPosts] = useState(() =>
@@ -32,27 +34,36 @@ function App() {
 	);
 
 	return (
-		<section>
-			<button
-				onClick={handleDarkModeToggle}
-				className='btn-fake-dark-mode'
-			>
-				{isFakeDark ? '☀️' : '🌙'}
-			</button>
+		<PostContext.Provider
+			value={{
+				posts: searchedPosts,
+				setPosts,
+				searchQuery,
+				setSearchQuery,
+			}}
+		>
+			<section>
+				<button
+					onClick={handleDarkModeToggle}
+					className='btn-fake-dark-mode'
+				>
+					{isFakeDark ? '☀️' : '🌙'}
+				</button>
 
-			<Header
-				posts={searchedPosts}
-				setPosts={setPosts}
-				searchQuery={searchQuery}
-				setSearchQuery={setSearchQuery}
-			/>
-			<Main
-				posts={searchedPosts}
-				setPosts={setPosts}
-			/>
-			<Archive setPosts={setPosts} />
-			<Footer />
-		</section>
+				<Header
+					posts={searchedPosts}
+					setPosts={setPosts}
+					searchQuery={searchQuery}
+					setSearchQuery={setSearchQuery}
+				/>
+				<Main
+					posts={searchedPosts}
+					setPosts={setPosts}
+				/>
+				<Archive setPosts={setPosts} />
+				<Footer />
+			</section>
+		</PostContext.Provider>
 	);
 }
 
