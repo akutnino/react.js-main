@@ -1,25 +1,13 @@
-import { createContext, useEffect, useState } from 'react';
-import { createRandomPost } from '../functions/createRandomPost.js';
+import { useEffect, useState } from 'react';
+import { PostProvider } from '../context/PostContext.js';
 
 import Footer from './Footer.js';
 import Archive from './Archive.js';
 import Main from './Main.js';
 import Header from './Header.js';
 
-export const PostContext = createContext();
-
 function App() {
-	const [posts, setPosts] = useState(() =>
-		Array(30)
-			.fill(null)
-			.map(() => createRandomPost())
-	);
-	const [searchQuery, setSearchQuery] = useState('');
 	const [isFakeDark, setIsFakeDark] = useState(false);
-	const filteredPosts = posts.filter((post) =>
-		`${post.title} ${post.body}`.toLowerCase().includes(searchQuery.toLowerCase())
-	);
-	const searchedPosts = searchQuery.length > 0 ? filteredPosts : posts;
 
 	const handleDarkModeToggle = () => {
 		setIsFakeDark((isFakeDark) => !isFakeDark);
@@ -34,28 +22,21 @@ function App() {
 	);
 
 	return (
-		<PostContext.Provider
-			value={{
-				posts: searchedPosts,
-				setPosts,
-				searchQuery,
-				setSearchQuery,
-			}}
-		>
-			<section>
-				<button
-					onClick={handleDarkModeToggle}
-					className='btn-fake-dark-mode'
-				>
-					{isFakeDark ? '☀️' : '🌙'}
-				</button>
+		<section>
+			<button
+				onClick={handleDarkModeToggle}
+				className='btn-fake-dark-mode'
+			>
+				{isFakeDark ? '☀️' : '🌙'}
+			</button>
 
+			<PostProvider>
 				<Header />
 				<Main />
 				<Archive />
 				<Footer />
-			</section>
-		</PostContext.Provider>
+			</PostProvider>
+		</section>
 	);
 }
 
