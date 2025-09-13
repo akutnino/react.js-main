@@ -6,7 +6,7 @@ import Archive from './Archive.js';
 import Main from './Main.js';
 import Header from './Header.js';
 
-const PostContext = createContext();
+export const PostContext = createContext();
 
 function App() {
 	const [posts, setPosts] = useState(() =>
@@ -50,17 +50,9 @@ function App() {
 					{isFakeDark ? '☀️' : '🌙'}
 				</button>
 
-				<Header
-					posts={searchedPosts}
-					setPosts={setPosts}
-					searchQuery={searchQuery}
-					setSearchQuery={setSearchQuery}
-				/>
-				<Main
-					posts={searchedPosts}
-					setPosts={setPosts}
-				/>
-				<Archive setPosts={setPosts} />
+				<Header />
+				<Main />
+				<Archive />
 				<Footer />
 			</section>
 		</PostContext.Provider>

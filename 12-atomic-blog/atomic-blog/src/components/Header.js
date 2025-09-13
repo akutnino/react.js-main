@@ -1,7 +1,12 @@
+import { useContext } from 'react';
+import { PostContext } from './App.js';
+
 import Results from './Results.js';
 import SearchPosts from './SearchPosts.js';
 
-function Header({ posts, setPosts, searchQuery, setSearchQuery }) {
+function Header() {
+	const { setPosts } = useContext(PostContext);
+
 	const handleClearPosts = () => {
 		setPosts([]);
 	};
@@ -12,11 +17,8 @@ function Header({ posts, setPosts, searchQuery, setSearchQuery }) {
 				<span>⚛️</span>The Atomic Blog
 			</h1>
 			<div>
-				<Results posts={posts} />
-				<SearchPosts
-					searchQuery={searchQuery}
-					setSearchQuery={setSearchQuery}
-				/>
+				<Results />
+				<SearchPosts />
 				<button onClick={handleClearPosts}>Clear posts</button>
 			</div>
 		</header>

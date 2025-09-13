@@ -1,11 +1,11 @@
 import FormAddPost from './FormAddPost.js';
 import Posts from './Posts.js';
 
-function Main({ posts, setPosts }) {
+function Main() {
 	return (
 		<main>
-			<FormAddPost setPosts={setPosts} />
-			<Posts posts={posts} />
+			<FormAddPost />
+			<Posts />
 		</main>
 	);
 }
