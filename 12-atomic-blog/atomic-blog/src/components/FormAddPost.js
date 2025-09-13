@@ -4,7 +4,7 @@ function FormAddPost({ setPosts }) {
 	const [title, setTitle] = useState('');
 	const [body, setBody] = useState('');
 
-	const handleSubmit = function (event) {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (!body || !title) return;
 		setPosts({ title, body });
