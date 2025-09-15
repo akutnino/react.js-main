@@ -1,17 +1,15 @@
 import type { CityDataType } from '../types/components/types.ts';
+import type { CitiesContextValue } from '../types/contexts/types.ts';
+import { useCities } from '../contexts/CitiesContext.tsx';
 import styles from '../styles/components/CountryList.module.scss';
 
 import CountryItem from './CountryItem.tsx';
 import Spinner from './Spinner.tsx';
 import Message from './Message.tsx';
 
-function CountryList({
-	cities,
-	isLoading,
-}: {
-	cities: CityDataType[];
-	isLoading: boolean;
-}) {
+function CountryList() {
+	const { cities, isLoading }: CitiesContextValue = useCities();
+
 	const filteredCountries: CityDataType[] = cities.reduce(
 		(acc: CityDataType[], curr: CityDataType) => {
 			if (!acc.length) acc.push(curr);
