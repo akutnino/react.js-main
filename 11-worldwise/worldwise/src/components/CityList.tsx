@@ -1,11 +1,15 @@
 import type { CityDataType } from '../types/components/types.ts';
+import type { CitiesContextValue } from '../types/contexts/types.ts';
+import { useCities } from '../contexts/CitiesContext.tsx';
 import styles from '../styles/components/CityList.module.scss';
 
 import CityItem from './CityItem.tsx';
 import Message from './Message.tsx';
 import Spinner from './Spinner.tsx';
 
-function CityList({ cities, isLoading }: { cities: CityDataType[]; isLoading: boolean }) {
+function CityList() {
+	const { cities, isLoading }: CitiesContextValue = useCities();
+
 	return (
 		<>
 			{isLoading && <Spinner />}
