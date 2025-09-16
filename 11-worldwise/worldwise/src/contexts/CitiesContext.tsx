@@ -7,6 +7,7 @@ const CitiesContext = createContext<CitiesContextValue | null>(null);
 function CitiesProvider({ children }: { children: ReactNode }) {
 	const [cities, setCities] = useState<CityDataType[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [currentCity, setCurrentCity] = useState<CityDataType | null>(null);
 
 	useEffect(() => {
 		const fetchCitiesData = async () => {
@@ -45,6 +46,9 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 			value={{
 				cities,
 				isLoading,
+				setIsLoading,
+				currentCity,
+				setCurrentCity,
 			}}
 		>
 			{children}
