@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
-import { useParams, useSearchParams, type Params } from 'react-router';
+import { useParams, type Params } from 'react-router';
 import { formatDate } from '../functions/formatDate.ts';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import { fetchData } from '../functions/fetchData.ts';
-import type { UseSearchParamsType } from '../types/components/types.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
 import styles from '../styles/components/City.module.scss';
 
@@ -14,12 +13,7 @@ function City() {
 	const { isLoading, setIsLoading, currentCity, setCurrentCity }: CitiesContextValue =
 		useCities();
 	const { id }: Readonly<Params<string>> = useParams();
-	const [searchParams, setSearchParams]: UseSearchParamsType = useSearchParams();
-	const lat: string | null = searchParams.get('lat');
-	const lng: string | null = searchParams.get('lng');
 	const isNotNull: boolean = currentCity !== null;
-
-	console.log(id, lng, lat);
 
 	useEffect(() => {
 		fetchData(`cities/${id}`, setIsLoading, setCurrentCity);
