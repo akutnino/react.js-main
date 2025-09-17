@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { fetchData } from '../functions/fetchData.ts';
 import type { CityDataType } from '../types/components/types.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
 
@@ -10,34 +11,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 	const [currentCity, setCurrentCity] = useState<CityDataType | null>(null);
 
 	useEffect(() => {
-		const fetchCitiesData = async () => {
-			try {
-				setIsLoading(true);
-
-				const fetchURL: string = 'http://localhost:8000/cities';
-				const fetchOptions: RequestInit = {
-					method: 'GET',
-					headers: {
-						Accept: 'application/json',
-						'Content-Type': 'application/json',
-					},
-				};
-
-				const response: Response = await fetch(fetchURL, fetchOptions);
-				if (!response.ok) throw new Error('Failed Fetch Request');
-
-				const data: CityDataType[] = await response.json();
-				setCities(data);
-			} catch (error) {
-				if (error instanceof Error) {
-					console.log(error.message);
-				}
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchCitiesData();
+		fetchData('cities', setIsLoading, setCities);
 		return () => {};
 	}, []);
 
