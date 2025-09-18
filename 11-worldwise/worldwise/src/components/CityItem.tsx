@@ -5,13 +5,20 @@ import styles from '../styles/components/CityItem.module.scss';
 
 import CountryIcon from './CountryIcon.tsx';
 
-function CityItem({ cityObject }: { cityObject: CityDataType }) {
+function CityItem({
+	cityObject,
+	currentCity,
+}: {
+	cityObject: CityDataType;
+	currentCity: CityDataType | null;
+}) {
 	const { cityName, emoji, date, id, position }: CityDataType = cityObject;
+	const isActive: boolean = currentCity?.id === id;
 
 	return (
 		<li>
 			<Link
-				className={styles.cityItem}
+				className={`${styles.cityItem} ${isActive ? styles['cityItem--active'] : ''} `}
 				to={`${id}?lat=${position.lat}&lng=${position.lng}`}
 			>
 				<span className={styles.emoji}>
