@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams, type NavigateFunction } from 'react-router';
 import type { UseSearchParamsType } from '../types/components/types.ts';
+import type { MouseEvent } from 'react';
 import styles from '../styles/components/Map.module.scss';
 
 function Map() {
@@ -12,7 +13,8 @@ function Map() {
 		navigate('form');
 	};
 
-	const handleChangePosition = () => {
+	const handleChangePosition = (event: MouseEvent<HTMLButtonElement>) => {
+		event.stopPropagation();
 		setSearchParams({ lat: 'nino', lng: 'brown' });
 	};
 
