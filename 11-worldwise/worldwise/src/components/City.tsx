@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useParams, type Params } from 'react-router';
+import { useEffect, type MouseEvent } from 'react';
+import { useNavigate, useParams, type NavigateFunction, type Params } from 'react-router';
 import { formatDate } from '../functions/formatDate.ts';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import { fetchData } from '../functions/fetchData.ts';
@@ -8,12 +8,19 @@ import styles from '../styles/components/City.module.scss';
 
 import CountryIcon from './CountryIcon.tsx';
 import Spinner from './Spinner.tsx';
+import Button from './Button.tsx';
 
 function City() {
 	const { isLoading, setIsLoading, currentCity, setCurrentCity }: CitiesContextValue =
 		useCities();
+	const navigate: NavigateFunction = useNavigate();
 	const { id }: Readonly<Params<string>> = useParams();
 	const isNotNull: boolean = currentCity !== null;
+
+	const handleBack = (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		navigate(-1);
+	};
 
 	useEffect(() => {
 		fetchData(`cities/${id}`, setIsLoading, setCurrentCity);
@@ -23,6 +30,7 @@ function City() {
 	return (
 		<>
 			{isLoading && <Spinner />}
+
 			{!isLoading && isNotNull && (
 				<div className={styles.city}>
 					<div className={styles.row}>
@@ -58,7 +66,14 @@ function City() {
 						</a>
 					</div>
 
-					<div>{/* <ButtonBack /> */}</div>
+					<div>
+						<Button
+							type='back'
+							onClick={handleBack}
+						>
+							&larr; Back
+						</Button>
+					</div>
 				</div>
 			)}
 		</>
