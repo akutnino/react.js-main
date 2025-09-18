@@ -8,7 +8,7 @@ import Message from './Message.tsx';
 import Spinner from './Spinner.tsx';
 
 function CityList() {
-	const { cities, isLoading }: CitiesContextValue = useCities();
+	const { cities, isLoading, currentCity }: CitiesContextValue = useCities();
 
 	return (
 		<>
@@ -20,6 +20,7 @@ function CityList() {
 				<ul className={styles.cityList}>
 					{cities.map((cityObject: CityDataType) => (
 						<CityItem
+							currentCity={currentCity}
 							cityObject={cityObject}
 							key={cityObject.id}
 						/>
