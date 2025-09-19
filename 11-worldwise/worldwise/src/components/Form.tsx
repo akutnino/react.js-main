@@ -27,7 +27,7 @@ function Form() {
 
 	const handleBack = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		navigate(-1);
+		navigate('/app/cities', { replace: true });
 	};
 
 	return (
