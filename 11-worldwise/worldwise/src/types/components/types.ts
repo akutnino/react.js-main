@@ -14,7 +14,7 @@ export type CurrentCityType = {
 	notes: string;
 };
 
-type CityPositionType = {
+export type CityPositionType = {
 	lat: number;
 	lng: number;
 };
