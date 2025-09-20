@@ -1,19 +1,33 @@
 import { useNavigate, useSearchParams, type NavigateFunction } from 'react-router';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import { useState, type MouseEvent } from 'react';
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
-import type { CityDataType, UseSearchParamsType } from '../types/components/types.ts';
+import type {
+	CityDataType,
+	CityPositionType,
+	UseSearchParamsType,
+} from '../types/components/types.ts';
 import type { LatLngExpression } from 'leaflet';
 import styles from '../styles/components/Map.module.scss';
 
+function ChangeMapPosition({
+	cityPosition,
+}: {
+	cityPosition: CityPositionType | undefined;
+}) {
+	const positionObject: CityPositionType = cityPosition ?? { lat: 40, lng: 0 };
+	const updatedPosition: number[] = Object.values(positionObject);
+
+	useMap().setView(updatedPosition as LatLngExpression);
+	return null;
+}
+
 function Map() {
 	const navigate: NavigateFunction = useNavigate();
-	const { cities }: CitiesContextValue = useCities();
-	const [mapPosition, setMapPosition] = useState<LatLngExpression>([40, 0]);
-	// const [searchParams, setSearchParams]: UseSearchParamsType = useSearchParams();
-	// const lat: string | null = searchParams.get('lat');
-	// const lng: string | null = searchParams.get('lng');
+	const { cities, currentCity }: CitiesContextValue = useCities();
+	const [searchParams]: UseSearchParamsType = useSearchParams();
+	const mapLatitude: string | null = searchParams.get('lat');
+	const mapLongitude: string | null = searchParams.get('lng');
 
 	const handleClick = () => {
 		navigate('form');
@@ -31,8 +45,8 @@ function Map() {
 		>
 			<MapContainer
 				className={styles.map}
-				center={mapPosition}
-				zoom={4}
+				center={[Number(mapLatitude), Number(mapLongitude)] as LatLngExpression}
+				zoom={6}
 				scrollWheelZoom={true}
 			>
 				<TileLayer
@@ -50,6 +64,8 @@ function Map() {
 						</Popup>
 					</Marker>
 				))}
+
+				<ChangeMapPosition cityPosition={currentCity?.position} />
 			</MapContainer>
 		</div>
 	);
