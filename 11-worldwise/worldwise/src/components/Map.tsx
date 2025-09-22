@@ -2,29 +2,23 @@ import { useNavigate, useSearchParams, type NavigateFunction } from 'react-route
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
-import type {
-	CityDataType,
-	CityPositionType,
-	UseSearchParamsType,
-} from '../types/components/types.ts';
+import type { CityDataType, UseSearchParamsType } from '../types/components/types.ts';
 import type { LatLngExpression, Map as MapType } from 'leaflet';
 import styles from '../styles/components/Map.module.scss';
 
-function ChangeMapPosition({
-	cityPosition,
-}: {
-	cityPosition: CityPositionType | undefined;
-}) {
+function ChangeMapPosition({ cityPosition }: { cityPosition: number[] }) {
 	const map: MapType = useMap();
-	const position: number[] = Object.values(cityPosition ?? map.getCenter());
+	const position: number[] = Object.values(map.getCenter());
+	const isNull: number[] | null =
+		!cityPosition[0] && !cityPosition[1] ? null : cityPosition;
 
-	useMap().setView(position as LatLngExpression);
+	useMap().setView((isNull as LatLngExpression) ?? (position as LatLngExpression));
 	return null;
 }
 
 function Map() {
 	const navigate: NavigateFunction = useNavigate();
-	const { cities, currentCity }: CitiesContextValue = useCities();
+	const { cities }: CitiesContextValue = useCities();
 	const [searchParams]: UseSearchParamsType = useSearchParams();
 	const mapLatitude: string | null = searchParams.get('lat');
 	const mapLongitude: string | null = searchParams.get('lng');
@@ -60,7 +54,7 @@ function Map() {
 					</Marker>
 				))}
 
-				<ChangeMapPosition cityPosition={currentCity?.position} />
+				<ChangeMapPosition cityPosition={[Number(mapLatitude), Number(mapLongitude)]} />
 			</MapContainer>
 		</div>
 	);
