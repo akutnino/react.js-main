@@ -7,7 +7,7 @@ import type {
 	CityPositionType,
 	UseSearchParamsType,
 } from '../types/components/types.ts';
-import type { LatLngExpression } from 'leaflet';
+import type { LatLngExpression, Map as MapType } from 'leaflet';
 import styles from '../styles/components/Map.module.scss';
 
 function ChangeMapPosition({
@@ -15,10 +15,10 @@ function ChangeMapPosition({
 }: {
 	cityPosition: CityPositionType | undefined;
 }) {
-	const positionObject: CityPositionType = cityPosition ?? { lat: 40, lng: 0 };
-	const updatedPosition: number[] = Object.values(positionObject);
+	const map: MapType = useMap();
+	const position: number[] = Object.values(cityPosition ?? map.getCenter());
 
-	useMap().setView(updatedPosition as LatLngExpression);
+	useMap().setView(position as LatLngExpression);
 	return null;
 }
 
@@ -32,11 +32,6 @@ function Map() {
 	const handleClick = () => {
 		navigate('form');
 	};
-
-	// const handleChangePosition = (event: MouseEvent<HTMLButtonElement>) => {
-	// 	event.stopPropagation();
-	// 	setSearchParams({ lat: 'nino', lng: 'brown' });
-	// };
 
 	return (
 		<div
