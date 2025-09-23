@@ -8,6 +8,7 @@ import {
 	useMapEvents,
 } from 'react-leaflet';
 import { useCities } from '../contexts/CitiesContext.tsx';
+import { useGeolocation } from '../hooks/useGeolocation.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
 import type { CityDataType, UseSearchParamsType } from '../types/components/types.ts';
 import type {
@@ -17,6 +18,8 @@ import type {
 	Map as MapType,
 } from 'leaflet';
 import styles from '../styles/components/Map.module.scss';
+
+import Button from './Button.tsx';
 
 function ChangeMapPosition({ cityPosition }: { cityPosition: number[] }) {
 	const map: MapType = useMap();
@@ -48,12 +51,34 @@ function HandleMapClick() {
 
 function Map() {
 	const { cities }: CitiesContextValue = useCities();
+	const {
+		isLoading: isLoadingPosition,
+		position: geolocationPosition,
+		getPosition,
+	} = useGeolocation(null);
 	const [searchParams]: UseSearchParamsType = useSearchParams();
 	const mapLatitude: string | null = searchParams.get('lat');
 	const mapLongitude: string | null = searchParams.get('lng');
+	const isGeolocationPosition: number[] =
+		geolocationPosition === null
+			? [Number(mapLatitude), Number(mapLongitude)]
+			: Object.values(geolocationPosition);
+
+	const handleClick = () => {
+		getPosition();
+	};
 
 	return (
 		<div className={styles.mapContainer}>
+			{!geolocationPosition && (
+				<Button
+					type='position'
+					onClick={handleClick}
+				>
+					{isLoadingPosition ? 'Loading...' : 'Use Your Location'}
+				</Button>
+			)}
+
 			<MapContainer
 				className={styles.map}
 				center={[Number(mapLatitude), Number(mapLongitude)] as LatLngExpression}
@@ -76,7 +101,11 @@ function Map() {
 					</Marker>
 				))}
 
-				<ChangeMapPosition cityPosition={[Number(mapLatitude), Number(mapLongitude)]} />
+				<ChangeMapPosition
+					cityPosition={
+						isGeolocationPosition ?? [Number(mapLatitude), Number(mapLongitude)]
+					}
+				/>
 				<HandleMapClick />
 			</MapContainer>
 		</div>
