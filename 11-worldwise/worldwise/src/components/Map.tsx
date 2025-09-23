@@ -1,9 +1,21 @@
 import { useNavigate, useSearchParams, type NavigateFunction } from 'react-router';
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
+import {
+	MapContainer,
+	Marker,
+	Popup,
+	TileLayer,
+	useMap,
+	useMapEvents,
+} from 'react-leaflet';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
 import type { CityDataType, UseSearchParamsType } from '../types/components/types.ts';
-import type { LatLngExpression, Map as MapType } from 'leaflet';
+import type {
+	LatLng,
+	LatLngExpression,
+	LeafletMouseEvent,
+	Map as MapType,
+} from 'leaflet';
 import styles from '../styles/components/Map.module.scss';
 
 function ChangeMapPosition({ cityPosition }: { cityPosition: number[] }) {
@@ -22,22 +34,26 @@ function ChangeMapPosition({ cityPosition }: { cityPosition: number[] }) {
 	return null;
 }
 
-function Map() {
+function HandleMapClick() {
 	const navigate: NavigateFunction = useNavigate();
+
+	const handleClick = (event: LeafletMouseEvent) => {
+		const { lat, lng }: LatLng = event.latlng;
+		navigate(`form?lat=${lat}&lng=${lng}`);
+	};
+
+	useMapEvents({ click: handleClick });
+	return null;
+}
+
+function Map() {
 	const { cities }: CitiesContextValue = useCities();
 	const [searchParams]: UseSearchParamsType = useSearchParams();
 	const mapLatitude: string | null = searchParams.get('lat');
 	const mapLongitude: string | null = searchParams.get('lng');
 
-	const handleClick = () => {
-		navigate('form');
-	};
-
 	return (
-		<div
-			className={styles.mapContainer}
-			onClick={handleClick}
-		>
+		<div className={styles.mapContainer}>
 			<MapContainer
 				className={styles.map}
 				center={[Number(mapLatitude), Number(mapLongitude)] as LatLngExpression}
@@ -61,6 +77,7 @@ function Map() {
 				))}
 
 				<ChangeMapPosition cityPosition={[Number(mapLatitude), Number(mapLongitude)]} />
+				<HandleMapClick />
 			</MapContainer>
 		</div>
 	);
