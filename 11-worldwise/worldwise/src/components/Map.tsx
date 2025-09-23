@@ -8,11 +8,17 @@ import styles from '../styles/components/Map.module.scss';
 
 function ChangeMapPosition({ cityPosition }: { cityPosition: number[] }) {
 	const map: MapType = useMap();
-	const position: number[] = Object.values(map.getCenter());
-	const isNull: number[] | null =
-		!cityPosition[0] && !cityPosition[1] ? null : cityPosition;
+	const centerPosition: number[] = Object.values(map.getCenter());
 
-	useMap().setView((isNull as LatLngExpression) ?? (position as LatLngExpression));
+	// prettier-ignore
+	const currentPosition: number[] | null = 
+		!cityPosition[0] && !cityPosition[1] 
+		? null 
+		: cityPosition;
+
+	const mapPosition: number[] = currentPosition ?? centerPosition;
+
+	useMap().setView(mapPosition as LatLngExpression);
 	return null;
 }
 
