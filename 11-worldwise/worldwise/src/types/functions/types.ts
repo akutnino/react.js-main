@@ -8,3 +8,36 @@ export type SetResponseDataType =
 export type SetIsLoadingType = Dispatch<React.SetStateAction<boolean>>;
 
 export type ResponseDataType = CityDataType[] & CityDataType;
+
+export type SetIsLoadingGeolocationType = Dispatch<React.SetStateAction<boolean>>;
+
+export type SetFetchErrorType = Dispatch<React.SetStateAction<string>>;
+
+export type SetCityNameType = Dispatch<React.SetStateAction<string>>;
+
+export type SetCountryType = Dispatch<React.SetStateAction<string>>;
+
+export type SetCountryCodeType = Dispatch<React.SetStateAction<string>>;
+
+type LocalityInfoType = {
+	administrative: object[];
+	informative: object[];
+};
+
+export type FormFetchCityDataType = {
+	latitude: number;
+	lookupSource: string;
+	longitude: number;
+	localityLanguageRequested: string;
+	continent: string;
+	continentCode: string;
+	countryName: string;
+	countryCode: string;
+	principalSubdivision: string;
+	principalSubdivisionCode: string;
+	city: string;
+	locality: string;
+	postcode: string;
+	plusCode: string;
+	localityInfo: LocalityInfoType;
+};
