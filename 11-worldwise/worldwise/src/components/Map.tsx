@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams, type NavigateFunction } from 'react-router';
+import { useNavigate, type NavigateFunction } from 'react-router';
 import {
 	MapContainer,
 	Marker,
@@ -9,8 +9,9 @@ import {
 } from 'react-leaflet';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import { useGeolocation } from '../hooks/useGeolocation.ts';
+import { useUrlPosition } from '../hooks/useUrlPosition.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
-import type { CityDataType, UseSearchParamsType } from '../types/components/types.ts';
+import type { CityDataType } from '../types/components/types.ts';
 import type {
 	LatLng,
 	LatLngExpression,
@@ -56,9 +57,7 @@ function Map() {
 		position: geolocationPosition,
 		getPosition,
 	} = useGeolocation(null);
-	const [searchParams]: UseSearchParamsType = useSearchParams();
-	const mapLatitude: string | null = searchParams.get('lat');
-	const mapLongitude: string | null = searchParams.get('lng');
+	const [mapLatitude, mapLongitude] = useUrlPosition();
 	const isGeolocationPosition: number[] =
 		geolocationPosition === null
 			? [Number(mapLatitude), Number(mapLongitude)]
