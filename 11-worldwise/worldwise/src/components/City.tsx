@@ -2,7 +2,7 @@ import { useEffect, type MouseEvent } from 'react';
 import { useNavigate, useParams, type NavigateFunction, type Params } from 'react-router';
 import { formatDate } from '../functions/formatDate.ts';
 import { useCities } from '../contexts/CitiesContext.tsx';
-import { fetchData } from '../functions/fetchData.ts';
+import { getCityData } from '../functions/getCityData.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
 import styles from '../styles/components/City.module.scss';
 
@@ -23,7 +23,7 @@ function City() {
 	};
 
 	useEffect(() => {
-		fetchData(`cities/${id}`, setIsLoading, setCurrentCity);
+		getCityData(`cities/${id}`, setIsLoading, setCurrentCity);
 		return () => {};
 	}, [id, setIsLoading, setCurrentCity]);
 
