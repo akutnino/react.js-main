@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { fetchData } from '../functions/fetchData.ts';
+import { getCityData } from '../functions/getCityData.ts';
 import type { CityDataType } from '../types/components/types.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
 
@@ -11,7 +11,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 	const [currentCity, setCurrentCity] = useState<CityDataType | null>(null);
 
 	useEffect(() => {
-		fetchData('cities', setIsLoading, setCities);
+		getCityData('cities', setIsLoading, setCities);
 		return () => {};
 	}, []);
 
