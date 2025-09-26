@@ -4,7 +4,7 @@ import type {
 	ResponseDataType,
 } from '../types/functions/types.ts';
 
-export const fetchData = async (
+export const getCityData = async (
 	urlPath: string,
 	setIsLoading: SetIsLoadingType,
 	setResponseData: SetResponseDataType
