@@ -2,7 +2,6 @@ import { useEffect, type MouseEvent } from 'react';
 import { useNavigate, useParams, type NavigateFunction, type Params } from 'react-router';
 import { formatDate } from '../functions/formatDate.ts';
 import { useCities } from '../contexts/CitiesContext.tsx';
-import { getCityData } from '../functions/getCityData.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
 import styles from '../styles/components/City.module.scss';
 
@@ -11,8 +10,13 @@ import Spinner from './Spinner.tsx';
 import Button from './Button.tsx';
 
 function City() {
-	const { isLoading, setIsLoading, currentCity, setCurrentCity }: CitiesContextValue =
-		useCities();
+	const {
+		isLoading,
+		setIsLoading,
+		currentCity,
+		setCurrentCity,
+		getCityDataFunc,
+	}: CitiesContextValue = useCities();
 	const navigate: NavigateFunction = useNavigate();
 	const { id }: Readonly<Params<string>> = useParams();
 	const isNotNull: boolean = currentCity !== null;
@@ -23,9 +27,9 @@ function City() {
 	};
 
 	useEffect(() => {
-		getCityData(`cities/${id}`, setIsLoading, setCurrentCity);
+		getCityDataFunc(`cities/${id}`, setIsLoading, setCurrentCity);
 		return () => {};
-	}, [id, setIsLoading, setCurrentCity]);
+	}, [id, setIsLoading, setCurrentCity, getCityDataFunc]);
 
 	return (
 		<>
