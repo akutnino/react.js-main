@@ -7,7 +7,7 @@ import type {
 	SetIsLoadingGeolocationType,
 } from '../types/functions/types.ts';
 
-export const fetchCityData = async (
+export const getNewCityData = async (
 	mapLatitude: string | null,
 	mapLongitude: string | null,
 	setIsLoadingGeolocation: SetIsLoadingGeolocationType,
