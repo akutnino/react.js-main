@@ -1,10 +1,19 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useEffect, useState, type ChangeEvent, type MouseEvent } from 'react';
+import {
+	useEffect,
+	useState,
+	type ChangeEvent,
+	type FormEvent,
+	type MouseEvent,
+} from 'react';
+import { useCities } from '../contexts/CitiesContext.tsx';
+import { DatePicker } from 'react-datepicker';
 import { useNavigate, type NavigateFunction } from 'react-router';
 import { useUrlPosition } from '../hooks/useUrlPosition.ts';
-import { fetchCityData } from '../functions/fetchCityData.ts';
+import type { CityDataType } from '../types/components/types.ts';
 import styles from '../styles/components/Form.module.scss';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import Button from './Button.tsx';
 import CountryIcon from './CountryIcon.tsx';
@@ -12,12 +21,14 @@ import Message from './Message.tsx';
 import Spinner from './Spinner.tsx';
 
 function Form() {
+	const { isLoading, setIsLoading, getNewCityData, postNewCityData, setCities } =
+		useCities();
 	const navigate: NavigateFunction = useNavigate();
 	const [mapLatitude, mapLongitude] = useUrlPosition();
 	const [cityName, setCityName] = useState<string>('');
 	const [country, setCountry] = useState<string>('');
 	const [countryCode, setCountryCode] = useState<string>('');
-	const [date, setDate] = useState<Date | string>(new Date());
+	const [date, setDate] = useState<Date | null>(new Date());
 	const [notes, setNotes] = useState<string>('');
 	const [isLoadingGeolocation, setIsLoadingGeolocation] = useState<boolean>(false);
 	const [fetchError, setFetchError] = useState<string>('');
@@ -26,8 +37,8 @@ function Form() {
 		setCityName(event.target.value);
 	};
 
-	const handleDateInput = (event: ChangeEvent<HTMLInputElement>) => {
-		setDate(event.target.value);
+	const handleDateInput = (date: Date | null) => {
+		setDate(date);
 	};
 
 	const handleNotesInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -39,8 +50,31 @@ function Form() {
 		navigate('/app/cities', { replace: true });
 	};
 
+	const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		if (!cityName || !date) return;
+
+		const newCityData: CityDataType = {
+			cityName,
+			country,
+			date: String(date),
+			emoji: countryCode,
+			notes,
+			position: {
+				lat: Number(mapLatitude),
+				lng: Number(mapLongitude),
+			},
+		};
+
+		await postNewCityData(newCityData, setIsLoading, setCities);
+		navigate('/app/cities', { replace: true });
+	};
+
 	useEffect(() => {
-		fetchCityData(
+		if (!mapLatitude && !mapLongitude) return;
+
+		getNewCityData(
 			mapLatitude,
 			mapLongitude,
 			setIsLoadingGeolocation,
@@ -50,16 +84,21 @@ function Form() {
 			setCountryCode
 		);
 		return () => {};
-	}, [mapLatitude, mapLongitude]);
+	}, [mapLatitude, mapLongitude, getNewCityData]);
 
 	return (
 		<>
+			{!mapLatitude && !mapLongitude && <Message message='Click on the Map to Start.' />}
+
 			{isLoadingGeolocation && <Spinner />}
 
 			{!isLoadingGeolocation && fetchError && <Message message={fetchError} />}
 
-			{!isLoadingGeolocation && !fetchError && (
-				<form className={styles.form}>
+			{!isLoadingGeolocation && !fetchError && mapLatitude && mapLongitude && (
+				<form
+					className={`${styles.form} ${isLoading ? styles.loading : ''}`}
+					onSubmit={handleFormSubmit}
+				>
 					<div className={styles.row}>
 						<label htmlFor='cityName'>City name</label>
 						<input
@@ -74,10 +113,11 @@ function Form() {
 
 					<div className={styles.row}>
 						<label htmlFor='date'>When did you go to {cityName}?</label>
-						<input
+						<DatePicker
 							id='date'
 							onChange={handleDateInput}
-							value={date as string}
+							selected={date}
+							dateFormat={'dd/MM/yyyy'}
 						/>
 					</div>
 
@@ -91,7 +131,7 @@ function Form() {
 					</div>
 
 					<div className={styles.buttons}>
-						<Button type='primary'>Add</Button>
+						<Button type='submit'>Add</Button>
 						<Button
 							type='back'
 							onClick={handleBack}
