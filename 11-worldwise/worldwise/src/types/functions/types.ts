@@ -19,13 +19,13 @@ export type SetCountryType = Dispatch<React.SetStateAction<string>>;
 
 export type SetCountryCodeType = Dispatch<React.SetStateAction<string>>;
 
-export type GetCityDataFuncType = (
+export type GetCityDataType = (
 	urlPath: string,
 	setIsLoading: SetIsLoadingType,
 	setResponseData: SetResponseDataType
 ) => Promise<void>;
 
-export type GetNewCityDataFuncType = (
+export type GetNewCityDataType = (
 	mapLatitude: string | null,
 	mapLongitude: string | null,
 	setIsLoadingGeolocation: SetIsLoadingGeolocationType,
