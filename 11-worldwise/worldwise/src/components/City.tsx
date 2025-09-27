@@ -15,7 +15,7 @@ function City() {
 		setIsLoading,
 		currentCity,
 		setCurrentCity,
-		getCityDataFunc,
+		getCityData,
 	}: CitiesContextValue = useCities();
 	const navigate: NavigateFunction = useNavigate();
 	const { id }: Readonly<Params<string>> = useParams();
@@ -27,9 +27,9 @@ function City() {
 	};
 
 	useEffect(() => {
-		getCityDataFunc(`cities/${id}`, setIsLoading, setCurrentCity);
+		getCityData(`cities/${id}`, setIsLoading, setCurrentCity);
 		return () => {};
-	}, [id, setIsLoading, setCurrentCity, getCityDataFunc]);
+	}, [id, setIsLoading, setCurrentCity, getCityData]);
 
 	return (
 		<>
