@@ -1,9 +1,14 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { getCityData as getCityDataFunc } from '../functions/getCityData.ts';
 import { getNewCityData as getNewCityDataFunc } from '../functions/getNewCityData.ts';
+import { postNewCityData as postNewCityDataFunc } from '../functions/postNewCityData.ts';
 import type { CityDataType } from '../types/components/types.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
-import type { GetCityDataType, GetNewCityDataType } from '../types/functions/types.ts';
+import type {
+	GetCityDataType,
+	GetNewCityDataType,
+	PostNewCityDataType,
+} from '../types/functions/types.ts';
 
 const CitiesContext = createContext<CitiesContextValue | null>(null);
 
@@ -13,6 +18,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 	const [currentCity, setCurrentCity] = useState<CityDataType | null>(null);
 	const getCityData: GetCityDataType = getCityDataFunc;
 	const getNewCityData: GetNewCityDataType = getNewCityDataFunc;
+	const postNewCityData: PostNewCityDataType = postNewCityDataFunc;
 
 	useEffect(() => {
 		getCityData('cities', setIsLoading, setCities);
@@ -23,12 +29,14 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 		<CitiesContext.Provider
 			value={{
 				cities,
+				setCities,
 				isLoading,
 				setIsLoading,
 				currentCity,
 				setCurrentCity,
 				getCityData,
 				getNewCityData,
+				postNewCityData,
 			}}
 		>
 			{children}
