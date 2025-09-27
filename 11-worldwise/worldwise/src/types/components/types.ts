@@ -26,7 +26,7 @@ export type CityDataType = {
 	date: string;
 	notes: string;
 	position: CityPositionType;
-	id?: number;
+	id?: string;
 };
 
 export type UseSearchParamsType = [URLSearchParams, SetURLSearchParams];
