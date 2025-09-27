@@ -1,5 +1,6 @@
 import type { Dispatch } from 'react';
 import type { CityDataType } from '../components/types.ts';
+import type { SetCitiesType } from '../contexts/types.ts';
 
 export type SetResponseDataType =
 	| Dispatch<React.SetStateAction<CityDataType | null>>
@@ -33,6 +34,12 @@ export type GetNewCityDataType = (
 	setCityName: SetCityNameType,
 	setCountry: SetCountryType,
 	setCountryCode: SetCountryCodeType
+) => Promise<void>;
+
+export type PostNewCityDataType = (
+	newCityData: CityDataType,
+	setIsLoading: SetIsLoadingType,
+	setCities: SetCitiesType
 ) => Promise<void>;
 
 type LocalityInfoType = {
