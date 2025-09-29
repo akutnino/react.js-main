@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react';
 import { Link } from 'react-router';
 import { formatDate } from '../functions/formatDate.ts';
 import type { CityDataType } from '../types/components/types.ts';
@@ -8,9 +9,11 @@ import CountryIcon from './CountryIcon.tsx';
 function CityItem({
 	cityObject,
 	currentCity,
+	onClick,
 }: {
 	cityObject: CityDataType;
 	currentCity: CityDataType | null;
+	onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }) {
 	const { cityName, emoji, date, id, position }: CityDataType = cityObject;
 	const isActive: boolean = currentCity?.id === id;
@@ -29,6 +32,7 @@ function CityItem({
 				<button
 					className={styles.deleteBtn}
 					type='button'
+					onClick={onClick}
 				>
 					&times;
 				</button>
