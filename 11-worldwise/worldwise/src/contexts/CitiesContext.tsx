@@ -2,9 +2,11 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 import { getCityData as getCityDataFunc } from '../functions/getCityData.ts';
 import { getNewCityData as getNewCityDataFunc } from '../functions/getNewCityData.ts';
 import { postNewCityData as postNewCityDataFunc } from '../functions/postNewCityData.ts';
+import { deleteCityData as deleteCityDataFunc } from '../functions/deleteCityData.ts';
 import type { CityDataType } from '../types/components/types.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
 import type {
+	DeleteCityDataType,
 	GetCityDataType,
 	GetNewCityDataType,
 	PostNewCityDataType,
@@ -19,6 +21,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 	const getCityData: GetCityDataType = getCityDataFunc;
 	const getNewCityData: GetNewCityDataType = getNewCityDataFunc;
 	const postNewCityData: PostNewCityDataType = postNewCityDataFunc;
+	const deleteCityData: DeleteCityDataType = deleteCityDataFunc;
 
 	useEffect(() => {
 		getCityData('cities', setIsLoading, setCities);
@@ -37,6 +40,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 				getCityData,
 				getNewCityData,
 				postNewCityData,
+				deleteCityData,
 			}}
 		>
 			{children}
