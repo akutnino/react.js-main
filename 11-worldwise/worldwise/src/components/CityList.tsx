@@ -1,5 +1,6 @@
 import type { CityDataType } from '../types/components/types.ts';
 import type { CitiesContextValue } from '../types/contexts/types.ts';
+import type { MouseEvent } from 'react';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import styles from '../styles/components/CityList.module.scss';
 
@@ -8,7 +9,15 @@ import Message from './Message.tsx';
 import Spinner from './Spinner.tsx';
 
 function CityList() {
-	const { cities, isLoading, currentCity }: CitiesContextValue = useCities();
+	const { cities, isLoading, currentCity, deleteCityData }: CitiesContextValue =
+		useCities();
+
+	const handleDeleteCity = (cityID: string) => {
+		return (event: MouseEvent<HTMLButtonElement>) => {
+			event.preventDefault();
+			deleteCityData(cityID);
+		};
+	};
 
 	return (
 		<>
@@ -20,6 +29,7 @@ function CityList() {
 				<ul className={styles.cityList}>
 					{cities.map((cityObject: CityDataType) => (
 						<CityItem
+							onClick={handleDeleteCity(cityObject.id!)}
 							currentCity={currentCity}
 							cityObject={cityObject}
 							key={cityObject.id}
