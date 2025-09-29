@@ -42,7 +42,11 @@ export type PostNewCityDataType = (
 	setCities: SetCitiesType
 ) => Promise<void>;
 
-export type DeleteCityDataType = (cityID: string) => Promise<void>;
+export type DeleteCityDataType = (
+	cityID: string,
+	setIsLoading: SetIsLoadingType,
+	setCities: SetCitiesType
+) => Promise<void>;
 
 type LocalityInfoType = {
 	administrative: object[];
