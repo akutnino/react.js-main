@@ -29,9 +29,9 @@ function CityList() {
 		<>
 			{isLoading && <Spinner />}
 
-			{!isLoading && !cities.length ? (
-				<Message message='Add a City by Clicking on the Map.' />
-			) : (
+			{!cities.length && <Message message='Add a City by Clicking on the Map.' />}
+
+			{!isLoading && (
 				<ul className={styles.cityList}>
 					{cities.map((cityObject: CityDataType) => (
 						<CityItem
