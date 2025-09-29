@@ -1,6 +1,7 @@
 import type { Dispatch } from 'react';
 import type { CityDataType } from '../components/types.ts';
 import type {
+	DeleteCityDataType,
 	GetCityDataType,
 	GetNewCityDataType,
 	PostNewCityDataType,
@@ -18,4 +19,5 @@ export type CitiesContextValue = {
 	getCityData: GetCityDataType;
 	getNewCityData: GetNewCityDataType;
 	postNewCityData: PostNewCityDataType;
+	deleteCityData: DeleteCityDataType;
 };
