@@ -21,8 +21,7 @@ import Message from './Message.tsx';
 import Spinner from './Spinner.tsx';
 
 function Form() {
-	const { isLoading, setIsLoading, getNewCityData, postNewCityData, setCities } =
-		useCities();
+	const { isLoading, getNewCityData, postNewCityData } = useCities();
 	const navigate: NavigateFunction = useNavigate();
 	const [mapLatitude, mapLongitude] = useUrlPosition();
 	const [cityName, setCityName] = useState<string>('');
@@ -67,7 +66,7 @@ function Form() {
 			},
 		};
 
-		await postNewCityData(newCityData, setIsLoading, setCities);
+		await postNewCityData(newCityData);
 		navigate('/app/cities', { replace: true });
 	};
 
