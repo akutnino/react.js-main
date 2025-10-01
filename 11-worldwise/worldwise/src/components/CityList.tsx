@@ -9,19 +9,13 @@ import Message from './Message.tsx';
 import Spinner from './Spinner.tsx';
 
 function CityList() {
-	const {
-		cities,
-		isLoading,
-		currentCity,
-		deleteCityData,
-		setIsLoading,
-		setCities,
-	}: CitiesContextValue = useCities();
+	const { cities, isLoading, currentCity, deleteCityData }: CitiesContextValue =
+		useCities();
 
 	const handleDeleteCity = (cityID: string) => {
 		return (event: MouseEvent<HTMLButtonElement>) => {
 			event.preventDefault();
-			deleteCityData(cityID, setIsLoading, setCities);
+			deleteCityData(cityID);
 		};
 	};
 
