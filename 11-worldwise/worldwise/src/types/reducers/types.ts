@@ -10,12 +10,12 @@ type WorldwiseCitiesLoadedActionType = {
 };
 
 type WorldwiseCitiesCreatedActionType = {
-	type: 'cities/created';
+	type: 'city/created';
 	payload: CityDataType;
 };
 
 type WorldwiseCitiesDeletedActionType = {
-	type: 'cities/deleted';
+	type: 'city/deleted';
 	payload: string;
 };
 
