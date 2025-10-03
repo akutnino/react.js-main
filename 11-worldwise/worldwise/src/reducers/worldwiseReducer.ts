@@ -35,14 +35,14 @@ export function worldwiseReducer(
 				currentCity: action.payload,
 			};
 		}
-		case 'cities/created': {
+		case 'city/created': {
 			return {
 				...currentState,
 				isLoading: false,
 				cities: [...currentState.cities, action.payload],
 			};
 		}
-		case 'cities/deleted': {
+		case 'city/deleted': {
 			return {
 				...currentState,
 				isLoading: false,
