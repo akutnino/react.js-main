@@ -1,16 +1,9 @@
 import type { Dispatch } from 'react';
 import type { CityDataType } from '../components/types.ts';
 
-// export type SetResponseDataType =
-// 	| Dispatch<React.SetStateAction<CityDataType | null>>
-// 	| Dispatch<React.SetStateAction<CityDataType[]>>;
-
 export type ResponseDataType = CityDataType[] & CityDataType;
 
-export type GetCityDataType = (
-	urlPath: string
-	// setResponseData: SetResponseDataType
-) => Promise<void>;
+export type GetCityDataType = (urlPath: string) => Promise<void>;
 
 export type GetNewCityDataType = (
 	mapLatitude: string | null,
@@ -59,15 +52,10 @@ export type FormFetchCityDataType = {
 	localityInfo: LocalityInfoType;
 };
 
-export type SetCitiesType = Dispatch<React.SetStateAction<CityDataType[]>>;
-
 export type CitiesContextValue = {
 	cities: CityDataType[];
-	setCities: SetCitiesType;
 	isLoading: boolean;
-	setIsLoading: Dispatch<React.SetStateAction<boolean>>;
 	currentCity: CityDataType | null;
-	setCurrentCity: Dispatch<React.SetStateAction<CityDataType | null>>;
 	getCityData: GetCityDataType;
 	getNewCityData: GetNewCityDataType;
 	postNewCityData: PostNewCityDataType;
