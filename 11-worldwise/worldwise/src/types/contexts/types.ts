@@ -1,15 +1,15 @@
 import type { Dispatch } from 'react';
 import type { CityDataType } from '../components/types.ts';
 
-export type SetResponseDataType =
-	| Dispatch<React.SetStateAction<CityDataType | null>>
-	| Dispatch<React.SetStateAction<CityDataType[]>>;
+// export type SetResponseDataType =
+// 	| Dispatch<React.SetStateAction<CityDataType | null>>
+// 	| Dispatch<React.SetStateAction<CityDataType[]>>;
 
 export type ResponseDataType = CityDataType[] & CityDataType;
 
 export type GetCityDataType = (
-	urlPath: string,
-	setResponseData: SetResponseDataType
+	urlPath: string
+	// setResponseData: SetResponseDataType
 ) => Promise<void>;
 
 export type GetNewCityDataType = (
