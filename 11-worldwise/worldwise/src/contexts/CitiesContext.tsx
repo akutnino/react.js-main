@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useReducer,
+	useState,
+	type ReactNode,
+} from 'react';
 import type { CityDataType } from '../types/components/types.ts';
 import type {
 	CitiesContextValue,
@@ -11,17 +18,25 @@ import type {
 	SetIsLoadingGeolocationType,
 	SetResponseDataType,
 } from '../types/contexts/types.ts';
+import {
+	WORLDWISE_INITIAL_STATE,
+	worldwiseReducer,
+} from '../reducers/worldwiseReducer.ts';
+import type { WorldwiseInitialStateType } from '../types/reducers/types.ts';
 
 const CitiesContext = createContext<CitiesContextValue | null>(null);
 
 function CitiesProvider({ children }: { children: ReactNode }) {
-	const [cities, setCities] = useState<CityDataType[]>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [currentCity, setCurrentCity] = useState<CityDataType | null>(null);
+	const [state, dispatch] = useReducer(worldwiseReducer, WORLDWISE_INITIAL_STATE);
+	const { cities, isLoading, currentCity }: WorldwiseInitialStateType = state;
+
+	// const [cities, setCities] = useState<CityDataType[]>([]);
+	// const [isLoading, setIsLoading] = useState<boolean>(false);
+	// const [currentCity, setCurrentCity] = useState<CityDataType | null>(null);
 
 	const getCityData = async (urlPath: string, setResponseData: SetResponseDataType) => {
 		try {
-			setIsLoading(true);
+			dispatch({ type: 'cities/loading' });
 
 			const fetchURL: string = `http://localhost:8000/${urlPath}`;
 			const fetchOptions: RequestInit = {
@@ -36,13 +51,24 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 			if (!response.ok) throw new Error('Failed Fetch Request');
 
 			const responseData: ResponseDataType = await response.json();
-			setResponseData(responseData);
+			if (!responseData.cityName) {
+				dispatch({
+					type: 'cities/loaded',
+					payload: responseData,
+				});
+			} else {
+				dispatch({
+					type: 'city/loaded',
+					payload: responseData,
+				});
+			}
 		} catch (error) {
 			if (error instanceof Error) {
-				console.log(error.message);
+				dispatch({
+					type: 'cities/rejected',
+					payload: error.message,
+				});
 			}
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
@@ -91,7 +117,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 
 	const postNewCityData = async (newCityData: CityDataType) => {
 		try {
-			setIsLoading(true);
+			dispatch({ type: 'cities/loading' });
 
 			const fetchURL: RequestInfo | URL = `http://localhost:8000/cities`;
 			const fetchOptions: RequestInit = {
@@ -109,19 +135,23 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 			const data: CityDataType = await response.json();
 			if (!data.id) throw new Error('API Post Request Failed');
 
-			setCities((currentState) => [...currentState, data]);
+			dispatch({
+				type: 'cities/created',
+				payload: data,
+			});
 		} catch (error) {
 			if (error instanceof Error) {
-				console.log(error.message);
+				dispatch({
+					type: 'cities/rejected',
+					payload: error.message,
+				});
 			}
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
 	const deleteCityData = async (cityID: string) => {
 		try {
-			setIsLoading(true);
+			dispatch({ type: 'cities/loading' });
 
 			const fetchURL: RequestInfo | URL = `http://localhost:8000/cities/${cityID}`;
 			const fetchOptions: RequestInit = {
@@ -131,13 +161,17 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 			const response: Response = await fetch(fetchURL, fetchOptions);
 			if (!response.ok) throw new Error('Failed Fetch Request');
 
-			setCities((currentCities) => currentCities.filter((city) => city.id !== cityID));
+			dispatch({
+				type: 'cities/deleted',
+				payload: cityID,
+			});
 		} catch (error) {
 			if (error instanceof Error) {
-				console.log(error.message);
+				dispatch({
+					type: 'cities/rejected',
+					payload: error.message,
+				});
 			}
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
