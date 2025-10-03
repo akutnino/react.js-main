@@ -20,7 +20,8 @@ const CitiesContext = createContext<CitiesContextValue | null>(null);
 
 function CitiesProvider({ children }: { children: ReactNode }) {
 	const [state, dispatch] = useReducer(worldwiseReducer, WORLDWISE_INITIAL_STATE);
-	const { cities, isLoading, currentCity }: WorldwiseInitialStateType = state;
+	const { cities, isLoading, currentCity, errorMessage }: WorldwiseInitialStateType =
+		state;
 
 	const getCityData = async (urlPath: string) => {
 		try {
@@ -124,7 +125,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 			if (!data.id) throw new Error('API Post Request Failed');
 
 			dispatch({
-				type: 'cities/created',
+				type: 'city/created',
 				payload: data,
 			});
 		} catch (error) {
@@ -150,7 +151,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 			if (!response.ok) throw new Error('Failed Fetch Request');
 
 			dispatch({
-				type: 'cities/deleted',
+				type: 'city/deleted',
 				payload: cityID,
 			});
 		} catch (error) {
@@ -174,6 +175,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 				cities,
 				isLoading,
 				currentCity,
+				errorMessage,
 				getCityData,
 				getNewCityData,
 				postNewCityData,
