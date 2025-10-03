@@ -56,6 +56,7 @@ export type CitiesContextValue = {
 	cities: CityDataType[];
 	isLoading: boolean;
 	currentCity: CityDataType | null;
+	errorMessage: string | null;
 	getCityData: GetCityDataType;
 	getNewCityData: GetNewCityDataType;
 	postNewCityData: PostNewCityDataType;
