@@ -10,8 +10,7 @@ import Spinner from './Spinner.tsx';
 import Button from './Button.tsx';
 
 function City() {
-	const { isLoading, currentCity, setCurrentCity, getCityData }: CitiesContextValue =
-		useCities();
+	const { isLoading, currentCity, getCityData }: CitiesContextValue = useCities();
 	const navigate: NavigateFunction = useNavigate();
 	const { id }: Readonly<Params<string>> = useParams();
 	const isNotNull: boolean = currentCity !== null;
@@ -22,7 +21,7 @@ function City() {
 	};
 
 	useEffect(() => {
-		getCityData(`cities/${id}`, setCurrentCity);
+		getCityData(`cities/${id}`);
 		return () => {};
 	}, [id]);
 
