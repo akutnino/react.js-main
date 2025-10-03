@@ -1,11 +1,4 @@
-import {
-	createContext,
-	useContext,
-	useEffect,
-	useReducer,
-	useState,
-	type ReactNode,
-} from 'react';
+import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react';
 import type { CityDataType } from '../types/components/types.ts';
 import type {
 	CitiesContextValue,
@@ -16,7 +9,6 @@ import type {
 	SetCountryType,
 	SetFetchErrorType,
 	SetIsLoadingGeolocationType,
-	SetResponseDataType,
 } from '../types/contexts/types.ts';
 import {
 	WORLDWISE_INITIAL_STATE,
@@ -30,11 +22,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 	const [state, dispatch] = useReducer(worldwiseReducer, WORLDWISE_INITIAL_STATE);
 	const { cities, isLoading, currentCity }: WorldwiseInitialStateType = state;
 
-	// const [cities, setCities] = useState<CityDataType[]>([]);
-	// const [isLoading, setIsLoading] = useState<boolean>(false);
-	// const [currentCity, setCurrentCity] = useState<CityDataType | null>(null);
-
-	const getCityData = async (urlPath: string, setResponseData: SetResponseDataType) => {
+	const getCityData = async (urlPath: string) => {
 		try {
 			dispatch({ type: 'cities/loading' });
 
@@ -176,7 +164,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 	};
 
 	useEffect(() => {
-		getCityData('cities', setCities);
+		getCityData('cities');
 		return () => {};
 	}, []);
 
@@ -184,11 +172,8 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 		<CitiesContext.Provider
 			value={{
 				cities,
-				setCities,
 				isLoading,
-				setIsLoading,
 				currentCity,
-				setCurrentCity,
 				getCityData,
 				getNewCityData,
 				postNewCityData,
