@@ -1,5 +1,9 @@
 import type { Dispatch } from 'react';
 import type { CityDataType } from '../components/types.ts';
+import type {
+	AuthInitialStateType,
+	WorldwiseInitialStateType,
+} from '../reducers/types.ts';
 
 export type ResponseDataType = CityDataType[] & CityDataType;
 
@@ -52,13 +56,14 @@ export type FormFetchCityDataType = {
 	localityInfo: LocalityInfoType;
 };
 
-export type CitiesContextValue = {
-	cities: CityDataType[];
-	isLoading: boolean;
-	currentCity: CityDataType | null;
-	errorMessage: string | null;
+export type CitiesContextValueType = WorldwiseInitialStateType & {
 	getCityData: GetCityDataType;
 	getNewCityData: GetNewCityDataType;
 	postNewCityData: PostNewCityDataType;
 	deleteCityData: DeleteCityDataType;
+};
+
+export type AuthContextValueType = AuthInitialStateType & {
+	handleLogin: (email: string, password: string) => void;
+	handleLogout: () => void;
 };
