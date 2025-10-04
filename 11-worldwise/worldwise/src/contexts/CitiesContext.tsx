@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react';
 import type { CityDataType } from '../types/components/types.ts';
 import type {
-	CitiesContextValue,
+	CitiesContextValueType,
 	FormFetchCityDataType,
 	ResponseDataType,
 	SetCityNameType,
@@ -16,7 +16,7 @@ import {
 } from '../reducers/worldwiseReducer.ts';
 import type { WorldwiseInitialStateType } from '../types/reducers/types.ts';
 
-const CitiesContext = createContext<CitiesContextValue | null>(null);
+const CitiesContext = createContext<CitiesContextValueType | null>(null);
 
 function CitiesProvider({ children }: { children: ReactNode }) {
 	const [state, dispatch] = useReducer(worldwiseReducer, WORLDWISE_INITIAL_STATE);
@@ -188,7 +188,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 }
 
 function useCities() {
-	const context = useContext<CitiesContextValue | null>(CitiesContext);
+	const context = useContext<CitiesContextValueType | null>(CitiesContext);
 
 	if (context === null) throw new Error('CitiesContext cannot be null.');
 	if (context === undefined) throw new Error('Outside of CitiesContext Scope.');
