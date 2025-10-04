@@ -1,4 +1,4 @@
-import type { CityDataType } from '../components/types.ts';
+import type { CityDataType, UserType } from '../components/types.ts';
 
 type WorldwiseCitiesLoadingActionType = {
 	type: 'cities/loading';
@@ -42,4 +42,20 @@ export type WorldwiseInitialStateType = {
 	isLoading: boolean;
 	currentCity: CityDataType | null;
 	errorMessage: null | string;
+};
+
+type AuthUserLoginType = {
+	type: 'user/login';
+	payload: UserType;
+};
+
+type AuthUserLogoutType = {
+	type: 'user/logout';
+};
+
+export type AuthActionType = AuthUserLoginType | AuthUserLogoutType;
+
+export type AuthInitialStateType = {
+	user: UserType | null;
+	isAuthenticated: boolean;
 };
