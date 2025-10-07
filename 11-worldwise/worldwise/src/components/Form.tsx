@@ -11,6 +11,7 @@ import { useCities } from '../contexts/CitiesContext.tsx';
 import { DatePicker } from 'react-datepicker';
 import { useNavigate, type NavigateFunction } from 'react-router';
 import { useUrlPosition } from '../hooks/useUrlPosition.ts';
+import type { CitiesContextValueType } from '../types/contexts/types.ts';
 import type { CityDataType } from '../types/components/types.ts';
 import styles from '../styles/components/Form.module.scss';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -21,7 +22,8 @@ import Message from './Message.tsx';
 import Spinner from './Spinner.tsx';
 
 function Form() {
-	const { isLoading, getNewCityData, postNewCityData } = useCities();
+	const { isLoading, getNewCityData, postNewCityData }: CitiesContextValueType =
+		useCities();
 	const navigate: NavigateFunction = useNavigate();
 	const [mapLatitude, mapLongitude] = useUrlPosition();
 	const [cityName, setCityName] = useState<string>('');
