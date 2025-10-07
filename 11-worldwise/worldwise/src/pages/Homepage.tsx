@@ -21,7 +21,7 @@ function Homepage() {
 				</h2>
 
 				<Link
-					to={'/app'}
+					to={'/login'}
 					className={styles.cta}
 				>
 					Start Tracking Now
