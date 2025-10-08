@@ -1,27 +1,36 @@
-import type { UserType } from '../types/components/types.ts';
+import { type MouseEvent } from 'react';
+import type { AuthContextValueType } from '../types/contexts/types.ts';
+import { useAuth } from '../contexts/FakeAuthContext.tsx';
 import styles from '../styles/components/User.module.scss';
 
-const FAKE_USER: UserType = {
-	name: 'Jack',
-	email: 'jack@example.com',
-	password: 'qwerty',
-	avatar: 'https://i.pravatar.cc/100?u=zz',
-};
+import Button from './Button.tsx';
 
 function User() {
-	const user: UserType = FAKE_USER;
+	const { user, handleLogout }: AuthContextValueType = useAuth();
 
-	const handleClick = () => {};
+	const handleUserLogout = (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		handleLogout();
+	};
 
 	return (
-		<div className={styles.user}>
-			<img
-				src={user.avatar}
-				alt={user.name}
-			/>
-			<span>Welcome, {user.name}</span>
-			<button onClick={handleClick}>Logout</button>
-		</div>
+		<>
+			{user !== null && (
+				<div className={styles.user}>
+					<img
+						src={user.avatar}
+						alt={user.name}
+					/>
+					<span>Welcome, {user.name}</span>
+					<Button
+						type='primary'
+						onClick={handleUserLogout}
+					>
+						Logout
+					</Button>
+				</div>
+			)}
+		</>
 	);
 }
 
