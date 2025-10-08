@@ -1,12 +1,17 @@
-import { useState, type ChangeEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type MouseEvent } from 'react';
+import { useAuth } from '../contexts/FakeAuthContext.tsx';
+import { useNavigate, type NavigateFunction } from 'react-router';
+import type { AuthContextValueType } from '../types/contexts/types.ts';
 import styles from '../styles/pages/Login.module.scss';
 
 import PageNav from '../components/PageNav.tsx';
+import Button from '../components/Button.tsx';
 
 function Login() {
-	// PRE-FILL FOR DEV PURPOSES
+	const { handleLogin, isAuthenticated }: AuthContextValueType = useAuth();
 	const [email, setEmail] = useState<string>('jack@example.com');
 	const [password, setPassword] = useState<string>('qwerty');
+	const navigate: NavigateFunction = useNavigate();
 
 	const handleEmailInput = (event: ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);
@@ -15,6 +20,17 @@ function Login() {
 	const handlePasswordInput = (event: ChangeEvent<HTMLInputElement>) => {
 		setPassword(event.target.value);
 	};
+
+	const handleUserLogin = (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		handleLogin(email, password);
+	};
+
+	useEffect(() => {
+		if (isAuthenticated) navigate('/app', { replace: true });
+
+		return () => {};
+	}, [isAuthenticated, navigate]);
 
 	return (
 		<main className={styles.login}>
@@ -42,7 +58,12 @@ function Login() {
 				</div>
 
 				<div>
-					<button>Login</button>
+					<Button
+						type='submit'
+						onClick={handleUserLogin}
+					>
+						Login
+					</Button>
 				</div>
 			</form>
 		</main>
