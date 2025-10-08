@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { CitiesProvider } from '../contexts/CitiesContext.tsx';
+import { AuthProvider } from '../contexts/FakeAuthContext.tsx';
 
 import Homepage from '../pages/Homepage.tsx';
 import Product from '../pages/Product.tsx';
@@ -14,62 +15,64 @@ import Form from './Form.tsx';
 
 function App() {
 	return (
-		<CitiesProvider>
-			<BrowserRouter basename='/'>
-				<Routes>
-					<Route
-						index={true}
-						element={<Homepage />}
-					/>
-					<Route
-						path='product'
-						element={<Product />}
-					/>
-					<Route
-						path='pricing'
-						element={<Pricing />}
-					/>
-					<Route
-						path='login'
-						element={<Login />}
-					/>
-					<Route
-						path='app'
-						element={<AppLayout />}
-					>
+		<AuthProvider>
+			<CitiesProvider>
+				<BrowserRouter basename='/'>
+					<Routes>
 						<Route
 							index={true}
-							element={
-								<Navigate
-									replace={true}
-									to={'cities'}
-								/>
-							}
+							element={<Homepage />}
 						/>
 						<Route
-							path='cities'
-							element={<CityList />}
+							path='product'
+							element={<Product />}
 						/>
 						<Route
-							path='cities/:id'
-							element={<City />}
+							path='pricing'
+							element={<Pricing />}
 						/>
 						<Route
-							path='countries'
-							element={<CountryList />}
+							path='login'
+							element={<Login />}
 						/>
 						<Route
-							path='form'
-							element={<Form />}
+							path='app'
+							element={<AppLayout />}
+						>
+							<Route
+								index={true}
+								element={
+									<Navigate
+										replace={true}
+										to={'cities'}
+									/>
+								}
+							/>
+							<Route
+								path='cities'
+								element={<CityList />}
+							/>
+							<Route
+								path='cities/:id'
+								element={<City />}
+							/>
+							<Route
+								path='countries'
+								element={<CountryList />}
+							/>
+							<Route
+								path='form'
+								element={<Form />}
+							/>
+						</Route>
+						<Route
+							path='*'
+							element={<PageNotFound />}
 						/>
-					</Route>
-					<Route
-						path='*'
-						element={<PageNotFound />}
-					/>
-				</Routes>
-			</BrowserRouter>
-		</CitiesProvider>
+					</Routes>
+				</BrowserRouter>
+			</CitiesProvider>
+		</AuthProvider>
 	);
 }
 
