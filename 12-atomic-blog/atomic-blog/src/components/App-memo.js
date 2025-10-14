@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 function createRandomPost() {
@@ -39,10 +39,17 @@ function App() {
 		[isFakeDark]
 	);
 
-	const archiveOptions = {
-		show: false,
-		title: 'Post archive plus main post',
-	};
+	const archiveOptions = useMemo(() => {
+		return {
+			show: false,
+			title: 'Post archive plus main post',
+		};
+	}, []);
+
+	// const archiveOptions = {
+	// 	show: false,
+	// 	title: 'Post archive plus main post',
+	// };
 
 	return (
 		<section>
