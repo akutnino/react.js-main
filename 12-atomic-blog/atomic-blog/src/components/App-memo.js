@@ -42,14 +42,9 @@ function App() {
 	const archiveOptions = useMemo(() => {
 		return {
 			show: false,
-			title: 'Post archive plus main post',
+			title: `Post archive plus ${posts.length} main post`,
 		};
-	}, []);
-
-	// const archiveOptions = {
-	// 	show: false,
-	// 	title: 'Post archive plus main post',
-	// };
+	}, [posts.length]);
 
 	return (
 		<section>
