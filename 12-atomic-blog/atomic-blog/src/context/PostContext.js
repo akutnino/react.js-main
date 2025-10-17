@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { createRandomPost } from '../functions/createRandomPost.js';
 
 const PostContext = createContext();
@@ -16,18 +16,16 @@ function PostProvider({ children }) {
 	);
 	const searchedPosts = searchQuery.length > 0 ? filteredPosts : posts;
 
-	return (
-		<PostContext.Provider
-			value={{
-				posts: searchedPosts,
-				setPosts,
-				searchQuery,
-				setSearchQuery,
-			}}
-		>
-			{children}
-		</PostContext.Provider>
-	);
+	const contextValue = useMemo(() => {
+		return {
+			posts: searchedPosts,
+			setPosts,
+			searchQuery,
+			setSearchQuery,
+		};
+	}, [searchedPosts, searchQuery]);
+
+	return <PostContext.Provider value={contextValue}>{children}</PostContext.Provider>;
 }
 
 function usePosts() {
