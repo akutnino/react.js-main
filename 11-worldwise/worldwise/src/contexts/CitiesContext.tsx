@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react';
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useReducer,
+	type ReactNode,
+} from 'react';
 import type { CityDataType } from '../types/components/types.ts';
 import type {
 	CitiesContextValueType,
@@ -23,7 +30,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 	const { cities, isLoading, currentCity, errorMessage }: WorldwiseInitialStateType =
 		state;
 
-	const getCityData = async (urlPath: string) => {
+	const getCityData = useCallback(async (urlPath: string) => {
 		try {
 			dispatch({ type: 'cities/loading' });
 
@@ -59,7 +66,7 @@ function CitiesProvider({ children }: { children: ReactNode }) {
 				});
 			}
 		}
-	};
+	}, []);
 
 	const getNewCityData = async (
 		mapLatitude: string | null,
