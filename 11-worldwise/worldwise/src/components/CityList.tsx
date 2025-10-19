@@ -1,5 +1,5 @@
 import type { CityDataType } from '../types/components/types.ts';
-import type { CitiesContextValue } from '../types/contexts/types.ts';
+import type { CitiesContextValueType } from '../types/contexts/types.ts';
 import type { MouseEvent } from 'react';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import styles from '../styles/components/CityList.module.scss';
@@ -9,7 +9,7 @@ import Message from './Message.tsx';
 import Spinner from './Spinner.tsx';
 
 function CityList() {
-	const { cities, isLoading, currentCity, deleteCityData }: CitiesContextValue =
+	const { cities, isLoading, currentCity, deleteCityData }: CitiesContextValueType =
 		useCities();
 
 	const handleDeleteCity = (cityID: string) => {
