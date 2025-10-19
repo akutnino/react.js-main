@@ -1,5 +1,5 @@
 import type { CityDataType } from '../types/components/types.ts';
-import type { CitiesContextValue } from '../types/contexts/types.ts';
+import type { CitiesContextValueType } from '../types/contexts/types.ts';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import styles from '../styles/components/CountryList.module.scss';
 
@@ -8,7 +8,7 @@ import Spinner from './Spinner.tsx';
 import Message from './Message.tsx';
 
 function CountryList() {
-	const { cities, isLoading }: CitiesContextValue = useCities();
+	const { cities, isLoading }: CitiesContextValueType = useCities();
 
 	const filteredCountries: CityDataType[] = cities.reduce(
 		(acc: CityDataType[], curr: CityDataType) => {
