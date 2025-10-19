@@ -10,7 +10,7 @@ import {
 import { useCities } from '../contexts/CitiesContext.tsx';
 import { useGeolocation } from '../hooks/useGeolocation.ts';
 import { useUrlPosition } from '../hooks/useUrlPosition.ts';
-import type { CitiesContextValue } from '../types/contexts/types.ts';
+import type { CitiesContextValueType } from '../types/contexts/types.ts';
 import type { CityDataType } from '../types/components/types.ts';
 import type {
 	LatLng,
@@ -51,7 +51,7 @@ function HandleMapClick() {
 }
 
 function Map() {
-	const { cities }: CitiesContextValue = useCities();
+	const { cities }: CitiesContextValueType = useCities();
 	const {
 		isLoading: isLoadingPosition,
 		position: geolocationPosition,
