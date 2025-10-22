@@ -16,13 +16,6 @@ const Login = lazy(() => import('../pages/Login.tsx'));
 const AppLayout = lazy(() => import('../pages/AppLayout.tsx'));
 const PageNotFound = lazy(() => import('../pages/PageNotFound.tsx'));
 
-// import Homepage from '../pages/Homepage.tsx';
-// import Product from '../pages/Product.tsx';
-// import Pricing from '../pages/Pricing.tsx';
-// import Login from '../pages/Login.tsx';
-// import AppLayout from '../pages/AppLayout.tsx';
-// import PageNotFound from '../pages/PageNotFound.tsx';
-
 function App() {
 	return (
 		<AuthProvider>
