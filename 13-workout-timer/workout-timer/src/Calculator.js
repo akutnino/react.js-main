@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import clickSound from './ClickSound.m4a';
 
 function Calculator({ workouts, allowSound }) {
@@ -36,6 +36,7 @@ function Calculator({ workouts, allowSound }) {
 						))}
 					</select>
 				</div>
+
 				<div>
 					<label>How many sets?</label>
 					<input
@@ -47,6 +48,7 @@ function Calculator({ workouts, allowSound }) {
 					/>
 					<span>{sets}</span>
 				</div>
+
 				<div>
 					<label>How fast are you?</label>
 					<input
@@ -59,6 +61,7 @@ function Calculator({ workouts, allowSound }) {
 					/>
 					<span>{speed} sec/exercise</span>
 				</div>
+
 				<div>
 					<label>Break length</label>
 					<input
@@ -71,6 +74,7 @@ function Calculator({ workouts, allowSound }) {
 					<span>{durationBreak} minutes/break</span>
 				</div>
 			</form>
+
 			<section>
 				<button onClick={() => {}}>–</button>
 				<p>
@@ -84,4 +88,4 @@ function Calculator({ workouts, allowSound }) {
 	);
 }
 
-export default Calculator;
+export default memo(Calculator);
