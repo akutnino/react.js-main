@@ -11,12 +11,6 @@ function Calculator({ workouts, allowSound }) {
 	const mins = Math.floor(duration);
 	const seconds = (duration - mins) * 60;
 
-	const playSound = function () {
-		if (!allowSound) return;
-		const sound = new Audio(clickSound);
-		sound.play();
-	};
-
 	const handleDurationIncrease = () => {
 		setDuration((currentDuration) => Math.floor(currentDuration) + 1);
 	};
@@ -29,6 +23,17 @@ function Calculator({ workouts, allowSound }) {
 		setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
 		return () => {};
 	}, [number, sets, speed, durationBreak]);
+
+	useEffect(() => {
+		const playSound = () => {
+			if (!allowSound) return;
+			const sound = new Audio(clickSound);
+			sound.play();
+		};
+
+		playSound();
+		return () => {};
+	}, [duration, allowSound]);
 
 	return (
 		<>
