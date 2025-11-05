@@ -4,17 +4,17 @@ export type ReduxBankInitialStateType = {
 	loanPurpose: string;
 };
 
-type AccountDepositActionType = {
+export type AccountDepositActionType = {
 	type: 'account/deposit';
 	payload: number;
 };
 
-type AccountWithdrawActionType = {
+export type AccountWithdrawActionType = {
 	type: 'account/withdraw';
 	payload: number;
 };
 
-type AccountRequestLoanActionType = {
+export type AccountRequestLoanActionType = {
 	type: 'account/requestLoan';
 	payload: {
 		amount: number;
@@ -22,7 +22,7 @@ type AccountRequestLoanActionType = {
 	};
 };
 
-type AccountPayLoanActionType = {
+export type AccountPayLoanActionType = {
 	type: 'account/payLoan';
 };
 
