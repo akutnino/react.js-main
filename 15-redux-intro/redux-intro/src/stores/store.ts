@@ -1,5 +1,9 @@
 import { legacy_createStore as createStore, type Store } from 'redux';
 import type {
+	AccountDepositActionType,
+	AccountPayLoanActionType,
+	AccountRequestLoanActionType,
+	AccountWithdrawActionType,
 	ReducerActionType,
 	ReduxBankInitialStateType,
 } from '../types/stores/type.ts';
@@ -53,20 +57,57 @@ function reducer(
 
 const store: Store<ReduxBankInitialStateType, ReducerActionType> = createStore(reducer);
 
-store.dispatch({ type: 'account/deposit', payload: 500 });
-console.log(store.getState());
+// store.dispatch({ type: 'account/deposit', payload: 500 });
+// console.log(store.getState());
 
-store.dispatch({ type: 'account/withdraw', payload: 200 });
-console.log(store.getState());
+// store.dispatch({ type: 'account/withdraw', payload: 200 });
+// console.log(store.getState());
 
-store.dispatch({
-	type: 'account/requestLoan',
-	payload: {
-		amount: 1000,
-		purpose: 'buy a car',
-	},
-});
-console.log(store.getState());
+// store.dispatch({
+// 	type: 'account/requestLoan',
+// 	payload: {
+// 		amount: 1000,
+// 		purpose: 'buy a car',
+// 	},
+// });
+// console.log(store.getState());
 
-store.dispatch({ type: 'account/payLoan' });
+// store.dispatch({ type: 'account/payLoan' });
+// console.log(store.getState());
+
+function deposit(depositAmount: number): AccountDepositActionType {
+	return {
+		type: 'account/deposit',
+		payload: depositAmount,
+	};
+}
+
+function withdraw(withdrawAmount: number): AccountWithdrawActionType {
+	return {
+		type: 'account/withdraw',
+		payload: withdrawAmount,
+	};
+}
+
+function requestLoan(
+	requestLoanAmount: number,
+	loanPurpose: string
+): AccountRequestLoanActionType {
+	return {
+		type: 'account/requestLoan',
+		payload: {
+			amount: requestLoanAmount,
+			purpose: loanPurpose,
+		},
+	};
+}
+
+function payLoan(): AccountPayLoanActionType {
+	return { type: 'account/payLoan' };
+}
+
+store.dispatch(deposit(500));
+store.dispatch(withdraw(200));
+store.dispatch(requestLoan(1000, 'buy a car'));
+store.dispatch(payLoan());
 console.log(store.getState());
