@@ -1,11 +1,15 @@
-import { legacy_createStore as createStore, type Store } from 'redux';
+import { combineReducers, legacy_createStore as createStore } from 'redux';
 import type {
 	AccountDepositActionType,
 	AccountPayLoanActionType,
 	AccountRequestLoanActionType,
 	AccountWithdrawActionType,
-	ReducerActionType,
+	CustomerCreateCustomerActionType,
+	CustomerInitialStateType,
+	AccountReducerActionType,
 	ReduxBankInitialStateType,
+	CustomerReducerActionType,
+	CustomerUpdateNameActionType,
 } from '../types/stores/type.ts';
 
 const REDUX_BANK_INITIAL_STATE: ReduxBankInitialStateType = {
@@ -14,9 +18,15 @@ const REDUX_BANK_INITIAL_STATE: ReduxBankInitialStateType = {
 	loanPurpose: '',
 };
 
-function reducer(
+const CUSTOMER_INITIAL_STATE: CustomerInitialStateType = {
+	fullName: '',
+	nationalID: '',
+	createdAt: '',
+};
+
+function accountReducer(
 	currentState: ReduxBankInitialStateType = REDUX_BANK_INITIAL_STATE,
-	action: ReducerActionType
+	action: AccountReducerActionType
 ): ReduxBankInitialStateType {
 	switch (action.type) {
 		case 'account/deposit': {
@@ -55,25 +65,37 @@ function reducer(
 	}
 }
 
-const store: Store<ReduxBankInitialStateType, ReducerActionType> = createStore(reducer);
+function customerReducer(
+	currentState: CustomerInitialStateType = CUSTOMER_INITIAL_STATE,
+	action: CustomerReducerActionType
+): CustomerInitialStateType {
+	switch (action.type) {
+		case 'customer/createCustomer': {
+			return {
+				...currentState,
+				fullName: action.payload.fullName,
+				nationalID: action.payload.nationalID,
+				createdAt: action.payload.createdAt,
+			};
+		}
+		case 'customer/updateName': {
+			return {
+				...currentState,
+				fullName: action.payload,
+			};
+		}
+		default: {
+			return currentState;
+		}
+	}
+}
 
-// store.dispatch({ type: 'account/deposit', payload: 500 });
-// console.log(store.getState());
+const rootReducer = combineReducers({
+	account: accountReducer,
+	customer: customerReducer,
+});
 
-// store.dispatch({ type: 'account/withdraw', payload: 200 });
-// console.log(store.getState());
-
-// store.dispatch({
-// 	type: 'account/requestLoan',
-// 	payload: {
-// 		amount: 1000,
-// 		purpose: 'buy a car',
-// 	},
-// });
-// console.log(store.getState());
-
-// store.dispatch({ type: 'account/payLoan' });
-// console.log(store.getState());
+const store = createStore(rootReducer);
 
 function deposit(depositAmount: number): AccountDepositActionType {
 	return {
@@ -110,4 +132,30 @@ store.dispatch(deposit(500));
 store.dispatch(withdraw(200));
 store.dispatch(requestLoan(1000, 'buy a car'));
 store.dispatch(payLoan());
+console.log(store.getState());
+
+function createCustomer(
+	fullName: string,
+	nationalID: string
+): CustomerCreateCustomerActionType {
+	return {
+		type: 'customer/createCustomer',
+		payload: {
+			fullName,
+			nationalID,
+			createdAt: new Date().toISOString(),
+		},
+	};
+}
+
+function updateName(updatedFullName: string): CustomerUpdateNameActionType {
+	return {
+		type: 'customer/updateName',
+		payload: updatedFullName,
+	};
+}
+
+store.dispatch(createCustomer('Nino Akut', '121212'));
+console.log(store.getState());
+store.dispatch(updateName('LeBron James'));
 console.log(store.getState());
