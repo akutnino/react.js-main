@@ -26,8 +26,7 @@ function AccountOperations() {
 
 	const depositBalance: number = balance - currentLoan;
 	const isZeroBalance: boolean = balance === 0;
-	const isPendingLoan: boolean =
-		Number(withdrawalAmount) > depositBalance || Number(withdrawalAmount) >= balance;
+	const isPendingLoan: boolean = Number(withdrawalAmount) >= depositBalance + 1;
 
 	const handleDepositInputAmount = (event: ChangeEvent<HTMLInputElement>) => {
 		setDepositAmount(Number(event.target.value) < 0 ? 0 : Number(event.target.value));
