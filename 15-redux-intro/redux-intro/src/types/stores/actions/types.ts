@@ -22,11 +22,16 @@ export type AccountPayLoanActionType = {
 	type: 'account/payLoan';
 };
 
+export type AccountConvertingCurrencyActionType = {
+	type: 'account/convertingCurrency';
+};
+
 export type AccountReducerActionType =
 	| AccountDepositActionType
 	| AccountWithdrawActionType
 	| AccountRequestLoanActionType
-	| AccountPayLoanActionType;
+	| AccountPayLoanActionType
+	| AccountConvertingCurrencyActionType;
 
 export type CustomerCreateCustomerActionType = {
 	type: 'customer/createCustomer';
