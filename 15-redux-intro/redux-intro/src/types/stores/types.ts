@@ -1,3 +1,28 @@
-import type store from '../../stores/store.ts';
+import type { Dispatch, Reducer, Store } from 'redux';
+import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import type { preLoadedState, rootReducer } from '../../stores/store.ts';
+import type {
+	AccountReducerActionType,
+	CustomerReducerActionType,
+} from './actions/types.ts';
 
-export type RootState = ReturnType<typeof store.getState>;
+export type AppActions = AccountReducerActionType | CustomerReducerActionType;
+
+export type RootReducerType = Reducer<typeof preLoadedState, AppActions>;
+
+export type StoreType = Store<typeof preLoadedState, AppActions>;
+
+export type AppState = ReturnType<typeof rootReducer>;
+
+type DispatchType = Dispatch<AppActions>;
+
+type ThunkDispatchType = ThunkDispatch<AppState, unknown, AppActions>;
+
+export type AppDispatch = DispatchType & ThunkDispatchType;
+
+export type AsyncThunkAction<T> = ThunkAction<
+	Promise<void | T> | void,
+	AppState,
+	unknown,
+	AppActions
+>;
