@@ -1,8 +1,8 @@
 import { useState, type ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { Dispatch } from 'redux';
-import type { RootState } from '../types/stores/types.ts';
+import type { AppDispatch, AppState } from '../types/stores/types.ts';
 import type { ReduxBankInitialStateType } from '../types/stores/reducers/types.ts';
+import type { CurrencyType } from '../types/components/types.ts';
 import {
 	deposit,
 	payLoan,
@@ -15,14 +15,15 @@ function AccountOperations() {
 	const [withdrawalAmount, setWithdrawalAmount] = useState<null | number>(null);
 	const [loanAmount, setLoanAmount] = useState<null | number>(null);
 	const [loanPurpose, setLoanPurpose] = useState<string>('');
-	const [currency, setCurrency] = useState<'USD' | 'EUR' | 'GBP'>('USD');
+	const [currency, setCurrency] = useState<CurrencyType>('USD');
 
-	const dispatch: Dispatch = useDispatch();
+	const dispatch: AppDispatch = useDispatch();
 	const {
 		loan: currentLoan,
 		loanPurpose: currentLoanPurpose,
 		balance,
-	}: ReduxBankInitialStateType = useSelector((store: RootState) => store.account);
+		isLoading,
+	}: ReduxBankInitialStateType = useSelector((store: AppState) => store.account);
 
 	const depositBalance: number = balance - currentLoan;
 	const isZeroBalance: boolean = balance === 0;
@@ -53,8 +54,9 @@ function AccountOperations() {
 	const handleDeposit = () => {
 		if (!depositAmount) return;
 
-		dispatch(deposit(depositAmount));
+		dispatch(deposit(depositAmount, currency));
 		setDepositAmount(null);
+		setCurrency('USD');
 	};
 
 	const handleWithdrawal = () => {
@@ -101,8 +103,9 @@ function AccountOperations() {
 					<button
 						type='button'
 						onClick={handleDeposit}
+						disabled={isLoading}
 					>
-						Deposit {depositAmount}
+						{isLoading ? 'Converting...' : `Deposit ${depositAmount ?? ''}`}
 					</button>
 				</div>
 
