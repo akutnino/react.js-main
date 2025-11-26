@@ -1,12 +1,13 @@
 import { useState, type ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import type { Dispatch } from 'redux';
 import { createCustomer } from '../stores/actions/customerActions.ts';
+import type { AppDispatch } from '../types/stores/types.ts';
 
 function CreateCustomer() {
 	const [fullName, setFullName] = useState<string>('');
 	const [nationalId, setNationalId] = useState<string>('');
-	const dispatch: Dispatch = useDispatch();
+
+	const dispatch: AppDispatch = useDispatch();
 
 	const handleFullNameInput = (event: ChangeEvent<HTMLInputElement>) => {
 		setFullName(event.target.value);
