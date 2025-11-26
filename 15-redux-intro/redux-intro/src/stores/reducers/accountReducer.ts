@@ -5,17 +5,19 @@ const REDUX_BANK_INITIAL_STATE: ReduxBankInitialStateType = {
 	balance: 0,
 	loan: 0,
 	loanPurpose: '',
+	isLoading: false,
 };
 
-export function accountReducer(
-	currentState: ReduxBankInitialStateType = REDUX_BANK_INITIAL_STATE,
+const accountReducer = (
+	currentState = REDUX_BANK_INITIAL_STATE,
 	action: AccountReducerActionType
-): ReduxBankInitialStateType {
+): ReduxBankInitialStateType => {
 	switch (action.type) {
 		case 'account/deposit': {
 			return {
 				...currentState,
 				balance: currentState.balance + action.payload,
+				isLoading: false,
 			};
 		}
 		case 'account/withdraw': {
@@ -42,8 +44,16 @@ export function accountReducer(
 				loanPurpose: '',
 			};
 		}
+		case 'account/convertingCurrency': {
+			return {
+				...currentState,
+				isLoading: true,
+			};
+		}
 		default: {
 			return currentState;
 		}
 	}
-}
+};
+
+export { accountReducer, REDUX_BANK_INITIAL_STATE };
