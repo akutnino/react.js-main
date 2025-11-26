@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import type { RootState } from '../types/stores/types.ts';
+import type { AppState } from '../types/stores/types.ts';
 
 function Customer() {
-	const customerName: string = useSelector((store: RootState) => store.customer.fullName);
+	const customerName: string = useSelector((store: AppState) => store.customer.fullName);
 
 	return <h2>👋 Welcome, {customerName}</h2>;
 }
