@@ -1,7 +1,7 @@
 import type {
 	CustomerCreateCustomerActionType,
 	CustomerUpdateNameActionType,
-} from '../../types/stores/actions/types.ts';
+} from '../../types/stores/actions/customer-types.ts';
 
 export function createCustomer(
 	fullName: string,

@@ -5,7 +5,7 @@ import type {
 	AccountPayLoanActionType,
 	AccountRequestLoanActionType,
 	AccountWithdrawActionType,
-} from '../../types/stores/actions/types.ts';
+} from '../../types/stores/actions/account-types.ts';
 
 export function deposit(
 	depositAmount: number,
