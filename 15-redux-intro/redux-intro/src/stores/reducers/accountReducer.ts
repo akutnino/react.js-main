@@ -1,4 +1,4 @@
-import type { AccountReducerActionType } from '../../types/stores/actions/types.ts';
+import type { AccountReducerActionType } from '../../types/stores/actions/account-types.ts';
 import type { ReduxBankInitialStateType } from '../../types/stores/reducers/types.ts';
 
 const REDUX_BANK_INITIAL_STATE: ReduxBankInitialStateType = {

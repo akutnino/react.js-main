@@ -1,4 +1,4 @@
-import type { CustomerReducerActionType } from '../../types/stores/actions/types.ts';
+import type { CustomerReducerActionType } from '../../types/stores/actions/customer-types.ts';
 import type { CustomerInitialStateType } from '../../types/stores/reducers/types.ts';
 
 const CUSTOMER_INITIAL_STATE: CustomerInitialStateType = {
