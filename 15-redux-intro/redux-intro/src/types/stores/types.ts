@@ -1,10 +1,8 @@
 import type { Dispatch, Reducer, Store } from 'redux';
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import type { preLoadedState, rootReducer } from '../../stores/store.ts';
-import type {
-	AccountReducerActionType,
-	CustomerReducerActionType,
-} from './actions/types.ts';
+import type { AccountReducerActionType } from './actions/account-types.ts';
+import type { CustomerReducerActionType } from './actions/customer-types.ts';
 
 export type AppActions = AccountReducerActionType | CustomerReducerActionType;
 
