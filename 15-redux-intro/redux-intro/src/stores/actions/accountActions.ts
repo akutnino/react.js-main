@@ -9,7 +9,8 @@ import type {
 
 export function deposit(
 	depositAmount: number,
-	currency: CurrencyType
+	currency: CurrencyType,
+	url: string
 ): AccountDepositActionType | AsyncThunkAction<number> {
 	const AccountDepositAction: AccountDepositActionType = {
 		type: 'account/deposit',
@@ -20,7 +21,7 @@ export function deposit(
 		try {
 			dispatch({ type: 'account/convertingCurrency' });
 
-			const fetchURL: RequestInfo = `https://api.frankfurter.dev/v1/latest?base=${currency}&symbols=USD`;
+			const fetchURL: RequestInfo = `${url}latest?base=${currency}&symbols=USD`;
 			const fetchOptions: RequestInit = {
 				method: 'GET',
 				headers: {
@@ -46,8 +47,6 @@ export function deposit(
 				type: 'account/deposit',
 				payload: convertedAmount,
 			});
-
-			return convertedAmount;
 		} catch (error) {
 			if (error instanceof Error) {
 				throw error;
