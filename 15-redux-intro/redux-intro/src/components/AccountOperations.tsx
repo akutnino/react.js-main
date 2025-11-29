@@ -1,14 +1,17 @@
+import useSWR from 'swr';
 import { useState, type ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, AppState } from '../types/stores/types.ts';
 import type { ReduxBankInitialStateType } from '../types/stores/reducers/types.ts';
-import type { CurrencyType } from '../types/components/types.ts';
+import type { CurrencyType, FetcherReturnType } from '../types/components/types.ts';
 import {
 	deposit,
 	payLoan,
 	requestLoan,
 	withdraw,
 } from '../stores/actions/accountActions.ts';
+
+const fetchURL: string = import.meta.env.VITE_DEPOSIT_API;
 
 function AccountOperations() {
 	const [depositAmount, setDepositAmount] = useState<null | number>(null);
@@ -24,6 +27,15 @@ function AccountOperations() {
 		balance,
 		isLoading,
 	}: ReduxBankInitialStateType = useSelector((store: AppState) => store.account);
+
+	const AccountOperationsFetcher = (url: string) => {
+		if (typeof depositAmount !== 'number') return;
+		if (depositAmount <= 0) return;
+
+		return dispatch(deposit(depositAmount, currency, url)) as FetcherReturnType;
+	};
+
+	useSWR(fetchURL, () => AccountOperationsFetcher(fetchURL));
 
 	const depositBalance: number = balance - currentLoan;
 	const isZeroBalance: boolean = balance === 0;
@@ -54,7 +66,7 @@ function AccountOperations() {
 	const handleDeposit = () => {
 		if (!depositAmount) return;
 
-		dispatch(deposit(depositAmount, currency));
+		dispatch(deposit(depositAmount, currency, fetchURL));
 		setDepositAmount(null);
 		setCurrency('USD');
 	};
