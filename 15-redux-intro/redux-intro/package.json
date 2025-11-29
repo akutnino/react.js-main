@@ -8,8 +8,7 @@
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"test": "vitest",
-		"dotenvx": "dotenvx"
+		"test": "vitest"
 	},
 	"dependencies": {
 		"@redux-devtools/extension": "^3.3.0",
@@ -21,7 +20,6 @@
 		"swr": "^2.3.6"
 	},
 	"devDependencies": {
-		"@dotenvx/dotenvx": "^1.51.1",
 		"@eslint/js": "^9.39.1",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/react": "^16.3.0",
