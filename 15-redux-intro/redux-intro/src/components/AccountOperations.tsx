@@ -3,7 +3,11 @@ import { useState, type ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, AppState } from '../types/stores/types.ts';
 import type { ReduxBankInitialStateType } from '../types/stores/reducers/types.ts';
-import type { CurrencyType, FetcherReturnType } from '../types/components/types.ts';
+import type {
+	CurrencyType,
+	DepositAmountType,
+	FetcherReturnType,
+} from '../types/components/types.ts';
 import {
 	deposit,
 	payLoan,
@@ -11,10 +15,32 @@ import {
 	withdraw,
 } from '../stores/actions/accountActions.ts';
 
-const fetchURL: string = import.meta.env.VITE_DEPOSIT_API;
+const API_URL: string = import.meta.env.VITE_DEPOSIT_API;
+
+const AccountOperationsKey = (depositAmount: DepositAmountType) => {
+	return () => {
+		if (typeof depositAmount !== 'number') return null;
+		if (depositAmount <= 0) return null;
+
+		return API_URL;
+	};
+};
+
+const AccountOperationsFetcher = (
+	dispatch: AppDispatch,
+	depositAmount: DepositAmountType,
+	currency: CurrencyType
+) => {
+	return () => {
+		if (typeof depositAmount !== 'number') return;
+		if (depositAmount <= 0) return;
+
+		return dispatch(deposit(depositAmount, currency)) as FetcherReturnType;
+	};
+};
 
 function AccountOperations() {
-	const [depositAmount, setDepositAmount] = useState<null | number>(null);
+	const [depositAmount, setDepositAmount] = useState<DepositAmountType>(null);
 	const [withdrawalAmount, setWithdrawalAmount] = useState<null | number>(null);
 	const [loanAmount, setLoanAmount] = useState<null | number>(null);
 	const [loanPurpose, setLoanPurpose] = useState<string>('');
@@ -28,14 +54,10 @@ function AccountOperations() {
 		isLoading,
 	}: ReduxBankInitialStateType = useSelector((store: AppState) => store.account);
 
-	const AccountOperationsFetcher = (url: string) => {
-		if (typeof depositAmount !== 'number') return;
-		if (depositAmount <= 0) return;
-
-		return dispatch(deposit(depositAmount, currency, url)) as FetcherReturnType;
-	};
-
-	useSWR(fetchURL, () => AccountOperationsFetcher(fetchURL));
+	useSWR(
+		AccountOperationsKey(depositAmount),
+		AccountOperationsFetcher(dispatch, depositAmount, currency)
+	);
 
 	const depositBalance: number = balance - currentLoan;
 	const isZeroBalance: boolean = balance === 0;
@@ -66,7 +88,7 @@ function AccountOperations() {
 	const handleDeposit = () => {
 		if (!depositAmount) return;
 
-		dispatch(deposit(depositAmount, currency, fetchURL));
+		dispatch(deposit(depositAmount, currency));
 		setDepositAmount(null);
 		setCurrency('USD');
 	};
