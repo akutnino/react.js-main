@@ -7,10 +7,11 @@ import type {
 	AccountWithdrawActionType,
 } from '../../types/stores/actions/account-types.ts';
 
+const API_URL: string = import.meta.env.VITE_DEPOSIT_API;
+
 export function deposit(
 	depositAmount: number,
-	currency: CurrencyType,
-	url: string
+	currency: CurrencyType
 ): AccountDepositActionType | AsyncThunkAction<number> {
 	const AccountDepositAction: AccountDepositActionType = {
 		type: 'account/deposit',
@@ -21,7 +22,7 @@ export function deposit(
 		try {
 			dispatch({ type: 'account/convertingCurrency' });
 
-			const fetchURL: RequestInfo = `${url}latest?base=${currency}&symbols=USD`;
+			const fetchURL: RequestInfo = `${API_URL}latest?base=${currency}&symbols=USD`;
 			const fetchOptions: RequestInit = {
 				method: 'GET',
 				headers: {
