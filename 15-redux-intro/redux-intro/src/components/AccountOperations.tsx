@@ -3,11 +3,7 @@ import { useState, type ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, AppState } from '../types/stores/types.ts';
 import type { ReduxBankInitialStateType } from '../types/stores/reducers/types.ts';
-import type {
-	CurrencyType,
-	DepositAmountType,
-	FetcherReturnType,
-} from '../types/components/types.ts';
+import type { CurrencyType, DepositAmountType } from '../types/components/types.ts';
 import {
 	deposit,
 	payLoan,
@@ -33,9 +29,9 @@ const AccountOperationsFetcher = (
 ) => {
 	return () => {
 		if (typeof depositAmount !== 'number') return;
-		if (depositAmount <= 0) return;
+		if (depositAmount <= 0 || depositAmount === 1) return;
 
-		return dispatch(deposit(depositAmount, currency)) as FetcherReturnType;
+		return dispatch(deposit(depositAmount, currency));
 	};
 };
 
