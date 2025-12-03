@@ -18,8 +18,8 @@ type ThunkDispatchType = ThunkDispatch<AppState, unknown, AppActions>;
 
 export type AppDispatch = DispatchType & ThunkDispatchType;
 
-export type AsyncThunkAction<T> = ThunkAction<
-	Promise<void | T> | void,
+export type AsyncThunkAction = ThunkAction<
+	Promise<void> | void,
 	AppState,
 	unknown,
 	AppActions
