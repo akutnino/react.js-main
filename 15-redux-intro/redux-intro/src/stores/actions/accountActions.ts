@@ -12,13 +12,13 @@ const API_URL: string = import.meta.env.VITE_DEPOSIT_API;
 export function deposit(
 	depositAmount: number,
 	currency: CurrencyType
-): AccountDepositActionType | AsyncThunkAction<number> {
+): AccountDepositActionType | AsyncThunkAction {
 	const AccountDepositAction: AccountDepositActionType = {
 		type: 'account/deposit',
 		payload: depositAmount,
 	};
 
-	const ThunkMiddleware: AsyncThunkAction<number> = async (dispatch) => {
+	const ThunkMiddleware: AsyncThunkAction = async (dispatch) => {
 		try {
 			dispatch({ type: 'account/convertingCurrency' });
 
