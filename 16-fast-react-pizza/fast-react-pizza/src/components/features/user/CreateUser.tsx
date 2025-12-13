@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 
 function CreateUser() {
-	const [username, setUsername] = useState('');
+	const [username, setUsername] = useState<string>('');
 
-	function handleSubmit(e) {
-		e.preventDefault();
-	}
+	const handleUsernameInput = (event: ChangeEvent<HTMLInputElement>) => {
+		setUsername(event.target.value);
+	};
+
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+	};
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -15,7 +19,7 @@ function CreateUser() {
 				type='text'
 				placeholder='Your full name'
 				value={username}
-				onChange={(e) => setUsername(e.target.value)}
+				onChange={handleUsernameInput}
 			/>
 
 			{username !== '' && (
