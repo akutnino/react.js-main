@@ -1,13 +1,17 @@
-import { useNavigate } from 'react-router';
+import { useNavigate, type NavigateFunction } from 'react-router';
 
 function NotFound() {
-	const navigate = useNavigate();
+	const navigate: NavigateFunction = useNavigate();
+
+	const handleBack = () => {
+		navigate('/', { replace: true });
+	};
 
 	return (
 		<div>
 			<h1>Something went wrong 😢</h1>
 			<p>%MESSAGE%</p>
-			<button onClick={() => navigate(-1)}>&larr; Go back</button>
+			<button onClick={handleBack}>&larr; Go back</button>
 		</div>
 	);
 }
