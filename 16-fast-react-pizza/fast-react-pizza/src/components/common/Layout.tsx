@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Outlet, useLocation, type Location } from 'react-router';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import SpinnerFullPage from './SpinnerFullPage.tsx';
 import Header from './Header.tsx';
@@ -9,14 +10,19 @@ function Layout() {
 	const loaction: Location = useLocation();
 
 	return (
-		<Suspense
+		<ErrorBoundary
 			key={loaction.key}
-			fallback={<SpinnerFullPage />}
+			fallback={<div>Something went wrong...</div>}
 		>
-			<Header />
-			<Outlet />
-			<CartOverview />
-		</Suspense>
+			<Suspense
+				key={loaction.key}
+				fallback={<SpinnerFullPage />}
+			>
+				<Header />
+				<Outlet />
+				<CartOverview />
+			</Suspense>
+		</ErrorBoundary>
 	);
 }
 
