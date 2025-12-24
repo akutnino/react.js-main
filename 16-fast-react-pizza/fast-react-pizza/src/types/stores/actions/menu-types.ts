@@ -1,8 +1,8 @@
-import type { MenuDataType } from '../reducers/types.ts';
+import type { MenuDataArrayType } from '../reducers/types.ts';
 
 export type FetchDataResponseType = {
 	status: string;
-	data: MenuDataType;
+	data: MenuDataArrayType;
 };
 
 export type MenuFetchStartActionType = {
