@@ -5,10 +5,14 @@ export type MenuDataType = {
 	imageUrl: string;
 	ingredients: string[];
 	soldOut: boolean;
-}[];
+};
+
+export type MenuDataArrayType = MenuDataType[];
+
+export type MenuType = MenuDataArrayType | null;
 
 export type MenuInitialStateType = {
-	menu: MenuDataType | null;
+	menu: MenuType;
 	isLoading: boolean;
 	errorMessage: string;
 };
