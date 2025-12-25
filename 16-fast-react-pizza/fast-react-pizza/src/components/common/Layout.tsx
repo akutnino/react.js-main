@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Outlet, useLocation, type Location } from 'react-router';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import { Error } from '../App.tsx';
 import SpinnerFullPage from './SpinnerFullPage.tsx';
 import Header from './Header.tsx';
 import CartOverview from '../features/cart/CartOverview.tsx';
@@ -12,7 +13,7 @@ function Layout() {
 	return (
 		<ErrorBoundary
 			key={loaction.key}
-			fallback={<div>Something went wrong...</div>}
+			fallback={<Error />}
 		>
 			<Suspense
 				key={loaction.key}
