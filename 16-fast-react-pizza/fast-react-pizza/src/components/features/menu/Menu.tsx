@@ -1,20 +1,25 @@
 import useSWR from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch, AppState } from '../../../types/stores/types.ts';
 import { fetchData } from '../../../stores/actions/menuActions.ts';
+import { selectMenu } from '../../../stores/selectors/menuSelectors.ts';
+import type { AppDispatch } from '../../../types/stores/types.ts';
 import type {
-	MenuDataType,
+	MenuType,
 	MenuInitialStateType,
 } from '../../../types/stores/reducers/types.ts';
 
-const MenuKey = (menu: MenuDataType | null) => {
+import { Error } from '../../App.tsx';
+import LoadingIndicator from '../../common/LoadingIndicator.tsx';
+import MenuList from './MenuList.tsx';
+
+const MenuKey = (menu: MenuType) => {
 	return () => {
 		if (menu !== null) return null;
 		return import.meta.env.VITE_MENU_API;
 	};
 };
 
-const MenuFetcher = (dispatch: AppDispatch, menu: MenuDataType | null) => {
+const MenuFetcher = (dispatch: AppDispatch, menu: MenuType) => {
 	return () => {
 		if (menu !== null) return;
 		return dispatch(fetchData());
@@ -23,14 +28,22 @@ const MenuFetcher = (dispatch: AppDispatch, menu: MenuDataType | null) => {
 
 function Menu() {
 	const dispatch: AppDispatch = useDispatch();
-	const { errorMessage, isLoading, menu }: MenuInitialStateType = useSelector(
-		(store: AppState) => store.menu
-	);
+	const { errorMessage, isLoading, menu }: MenuInitialStateType = useSelector(selectMenu);
+
+	const isError: boolean = errorMessage !== '';
+	const isMenuLoaded: boolean = !isLoading && !isError && menu !== null;
 
 	useSWR(MenuKey(menu), MenuFetcher(dispatch, menu));
-	console.log(`is Error? ${errorMessage ? 'yes' : 'no'}`, isLoading, menu);
 
-	return <h1>Menu</h1>;
+	return (
+		<>
+			{isLoading && <LoadingIndicator />}
+
+			{isMenuLoaded && <MenuList />}
+
+			{isError && <Error />}
+		</>
+	);
 }
 
 export default Menu;
