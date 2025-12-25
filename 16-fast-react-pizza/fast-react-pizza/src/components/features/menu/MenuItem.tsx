@@ -1,7 +1,8 @@
+import type { MenuDataType } from '../../../types/stores/reducers/types.ts';
 import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 
-function MenuItem({ pizza }) {
-	const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+function MenuItem({ pizza }: { pizza: MenuDataType }) {
+	const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
 	return (
 		<li>
