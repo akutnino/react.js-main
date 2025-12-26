@@ -1,7 +1,7 @@
 import type { FetchDataResponseType } from '../../types/stores/actions/menu-types.ts';
 import type { AsyncThunkAction } from '../../types/stores/types.ts';
 
-export function fetchData(): AsyncThunkAction {
+export function fetchMenuData(): AsyncThunkAction {
 	const ThunkMiddleWare: AsyncThunkAction = async (dispatch) => {
 		try {
 			dispatch({
