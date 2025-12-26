@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchData } from '../../../stores/actions/menuActions.ts';
+import { fetchMenuData } from '../../../stores/actions/menuActions.ts';
 import { selectMenu } from '../../../stores/selectors/menuSelectors.ts';
 import type { AppDispatch } from '../../../types/stores/types.ts';
 import type {
@@ -22,7 +22,7 @@ const MenuKey = (menu: MenuType) => {
 const MenuFetcher = (dispatch: AppDispatch, menu: MenuType) => {
 	return () => {
 		if (menu !== null) return;
-		return dispatch(fetchData());
+		return dispatch(fetchMenuData());
 	};
 };
 
