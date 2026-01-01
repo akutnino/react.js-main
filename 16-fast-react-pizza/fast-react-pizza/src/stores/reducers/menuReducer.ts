@@ -1,5 +1,5 @@
 import type { MenuReducerActionType } from '../../types/stores/actions/menu-types.ts';
-import type { MenuInitialStateType } from '../../types/stores/reducers/types.ts';
+import type { MenuInitialStateType } from '../../types/stores/reducers/menu-types.ts';
 
 const MENU_INITIAL_STATE: MenuInitialStateType = {
 	menu: null,

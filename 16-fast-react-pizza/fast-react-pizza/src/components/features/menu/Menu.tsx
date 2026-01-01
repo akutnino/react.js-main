@@ -6,7 +6,7 @@ import type { AppDispatch } from '../../../types/stores/types.ts';
 import type {
 	MenuType,
 	MenuInitialStateType,
-} from '../../../types/stores/reducers/types.ts';
+} from '../../../types/stores/reducers/menu-types.ts';
 
 import { Error } from '../../App.tsx';
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';

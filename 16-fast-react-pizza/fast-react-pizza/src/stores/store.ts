@@ -6,7 +6,7 @@ import {
 import { thunk, type ThunkMiddleware } from 'redux-thunk';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { MENU_INITIAL_STATE, menuReducer } from './reducers/menuReducer.ts';
-import type { MenuInitialStateType } from '../types/stores/reducers/types.ts';
+import type { MenuInitialStateType } from '../types/stores/reducers/menu-types.ts';
 import type {
 	AppActions,
 	AppState,

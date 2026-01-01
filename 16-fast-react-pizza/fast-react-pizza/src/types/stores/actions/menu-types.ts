@@ -1,4 +1,4 @@
-import type { MenuDataArrayType } from '../reducers/types.ts';
+import type { MenuDataArrayType } from '../reducers/menu-types.ts';
 
 export type FetchDataResponseType = {
 	status: string;

@@ -1,4 +1,4 @@
-import type { MenuInitialStateType } from '../../../types/stores/reducers/types.ts';
+import type { MenuInitialStateType } from '../../../types/stores/reducers/menu-types.ts';
 import { useSelector } from 'react-redux';
 import { selectMenu } from '../../../stores/selectors/menuSelectors.ts';
 

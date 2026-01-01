@@ -1,4 +1,4 @@
-import type { MenuDataType } from '../../../types/stores/reducers/types.ts';
+import type { MenuDataType } from '../../../types/stores/reducers/menu-types.ts';
 import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 
 function MenuItem({ pizza }: { pizza: MenuDataType }) {

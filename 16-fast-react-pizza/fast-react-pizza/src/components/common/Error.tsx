@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useNavigate, type NavigateFunction } from 'react-router';
 import { selectMenu } from '../../stores/selectors/menuSelectors.ts';
-import type { MenuInitialStateType } from '../../types/stores/reducers/types.ts';
+import type { MenuInitialStateType } from '../../types/stores/reducers/menu-types.ts';
 
 function Error() {
 	const navigate: NavigateFunction = useNavigate();
