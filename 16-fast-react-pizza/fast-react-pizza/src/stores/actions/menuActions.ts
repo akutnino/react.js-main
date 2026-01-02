@@ -1,4 +1,4 @@
-import type { FetchDataResponseType } from '../../types/stores/actions/menu-types.ts';
+import type { FetchMenuDataResponseType } from '../../types/stores/actions/menu-types.ts';
 import type { AsyncThunkAction } from '../../types/stores/types.ts';
 
 export function fetchMenuData(): AsyncThunkAction {
@@ -20,7 +20,7 @@ export function fetchMenuData(): AsyncThunkAction {
 			const response: Response = await fetch(fetchURL, fetchOptions);
 			if (!response.ok) throw new Error('Menu Data Fetching Failed');
 
-			const data: FetchDataResponseType = await response.json();
+			const data: FetchMenuDataResponseType = await response.json();
 			if (data.status !== 'success') throw new Error(`Status Not Successful: ${data.status}`); // prettier-ignore
 
 			dispatch({
