@@ -2,8 +2,9 @@ import type { Dispatch, Reducer, Store } from 'redux';
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import type { preLoadedState, rootReducer } from '../../stores/store.ts';
 import type { MenuReducerActionType } from './actions/menu-types.ts';
+import type { OrderReducerActionType } from './actions/order-types.ts';
 
-export type AppActions = MenuReducerActionType;
+export type AppActions = MenuReducerActionType | OrderReducerActionType;
 
 export type RootReducerType = Reducer<typeof preLoadedState, AppActions>;
 
