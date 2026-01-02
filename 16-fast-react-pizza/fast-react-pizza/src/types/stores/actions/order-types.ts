@@ -14,15 +14,6 @@ export type OrderFetchSuccessActionType = {
 	payload: FetchOrderDataResponseType;
 };
 
-export type OrderFetchErrorActionType = {
-	type: 'order/fetchError';
-	payload: string;
-};
-
-export type OrderFetchEndActionType = {
-	type: 'order/fetchEnd';
-};
-
 export type CreateOrderSuccessActionType = {
 	type: 'order/createOrderSuccess';
 	payload: FetchOrderDataResponseType;
@@ -32,10 +23,19 @@ export type UpdateOrderSuccessActionType = {
 	type: 'order/updateOrderSuccess';
 };
 
+export type OrderFetchErrorActionType = {
+	type: 'order/fetchError';
+	payload: string;
+};
+
+export type OrderFetchEndActionType = {
+	type: 'order/fetchEnd';
+};
+
 export type OrderReducerActionType =
 	| OrderFetchStartActionType
 	| OrderFetchSuccessActionType
-	| OrderFetchErrorActionType
-	| OrderFetchEndActionType
 	| CreateOrderSuccessActionType
-	| UpdateOrderSuccessActionType;
+	| UpdateOrderSuccessActionType
+	| OrderFetchErrorActionType
+	| OrderFetchEndActionType;
