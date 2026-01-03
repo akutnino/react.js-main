@@ -8,9 +8,9 @@ import type {
 	MenuInitialStateType,
 } from '../../../types/stores/reducers/menu-types.ts';
 
-import { Error } from '../../App.tsx';
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';
 import MenuList from './MenuList.tsx';
+import Error from '../../common/Error.tsx';
 
 const MenuKey = (menu: MenuType) => {
 	return () => {
@@ -30,7 +30,7 @@ function Menu() {
 	const dispatch: AppDispatch = useDispatch();
 	const { errorMessage, isLoading, menu }: MenuInitialStateType = useSelector(selectMenu);
 
-	const isError: boolean = errorMessage !== '';
+	const isError: boolean = !isLoading && errorMessage !== '';
 	const isMenuLoaded: boolean = !isLoading && !isError && menu !== null;
 
 	useSWR(MenuKey(menu), MenuFetcher(dispatch, menu));
