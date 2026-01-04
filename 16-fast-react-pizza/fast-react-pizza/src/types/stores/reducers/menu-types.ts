@@ -14,5 +14,5 @@ export type MenuType = MenuDataArrayType | null;
 export type MenuInitialStateType = {
 	menu: MenuType;
 	isLoading: boolean;
-	errorMessage: string;
+	errorMessage: null | string;
 };
