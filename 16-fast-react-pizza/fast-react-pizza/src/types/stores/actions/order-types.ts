@@ -32,10 +32,20 @@ export type OrderFetchEndActionType = {
 	type: 'order/fetchEnd';
 };
 
+export type OrderClearErrorActionType = {
+	type: 'order/clearError';
+};
+
+export type OrderResetStateActionType = {
+	type: 'order/resetState';
+};
+
 export type OrderReducerActionType =
 	| OrderFetchStartActionType
 	| OrderFetchSuccessActionType
 	| CreateOrderSuccessActionType
 	| UpdateOrderSuccessActionType
 	| OrderFetchErrorActionType
-	| OrderFetchEndActionType;
+	| OrderFetchEndActionType
+	| OrderClearErrorActionType
+	| OrderResetStateActionType;
