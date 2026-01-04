@@ -4,7 +4,7 @@ import type { MenuInitialStateType } from '../../types/stores/reducers/menu-type
 const MENU_INITIAL_STATE: MenuInitialStateType = {
 	menu: null,
 	isLoading: false,
-	errorMessage: '',
+	errorMessage: null,
 };
 
 function menuReducer(
@@ -16,6 +16,7 @@ function menuReducer(
 			return {
 				...currentState,
 				isLoading: true,
+				errorMessage: null,
 			};
 		}
 		case 'menu/fetchSuccess': {
