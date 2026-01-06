@@ -47,12 +47,6 @@ function orderReducer(
 				order: null,
 			};
 		}
-		case 'order/fetchEnd': {
-			return {
-				...currentState,
-				isLoading: false,
-			};
-		}
 		case 'order/clearError': {
 			return {
 				...currentState,
