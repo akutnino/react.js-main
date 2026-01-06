@@ -18,12 +18,7 @@ export type MenuFetchErrorActionType = {
 	payload: string;
 };
 
-export type MenuFetchEndActionType = {
-	type: 'menu/fetchEnd';
-};
-
 export type MenuReducerActionType =
 	| MenuFetchStartActionType
 	| MenuFetchSuccessActionType
-	| MenuFetchErrorActionType
-	| MenuFetchEndActionType;
+	| MenuFetchErrorActionType;
