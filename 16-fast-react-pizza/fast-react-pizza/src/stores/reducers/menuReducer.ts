@@ -33,12 +33,6 @@ function menuReducer(
 				isLoading: false,
 			};
 		}
-		case 'menu/fetchEnd': {
-			return {
-				...currentState,
-				isLoading: false,
-			};
-		}
 		default: {
 			return currentState;
 		}
