@@ -28,10 +28,6 @@ export type OrderFetchErrorActionType = {
 	payload: string;
 };
 
-export type OrderFetchEndActionType = {
-	type: 'order/fetchEnd';
-};
-
 export type OrderClearErrorActionType = {
 	type: 'order/clearError';
 };
@@ -46,6 +42,5 @@ export type OrderReducerActionType =
 	| CreateOrderSuccessActionType
 	| UpdateOrderSuccessActionType
 	| OrderFetchErrorActionType
-	| OrderFetchEndActionType
 	| OrderClearErrorActionType
 	| OrderResetStateActionType;
