@@ -34,10 +34,6 @@ export function fetchMenuData(): AsyncThunkAction {
 					payload: error.message,
 				});
 			}
-		} finally {
-			dispatch({
-				type: 'menu/fetchEnd',
-			});
 		}
 	};
 
