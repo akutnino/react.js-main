@@ -30,7 +30,7 @@ function Menu() {
 	const dispatch: AppDispatch = useDispatch();
 	const { errorMessage, isLoading, menu }: MenuInitialStateType = useSelector(selectMenu);
 
-	const isError: boolean = !isLoading && errorMessage !== '';
+	const isError: boolean = !isLoading && errorMessage !== null;
 	const isMenuLoaded: boolean = !isLoading && !isError && menu !== null;
 
 	useSWR(MenuKey(menu), MenuFetcher(dispatch, menu));
