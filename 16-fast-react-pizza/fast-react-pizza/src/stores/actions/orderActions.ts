@@ -38,10 +38,6 @@ export function fetchOrderData(orderID: string): AsyncThunkAction {
 					payload: error.message,
 				});
 			}
-		} finally {
-			dispatch({
-				type: 'order/fetchEnd',
-			});
 		}
 	};
 
@@ -82,10 +78,6 @@ export function createOrderData(newOrder: string): AsyncThunkAction {
 					payload: error.message,
 				});
 			}
-		} finally {
-			dispatch({
-				type: 'order/fetchEnd',
-			});
 		}
 	};
 
@@ -122,10 +114,6 @@ export function updateOrderData(orderID: string, updateObj: string): AsyncThunkA
 					payload: error.message,
 				});
 			}
-		} finally {
-			dispatch({
-				type: 'order/fetchEnd',
-			});
 		}
 	};
 
