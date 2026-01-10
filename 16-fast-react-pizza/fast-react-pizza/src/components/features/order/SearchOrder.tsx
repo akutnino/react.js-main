@@ -20,22 +20,19 @@ function SearchOrder() {
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
-		const QueryEqualsPathParams = query === orderId;
-
 		if (!query) return;
 
-		if (query === orderId && query === order?.id) {
+		const QueryIsParams: boolean = query === orderId;
+		const QueryIsOrderID: boolean = query === order?.id;
+		const QueryIsParamsAndOrderID: boolean = QueryIsParams && QueryIsOrderID;
+		const QueryIsNotParamsButIsOrderID: boolean = !QueryIsParams && QueryIsOrderID;
+
+		if (QueryIsParamsAndOrderID || QueryIsNotParamsButIsOrderID) {
 			navigate(`order/${query}`, { replace: true });
 		}
-
-		if (query !== orderId && query !== order?.id) {
+		if (!QueryIsParamsAndOrderID) {
 			navigate(`order/${query}`, { replace: true });
 			dispatch(fetchOrderData(query));
-		}
-
-		if (query !== orderId && query === order?.id) {
-			navigate(`order/${query}`, { replace: true });
 		}
 
 		setQuery('');
