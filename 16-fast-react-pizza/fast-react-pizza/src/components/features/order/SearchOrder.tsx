@@ -21,7 +21,7 @@ function SearchOrder() {
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		// const QueryEqualsPathParams = query === orderId;
+		const QueryEqualsPathParams = query === orderId;
 
 		if (!query) return;
 
