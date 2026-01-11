@@ -30,7 +30,7 @@ function SearchOrder() {
 		if (QueryIsParamsAndOrderID || QueryIsNotParamsButIsOrderID) {
 			navigate(`order/${query}`, { replace: true });
 		}
-		if (!QueryIsParamsAndOrderID) {
+		if (!QueryIsParams && !QueryIsOrderID) {
 			navigate(`order/${query}`, { replace: true });
 			dispatch(fetchOrderData(query));
 		}
