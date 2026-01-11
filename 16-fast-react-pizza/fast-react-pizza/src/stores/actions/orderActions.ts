@@ -1,4 +1,5 @@
 import type {
+	CreateOrderObjectType,
 	FetchOrderDataResponseType,
 	OrderClearErrorActionType,
 	OrderResetStateActionType,
@@ -44,7 +45,7 @@ export function fetchOrderData(orderID: string): AsyncThunkAction {
 	return ThunkMiddleWare;
 }
 
-export function createOrderData(newOrder: string): AsyncThunkAction {
+export function createOrderData(newOrder: CreateOrderObjectType): AsyncThunkAction {
 	const ThunkMiddleWare: AsyncThunkAction = async (dispatch) => {
 		try {
 			dispatch({
