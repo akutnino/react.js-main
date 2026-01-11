@@ -28,7 +28,7 @@ function Order() {
 
 						<div>
 							{order!.priority && <span>Priority</span>}
-							<span>{status} order</span>
+							<span>{order!.status} order</span>
 						</div>
 					</div>
 
