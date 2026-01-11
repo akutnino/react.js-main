@@ -1,4 +1,4 @@
-import type { OrderDataType } from '../reducers/order-types.ts';
+import type { OrderCartType, OrderDataType } from '../reducers/order-types.ts';
 
 export type FetchOrderDataResponseType = {
 	status: 'success' | 'fail';
@@ -44,3 +44,11 @@ export type OrderReducerActionType =
 	| OrderFetchErrorActionType
 	| OrderClearErrorActionType
 	| OrderResetStateActionType;
+
+export type CreateOrderObjectType = {
+	customer: string;
+	phone: string;
+	address: string;
+	withPriority: boolean;
+	cart: OrderCartType;
+};
