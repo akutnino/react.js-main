@@ -20,9 +20,10 @@ function Layout() {
 	const location: Location = useLocation();
 
 	useLayoutEffect(() => {
+		if (location.pathname === '/order/new') return;
 		if (orderId === undefined && errorMessage !== null) dispatch(clearError());
 		return () => {};
-	}, [orderId, errorMessage, dispatch]);
+	}, [orderId, errorMessage, dispatch, location.pathname]);
 
 	return (
 		<ErrorBoundary
