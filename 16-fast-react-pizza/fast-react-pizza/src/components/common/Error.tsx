@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, type NavigateFunction } from 'react-router';
 import { selectMenu } from '../../stores/selectors/menuSelectors.ts';
 import { selectOrder } from '../../stores/selectors/orderSelectors.ts';
-import { resetState } from '../../stores/actions/orderActions.ts';
+import { resetOrderState } from '../../stores/actions/orderActions.ts';
 import type { MenuInitialStateType } from '../../types/stores/reducers/menu-types.ts';
 import type { OrderInitialStateType } from '../../types/stores/reducers/order-types.ts';
 import type { AppDispatch } from '../../types/stores/types.ts';
@@ -18,7 +18,7 @@ function Error() {
 
 	const handleBack = () => {
 		navigate('/', { replace: true });
-		dispatch(resetState());
+		dispatch(resetOrderState());
 	};
 
 	return (
