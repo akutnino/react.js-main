@@ -3,7 +3,7 @@ import { Outlet, useLocation, useParams, type Location, type Params } from 'reac
 import { ErrorBoundary } from 'react-error-boundary';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectOrder } from '../../stores/selectors/orderSelectors.ts';
-import { clearError } from '../../stores/actions/orderActions.ts';
+import { clearOrderError } from '../../stores/actions/orderActions.ts';
 import type { OrderInitialStateType } from '../../types/stores/reducers/order-types.ts';
 import type { AppDispatch } from '../../types/stores/types.ts';
 
@@ -21,7 +21,7 @@ function Layout() {
 
 	useLayoutEffect(() => {
 		if (location.pathname === '/order/new') return;
-		if (orderId === undefined && errorMessage !== null) dispatch(clearError());
+		if (orderId === undefined && errorMessage !== null) dispatch(clearOrderError());
 		return () => {};
 	}, [orderId, errorMessage, dispatch, location.pathname]);
 
