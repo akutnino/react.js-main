@@ -121,10 +121,10 @@ export function updateOrderData(orderID: string, updateObj: string): AsyncThunkA
 	return ThunkMiddleWare;
 }
 
-export function clearError(): OrderClearErrorActionType {
+export function clearOrderError(): OrderClearErrorActionType {
 	return { type: 'order/clearError' };
 }
 
-export function resetState(): OrderResetStateActionType {
+export function resetOrderState(): OrderResetStateActionType {
 	return { type: 'order/resetState' };
 }
