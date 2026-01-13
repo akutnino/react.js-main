@@ -1,8 +1,8 @@
-import { useLayoutEffect, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router';
 import { createOrderData } from '../../../stores/actions/orderActions.ts';
 import { selectOrder } from '../../../stores/selectors/orderSelectors.ts';
-import { useNavigate, type NavigateFunction } from 'react-router';
 import type { AppDispatch } from '../../../types/stores/types.ts';
 import type { CreateOrderObjectType } from '../../../types/stores/actions/order-types.ts';
 import type { OrderInitialStateType } from '../../../types/stores/reducers/order-types.ts';
@@ -44,6 +44,7 @@ const fakeCart = [
 
 function CreateOrder() {
 	const { isLoading, order }: OrderInitialStateType = useSelector(selectOrder);
+
 	const [firstName, setFirstName] = useState<string>('');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
 	const [phoneNumberError, setPhoneNumberError] = useState<string>('');
@@ -51,8 +52,9 @@ function CreateOrder() {
 	const [withPriority, setWithPriority] = useState<boolean>(false);
 
 	const dispatch: AppDispatch = useDispatch();
-	const navigate: NavigateFunction = useNavigate();
 
+	const userHasOrdered: boolean = !isLoading && order !== null;
+	const userHasNotOrdered: boolean = !isLoading && order === null;
 	const cart = fakeCart;
 
 	const handleFirstNameInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +85,7 @@ function CreateOrder() {
 		setWithPriority(event.target.checked);
 	};
 
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if (!firstName || !phoneNumber || !address) return;
@@ -105,17 +107,11 @@ function CreateOrder() {
 		setWithPriority(false);
 	};
 
-	useLayoutEffect(() => {
-		if (order === null) return;
-		if (order.id !== undefined) navigate(`/order/${order.id}`, { replace: true });
-		return () => {};
-	}, [order, order?.id, navigate]);
-
 	return (
 		<>
 			{isLoading && <LoadingIndicator />}
 
-			{!isLoading && (
+			{userHasNotOrdered && (
 				<div>
 					<h2>Ready to order? Let's go!</h2>
 
@@ -179,6 +175,13 @@ function CreateOrder() {
 						</div>
 					</form>
 				</div>
+			)}
+
+			{userHasOrdered && (
+				<Navigate
+					to={`/order/${order?.id}`}
+					replace={true}
+				/>
 			)}
 		</>
 	);
