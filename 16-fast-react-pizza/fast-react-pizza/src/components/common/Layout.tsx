@@ -34,9 +34,17 @@ function Layout() {
 				key={location.key}
 				fallback={<SpinnerFullPage />}
 			>
-				<Header />
-				<Outlet />
-				<CartOverview />
+				<div className='grid h-screen grid-rows-[auto_1fr_auto]'>
+					<Header />
+
+					<div className='overflow-scroll'>
+						<main className='mx-auto max-w-3xl'>
+							<Outlet />
+						</main>
+					</div>
+
+					<CartOverview />
+				</div>
 			</Suspense>
 		</ErrorBoundary>
 	);

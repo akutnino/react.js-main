@@ -10,6 +10,7 @@ import type { OrderInitialStateType } from '../../../types/stores/reducers/order
 
 import Error from '../../common/Error.tsx';
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';
+import OrderItem from './OrderItem.tsx';
 
 function Order() {
 	const { errorMessage, isLoading, order }: OrderInitialStateType = useSelector(selectOrder); // prettier-ignore
@@ -22,31 +23,52 @@ function Order() {
 			{isLoading && <LoadingIndicator />}
 
 			{isOrderLoaded && (
-				<div>
-					<div>
-						<h2>Status</h2>
+				<div className='space-y-8 px-4 py-6'>
+					<div className='flex flex-wrap items-center justify-between gap-2'>
+						<h2 className='text-xl font-semibold'>Order #{order?.id} status</h2>
 
-						<div>
-							{order!.priority && <span>Priority</span>}
-							<span>{order!.status} order</span>
+						<div className='space-x-2'>
+							{order?.priority && (
+								<span className='rounded-full bg-red-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-red-50'>
+									Priority
+								</span>
+							)}
+							<span className='rounded-full bg-green-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-green-50'>
+								{status} order
+							</span>
 						</div>
 					</div>
 
-					<div>
-						<p>
-							{calcMinutesLeft(order!.estimatedDelivery) >= 0
+					<div className='flex flex-wrap items-center justify-between gap-2 bg-stone-200 px-6 py-5'>
+						<p className='font-medium'>
+							{Number(order?.estimatedDelivery) >= 0
 								? `Only ${calcMinutesLeft(order!.estimatedDelivery)} minutes left 😃`
 								: 'Order should have arrived'}
 						</p>
-						<p>(Estimated delivery: {formatDate(order!.estimatedDelivery)})</p>
+						<p className='text-xs text-stone-500'>
+							(Estimated delivery: {formatDate(order!.estimatedDelivery)})
+						</p>
 					</div>
 
-					<div>
-						<p>Price pizza: {formatCurrency(order!.orderPrice)}</p>
-						{order!.priority && (
-							<p>Price priority: {formatCurrency(order!.priorityPrice)}</p>
+					<ul className='dive-stone-200 divide-y border-b border-t'>
+						{order?.cart.map((item) => (
+							<OrderItem
+								item={item}
+								key={item.pizzaId}
+							/>
+						))}
+					</ul>
+
+					<div className='space-y-2 bg-stone-200 px-6 py-5'>
+						<p className='text-sm font-medium text-stone-600'>
+							Price pizza: {formatCurrency(order!.orderPrice)}
+						</p>
+						{order?.priority && (
+							<p className='text-sm font-medium text-stone-600'>
+								Price priority: {formatCurrency(order?.priorityPrice)}
+							</p>
 						)}
-						<p>
+						<p className='font-bold'>
 							To pay on delivery:{' '}
 							{formatCurrency(order!.orderPrice + order!.priorityPrice)}
 						</p>

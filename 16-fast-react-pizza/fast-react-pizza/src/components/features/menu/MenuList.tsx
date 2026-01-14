@@ -11,7 +11,7 @@ function MenuList() {
 	return (
 		<>
 			{isMenuLoaded && (
-				<ul>
+				<ul className='divide-y divide-stone-200 px-2'>
 					{menu!.map((menuItem) => (
 						<MenuItem
 							key={menuItem.id}

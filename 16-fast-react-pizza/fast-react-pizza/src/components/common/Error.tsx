@@ -25,7 +25,13 @@ function Error() {
 		<div>
 			<h1>Something went wrong 😢</h1>
 			{isError && <p>{errorMessage}</p>}
-			<button onClick={handleBack}>&larr; Go back</button>
+
+			<button
+				className='text-sm text-blue-500 hover:text-blue-600 hover:underline'
+				onClick={handleBack}
+			>
+				&larr; Go back
+			</button>
 		</div>
 	);
 }
