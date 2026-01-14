@@ -1,4 +1,4 @@
-export type OrderCartType = {
+export type OrderCartItemType = {
 	addIngredients: string[];
 	removeIngredients: string[];
 	pizzaId: number;
@@ -6,7 +6,9 @@ export type OrderCartType = {
 	quantity: number;
 	unitPrice: number;
 	totalPrice: number;
-}[];
+};
+
+export type OrderCartType = OrderCartItemType[];
 
 export type OrderDataType = {
 	customer: string;
