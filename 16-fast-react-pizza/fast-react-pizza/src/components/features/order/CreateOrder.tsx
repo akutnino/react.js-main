@@ -63,6 +63,10 @@ function CreateOrder() {
 
 	const handlePhoneNumberInput = (event: ChangeEvent<HTMLInputElement>) => {
 		const value: string = event.currentTarget.value;
+
+		const isValidValue: boolean = isValidPhone(value) || value === '';
+		const notValidValue: boolean = !isValidPhone(value);
+
 		const errorMessage: string =
 			value.length < 11 && Number.isInteger(Number(value))
 				? 'Must be 11 digits'
@@ -70,11 +74,10 @@ function CreateOrder() {
 
 		if (value.length > 11) return;
 
-		if (!isValidPhone(value)) setPhoneNumberError(errorMessage);
-		if (isValidPhone(value) || value === '') setPhoneNumberError('');
+		if (notValidValue) setPhoneNumberError(errorMessage);
+		if (isValidValue) setPhoneNumberError('');
 
 		if (value.length <= 11) setPhoneNumber(value);
-		return;
 	};
 
 	const handleAddressInput = (event: ChangeEvent<HTMLInputElement>) => {
