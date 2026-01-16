@@ -8,6 +8,8 @@ import type { CreateOrderObjectType } from '../../../types/stores/actions/order-
 import type { OrderInitialStateType } from '../../../types/stores/reducers/order-types.ts';
 
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';
+import type { UserInitialStateType } from '../../../types/stores/reducers/user-types.ts';
+import { selectUser } from '../../../stores/selectors/userSelectors.ts';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string): boolean => /(^(\+)(\d){12}$)|(^\d{11}$)/.test(str);
@@ -44,6 +46,7 @@ const fakeCart = [
 
 function CreateOrder() {
 	const { isLoading, order }: OrderInitialStateType = useSelector(selectOrder);
+	const { username }: UserInitialStateType = useSelector(selectUser);
 
 	const [firstName, setFirstName] = useState<string>('');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
@@ -125,7 +128,7 @@ function CreateOrder() {
 								className='input grow'
 								type='text'
 								name='customer'
-								value={firstName}
+								defaultValue={username || firstName}
 								onChange={handleFirstNameInput}
 								required
 							/>
