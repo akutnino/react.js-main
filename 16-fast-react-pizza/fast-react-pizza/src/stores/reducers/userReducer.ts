@@ -13,6 +13,7 @@ function userReducer(
 		case 'user/updateUsername': {
 			return {
 				...currentState,
+				username: action.payload,
 			};
 		}
 		default: {
