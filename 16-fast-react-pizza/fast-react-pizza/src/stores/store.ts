@@ -7,6 +7,8 @@ import { thunk, type ThunkMiddleware } from 'redux-thunk';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { MENU_INITIAL_STATE, menuReducer } from './reducers/menuReducer.ts';
 import { ORDER_INITIAL_STATE, orderReducer } from './reducers/orderReducer.ts';
+import { USER_INITIAL_STATE, userReducer } from './reducers/userReducer.ts';
+import type { UserInitialStateType } from '../types/stores/reducers/user-types.ts';
 import type { MenuInitialStateType } from '../types/stores/reducers/menu-types.ts';
 import type { OrderInitialStateType } from '../types/stores/reducers/order-types.ts';
 import type {
@@ -19,14 +21,17 @@ import type {
 const preLoadedState: {
 	menu: MenuInitialStateType;
 	order: OrderInitialStateType;
+	user: UserInitialStateType;
 } = {
 	menu: MENU_INITIAL_STATE,
 	order: ORDER_INITIAL_STATE,
+	user: USER_INITIAL_STATE,
 };
 
 const rootReducer: RootReducerType = combineReducers({
 	menu: menuReducer,
 	order: orderReducer,
+	user: userReducer,
 });
 
 const store: StoreType = createStore(
