@@ -1,4 +1,8 @@
 import { Link } from 'react-router';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../../stores/selectors/userSelectors.ts';
+import type { UserInitialStateType } from '../../../types/stores/reducers/user-types.ts';
+
 import CartItem from './CartItem.tsx';
 import Button from '../../common/Button.tsx';
 
@@ -33,6 +37,7 @@ const fakeCart = [
 ];
 
 function Cart() {
+	const { username }: UserInitialStateType = useSelector(selectUser);
 	const cart = fakeCart;
 
 	return (
@@ -44,7 +49,7 @@ function Cart() {
 				&larr; Back to menu
 			</Link>
 
-			<h2 className='mt-7 text-xl font-semibold'>Your cart, %NAME%</h2>
+			<h2 className='mt-7 text-xl font-semibold'>Your cart, {username}</h2>
 
 			<ul className='mt-3 divide-y divide-stone-200 border-b'>
 				{cart.map((item) => (
