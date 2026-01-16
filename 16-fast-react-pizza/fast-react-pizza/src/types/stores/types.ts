@@ -3,8 +3,12 @@ import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import type { preLoadedState, rootReducer } from '../../stores/store.ts';
 import type { MenuReducerActionType } from './actions/menu-types.ts';
 import type { OrderReducerActionType } from './actions/order-types.ts';
+import type { UserReducerActionType } from './actions/user-types.ts';
 
-export type AppActions = MenuReducerActionType | OrderReducerActionType;
+export type AppActions =
+	| MenuReducerActionType
+	| OrderReducerActionType
+	| UserReducerActionType;
 
 export type RootReducerType = Reducer<typeof preLoadedState, AppActions>;
 
