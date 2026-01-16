@@ -1,6 +1,13 @@
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../stores/selectors/userSelectors.ts';
+import type { UserInitialStateType } from '../../types/stores/reducers/user-types.ts';
+
 import CreateUser from '../features/user/CreateUser.tsx';
+import Button from './Button.tsx';
 
 function Home() {
+	const { username }: UserInitialStateType = useSelector(selectUser);
+
 	return (
 		<div className='my-10 px-4 text-center sm:my-16'>
 			<h1 className='mb-8  text-xl font-semibold md:text-3xl'>
@@ -11,7 +18,16 @@ function Home() {
 				</span>
 			</h1>
 
-			<CreateUser />
+			{username === null && <CreateUser />}
+
+			{username !== null && (
+				<Button
+					to='/menu'
+					type='primary'
+				>
+					Hey {username}, See Our Menu!
+				</Button>
+			)}
 		</div>
 	);
 }
