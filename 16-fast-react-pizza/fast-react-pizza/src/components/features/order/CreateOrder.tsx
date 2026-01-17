@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
 import { createOrderData } from '../../../stores/actions/orderActions.ts';
 import { selectOrder } from '../../../stores/selectors/orderSelectors.ts';
+import { selectUser } from '../../../stores/selectors/userSelectors.ts';
 import type { AppDispatch } from '../../../types/stores/types.ts';
 import type { CreateOrderObjectType } from '../../../types/stores/actions/order-types.ts';
 import type { OrderInitialStateType } from '../../../types/stores/reducers/order-types.ts';
+import type { UserInitialStateType } from '../../../types/stores/reducers/user-types.ts';
 
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';
-import type { UserInitialStateType } from '../../../types/stores/reducers/user-types.ts';
-import { selectUser } from '../../../stores/selectors/userSelectors.ts';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string): boolean => /(^(\+)(\d){12}$)|(^\d{11}$)/.test(str);
@@ -48,7 +48,7 @@ function CreateOrder() {
 	const { isLoading, order }: OrderInitialStateType = useSelector(selectOrder);
 	const { username }: UserInitialStateType = useSelector(selectUser);
 
-	const [firstName, setFirstName] = useState<string>('');
+	const [firstName, setFirstName] = useState<string>(() => username || '');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
 	const [phoneNumberError, setPhoneNumberError] = useState<string>('');
 	const [address, setAddress] = useState<string>('');
@@ -128,7 +128,7 @@ function CreateOrder() {
 								className='input grow'
 								type='text'
 								name='customer'
-								defaultValue={username || firstName}
+								value={firstName}
 								onChange={handleFirstNameInput}
 								required
 							/>
