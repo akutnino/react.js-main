@@ -1,8 +1,8 @@
-import type { OrderCartItemType } from '../../../types/stores/reducers/order-types.ts';
+import type { CartItemType } from '../../../types/stores/reducers/cart-types.ts';
 import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 import Button from '../../common/Button.tsx';
 
-function CartItem({ item }: { item: OrderCartItemType }) {
+function CartItem({ item }: { item: CartItemType }) {
 	const { name, quantity, totalPrice } = item;
 
 	return (
