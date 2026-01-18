@@ -1,20 +1,10 @@
-export type OrderCartItemType = {
-	addIngredients: string[];
-	removeIngredients: string[];
-	pizzaId: number;
-	name: string;
-	quantity: number;
-	unitPrice: number;
-	totalPrice: number;
-};
-
-export type OrderCartType = OrderCartItemType[];
+import type { CartType } from './cart-types.ts';
 
 export type OrderDataType = {
 	customer: string;
 	status: string | 'delivered';
 	priority: boolean;
-	cart: OrderCartType;
+	cart: CartType;
 	id: string;
 	estimatedDelivery: string;
 	orderPrice: number;
