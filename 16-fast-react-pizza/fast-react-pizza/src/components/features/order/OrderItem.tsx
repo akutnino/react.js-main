@@ -1,9 +1,9 @@
-import type { OrderCartItemType } from '../../../types/stores/reducers/order-types.ts';
+import type { CartItemType } from '../../../types/stores/reducers/cart-types.ts';
 import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 
 // const props = { item, isLoadingIngredients, ingredients };
 
-function OrderItem({ item }: { item: OrderCartItemType }) {
+function OrderItem({ item }: { item: CartItemType }) {
 	const { quantity, name, totalPrice } = item;
 
 	return (
