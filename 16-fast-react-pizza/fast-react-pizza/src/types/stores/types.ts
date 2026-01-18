@@ -4,11 +4,13 @@ import type { preLoadedState, rootReducer } from '../../stores/store.ts';
 import type { MenuReducerActionType } from './actions/menu-types.ts';
 import type { OrderReducerActionType } from './actions/order-types.ts';
 import type { UserReducerActionType } from './actions/user-types.ts';
+import type { CartReducerActionType } from './actions/cart-types.ts';
 
 export type AppActions =
 	| MenuReducerActionType
 	| OrderReducerActionType
-	| UserReducerActionType;
+	| UserReducerActionType
+	| CartReducerActionType;
 
 export type RootReducerType = Reducer<typeof preLoadedState, AppActions>;
 
