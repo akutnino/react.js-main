@@ -1,5 +1,7 @@
+import type { userTypes } from '../../../stores/_constants/userTypes.ts';
+
 export type UserUpdateUsernameActionType = {
-	type: 'user/updateUsername';
+	type: typeof userTypes.USER_UPDATE_USERNAME;
 	payload: string;
 };
 
