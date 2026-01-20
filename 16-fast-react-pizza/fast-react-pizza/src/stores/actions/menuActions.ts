@@ -1,11 +1,12 @@
 import type { FetchMenuDataResponseType } from '../../types/stores/actions/menu-types.ts';
 import type { AsyncThunkAction } from '../../types/stores/types.ts';
+import { menuTypes } from '../_constants/menuTypes.ts';
 
 export function fetchMenuData(): AsyncThunkAction {
 	const ThunkMiddleWare: AsyncThunkAction = async (dispatch) => {
 		try {
 			dispatch({
-				type: 'menu/fetchStart',
+				type: menuTypes.MENU_FETCH,
 			});
 
 			const fetchURL: RequestInfo = import.meta.env.VITE_MENU_API;
@@ -24,13 +25,13 @@ export function fetchMenuData(): AsyncThunkAction {
 			if (data.status !== 'success') throw new Error(`Status Not Successful: ${data.status}`); // prettier-ignore
 
 			dispatch({
-				type: 'menu/fetchSuccess',
+				type: menuTypes.MENU_FETCH_SUCCESS,
 				payload: data,
 			});
 		} catch (error) {
 			if (error instanceof Error) {
 				dispatch({
-					type: 'menu/fetchError',
+					type: menuTypes.MENU_FETCH_ERROR,
 					payload: error.message,
 				});
 			}
