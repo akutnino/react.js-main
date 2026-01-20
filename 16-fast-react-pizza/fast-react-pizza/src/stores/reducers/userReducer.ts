@@ -1,5 +1,6 @@
 import type { UserReducerActionType } from '../../types/stores/actions/user-types.ts';
 import type { UserInitialStateType } from '../../types/stores/reducers/user-types.ts';
+import { userTypes } from '../_constants/userTypes.ts';
 
 const USER_INITIAL_STATE: UserInitialStateType = {
 	username: null,
@@ -10,7 +11,7 @@ function userReducer(
 	action: UserReducerActionType
 ): UserInitialStateType {
 	switch (action.type) {
-		case 'user/updateUsername': {
+		case userTypes.USER_UPDATE_USERNAME: {
 			return {
 				...currentState,
 				username: action.payload,
