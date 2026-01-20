@@ -1,4 +1,5 @@
 import type { MenuDataArrayType } from '../reducers/menu-types.ts';
+import { menuTypes } from '../../../stores/_constants/menuTypes.ts';
 
 export type FetchMenuDataResponseType = {
 	status: 'success' | 'fail';
@@ -6,15 +7,15 @@ export type FetchMenuDataResponseType = {
 };
 
 export type MenuFetchStartActionType = {
-	type: 'menu/fetchStart';
+	type: typeof menuTypes.MENU_FETCH;
 };
 export type MenuFetchSuccessActionType = {
-	type: 'menu/fetchSuccess';
+	type: typeof menuTypes.MENU_FETCH_SUCCESS;
 	payload: FetchMenuDataResponseType;
 };
 
 export type MenuFetchErrorActionType = {
-	type: 'menu/fetchError';
+	type: typeof menuTypes.MENU_FETCH_ERROR;
 	payload: string;
 };
 
