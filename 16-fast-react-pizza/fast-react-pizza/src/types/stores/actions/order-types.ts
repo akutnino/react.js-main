@@ -1,3 +1,4 @@
+import type { orderTypes } from '../../../stores/_constants/orderTypes.ts';
 import type { CartType } from '../reducers/cart-types.ts';
 import type { OrderDataType } from '../reducers/order-types.ts';
 
@@ -7,34 +8,34 @@ export type FetchOrderDataResponseType = {
 };
 
 export type OrderFetchStartActionType = {
-	type: 'order/fetchStart';
+	type: typeof orderTypes.ORDER_FETCH;
 };
 
 export type OrderFetchSuccessActionType = {
-	type: 'order/fetchSuccess';
+	type: typeof orderTypes.ORDER_FETCH_SUCCESS;
 	payload: FetchOrderDataResponseType;
 };
 
 export type CreateOrderSuccessActionType = {
-	type: 'order/createOrderSuccess';
+	type: typeof orderTypes.ORDER_CREATE;
 	payload: FetchOrderDataResponseType;
 };
 
 export type UpdateOrderSuccessActionType = {
-	type: 'order/updateOrderSuccess';
+	type: typeof orderTypes.ORDER_UPDATE;
 };
 
 export type OrderFetchErrorActionType = {
-	type: 'order/fetchError';
+	type: typeof orderTypes.ORDER_FETCH_ERROR;
 	payload: string;
 };
 
 export type OrderClearErrorActionType = {
-	type: 'order/clearError';
+	type: typeof orderTypes.ORDER_CLEAR_ERROR;
 };
 
 export type OrderResetStateActionType = {
-	type: 'order/resetState';
+	type: typeof orderTypes.ORDER_RESET_STATE;
 };
 
 export type OrderReducerActionType =
