@@ -1,5 +1,6 @@
 import type { MenuReducerActionType } from '../../types/stores/actions/menu-types.ts';
 import type { MenuInitialStateType } from '../../types/stores/reducers/menu-types.ts';
+import { menuTypes } from '../_constants/menuTypes.ts';
 
 const MENU_INITIAL_STATE: MenuInitialStateType = {
 	menu: null,
@@ -12,21 +13,21 @@ function menuReducer(
 	action: MenuReducerActionType
 ): MenuInitialStateType {
 	switch (action.type) {
-		case 'menu/fetchStart': {
+		case menuTypes.MENU_FETCH: {
 			return {
 				...currentState,
 				isLoading: true,
 				errorMessage: null,
 			};
 		}
-		case 'menu/fetchSuccess': {
+		case menuTypes.MENU_FETCH_SUCCESS: {
 			return {
 				...currentState,
 				menu: action.payload.data,
 				isLoading: false,
 			};
 		}
-		case 'menu/fetchError': {
+		case menuTypes.MENU_FETCH_ERROR: {
 			return {
 				...currentState,
 				errorMessage: action.payload,
