@@ -5,12 +5,13 @@ import type {
 	OrderResetStateActionType,
 } from '../../types/stores/actions/order-types.ts';
 import type { AsyncThunkAction } from '../../types/stores/types.ts';
+import { orderTypes } from '../_constants/orderTypes.ts';
 
 export function fetchOrderData(orderID: string): AsyncThunkAction {
 	const ThunkMiddleWare: AsyncThunkAction = async (dispatch) => {
 		try {
 			dispatch({
-				type: 'order/fetchStart',
+				type: orderTypes.ORDER_FETCH,
 			});
 
 			const fetchURL: RequestInfo = `${import.meta.env.VITE_ORDER_API}/${orderID}`;
@@ -29,13 +30,13 @@ export function fetchOrderData(orderID: string): AsyncThunkAction {
 			if (data.status !== 'success') throw new Error(`Status Not Successful: ${data.status}`); // prettier-ignore
 
 			dispatch({
-				type: 'order/fetchSuccess',
+				type: orderTypes.ORDER_FETCH_SUCCESS,
 				payload: data,
 			});
 		} catch (error) {
 			if (error instanceof Error) {
 				dispatch({
-					type: 'order/fetchError',
+					type: orderTypes.ORDER_FETCH_ERROR,
 					payload: error.message,
 				});
 			}
@@ -49,7 +50,7 @@ export function createOrderData(newOrder: CreateOrderObjectType): AsyncThunkActi
 	const ThunkMiddleWare: AsyncThunkAction = async (dispatch) => {
 		try {
 			dispatch({
-				type: 'order/fetchStart',
+				type: orderTypes.ORDER_FETCH,
 			});
 
 			const fetchURL: RequestInfo = `${import.meta.env.VITE_ORDER_API}`;
@@ -69,13 +70,13 @@ export function createOrderData(newOrder: CreateOrderObjectType): AsyncThunkActi
 			if (data.status !== 'success') throw new Error(`Status Not Successful: ${data.status}`); // prettier-ignore
 
 			dispatch({
-				type: 'order/createOrderSuccess',
+				type: orderTypes.ORDER_CREATE,
 				payload: data,
 			});
 		} catch (error) {
 			if (error instanceof Error) {
 				dispatch({
-					type: 'order/fetchError',
+					type: orderTypes.ORDER_FETCH_ERROR,
 					payload: error.message,
 				});
 			}
@@ -89,7 +90,7 @@ export function updateOrderData(orderID: string, updateObj: string): AsyncThunkA
 	const ThunkMiddleWare: AsyncThunkAction = async (dispatch) => {
 		try {
 			dispatch({
-				type: 'order/fetchStart',
+				type: orderTypes.ORDER_FETCH,
 			});
 
 			const fetchURL: RequestInfo = `${import.meta.env.VITE_ORDER_API}/${orderID}`;
@@ -106,12 +107,12 @@ export function updateOrderData(orderID: string, updateObj: string): AsyncThunkA
 			if (!response.ok) throw new Error('Order Update Failed');
 
 			dispatch({
-				type: 'order/updateOrderSuccess',
+				type: orderTypes.ORDER_UPDATE,
 			});
 		} catch (error) {
 			if (error instanceof Error) {
 				dispatch({
-					type: 'order/fetchError',
+					type: orderTypes.ORDER_FETCH_ERROR,
 					payload: error.message,
 				});
 			}
@@ -122,9 +123,9 @@ export function updateOrderData(orderID: string, updateObj: string): AsyncThunkA
 }
 
 export function clearOrderError(): OrderClearErrorActionType {
-	return { type: 'order/clearError' };
+	return { type: orderTypes.ORDER_CLEAR_ERROR };
 }
 
 export function resetOrderState(): OrderResetStateActionType {
-	return { type: 'order/resetState' };
+	return { type: orderTypes.ORDER_RESET_STATE };
 }
