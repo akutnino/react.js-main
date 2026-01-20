@@ -1,5 +1,6 @@
 import type { OrderReducerActionType } from '../../types/stores/actions/order-types.ts';
 import type { OrderInitialStateType } from '../../types/stores/reducers/order-types.ts';
+import { orderTypes } from '../_constants/orderTypes.ts';
 
 const ORDER_INITIAL_STATE: OrderInitialStateType = {
 	order: null,
@@ -12,34 +13,34 @@ function orderReducer(
 	action: OrderReducerActionType
 ): OrderInitialStateType {
 	switch (action.type) {
-		case 'order/fetchStart': {
+		case orderTypes.ORDER_FETCH: {
 			return {
 				...currentState,
 				isLoading: true,
 				errorMessage: null,
 			};
 		}
-		case 'order/fetchSuccess': {
+		case orderTypes.ORDER_FETCH_SUCCESS: {
 			return {
 				...currentState,
 				isLoading: false,
 				order: action.payload.data,
 			};
 		}
-		case 'order/createOrderSuccess': {
+		case orderTypes.ORDER_CREATE: {
 			return {
 				...currentState,
 				isLoading: false,
 				order: action.payload.data,
 			};
 		}
-		case 'order/updateOrderSuccess': {
+		case orderTypes.ORDER_UPDATE: {
 			return {
 				...currentState,
 				isLoading: false,
 			};
 		}
-		case 'order/fetchError': {
+		case orderTypes.ORDER_FETCH_ERROR: {
 			return {
 				...currentState,
 				errorMessage: action.payload,
@@ -47,13 +48,13 @@ function orderReducer(
 				order: null,
 			};
 		}
-		case 'order/clearError': {
+		case orderTypes.ORDER_CLEAR_ERROR: {
 			return {
 				...currentState,
 				errorMessage: null,
 			};
 		}
-		case 'order/resetState': {
+		case orderTypes.ORDER_RESET_STATE: {
 			return {
 				...currentState,
 				order: null,
