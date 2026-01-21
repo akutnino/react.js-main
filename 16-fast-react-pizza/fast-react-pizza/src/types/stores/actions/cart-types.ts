@@ -1,21 +1,28 @@
+import type { cartTypes } from '../../../stores/_constants/cartTypes.ts';
+import type { CartItemType } from '../reducers/cart-types.ts';
+
 export type CartAddCartItemActionType = {
-	type: 'cart/addCartItem';
+	type: typeof cartTypes.CART_ADD_ITEM;
+	payload: CartItemType;
 };
 
 export type CartDeleteCartItemActionType = {
-	type: 'cart/deleteCartItem';
+	type: typeof cartTypes.CART_DELETE_ITEM;
+	payload: number;
 };
 
 export type CartIncreaseCartItemQuantityActionType = {
-	type: 'cart/increaseCartItemQuantity';
+	type: typeof cartTypes.CART_INCREASE_ITEM_QUANTITY;
+	payload: number;
 };
 
 export type CartDecreaseCartItemQuantityActionType = {
-	type: 'cart/decreaseCartItemQuantity';
+	type: typeof cartTypes.CART_DECREASE_ITEM_QUANTITY;
+	payload: number;
 };
 
 export type CartClearCartItemActionType = {
-	type: 'cart/clearCart';
+	type: typeof cartTypes.CART_CLEAR;
 };
 
 export type CartReducerActionType =
