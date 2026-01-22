@@ -7,6 +7,7 @@ import { cartAddItem, cartDeleteItem } from '../../../stores/actions/cartActions
 import { getCartItemQuantityById } from '../../../stores/selectors/cartSelectors.ts';
 
 import Button from '../../common/Button.tsx';
+import CartItemQuantityUpdate from '../cart/CartItemQuantityUpdate.tsx';
 
 function MenuItem({ pizza }: { pizza: MenuDataType }) {
 	const { name, unitPrice, ingredients, soldOut, imageUrl, id } = pizza;
@@ -53,12 +54,19 @@ function MenuItem({ pizza }: { pizza: MenuDataType }) {
 					)}
 
 					{isInCart && (
-						<Button
-							type='small'
-							onClick={handleDeleteItem}
-						>
-							Delete
-						</Button>
+						<div className='flex items-center gap-3 sm:gap-8'>
+							<CartItemQuantityUpdate
+								pizzaId={id}
+								quantity={cartItemQuantity}
+							/>
+
+							<Button
+								type='small'
+								onClick={handleDeleteItem}
+							>
+								Delete
+							</Button>
+						</div>
 					)}
 
 					{!soldOut && !isInCart && (
