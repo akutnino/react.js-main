@@ -1,10 +1,29 @@
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../../types/stores/types.ts';
 import type { MenuDataType } from '../../../types/stores/reducers/menu-types.ts';
+import type { CartItemType } from '../../../types/stores/reducers/cart-types.ts';
 import { formatCurrency } from '../../../utilities/formatCurrency.ts';
+import { cartAddItem } from '../../../stores/actions/cartActions.ts';
 
 import Button from '../../common/Button.tsx';
 
 function MenuItem({ pizza }: { pizza: MenuDataType }) {
-	const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+	const { name, unitPrice, ingredients, soldOut, imageUrl, id } = pizza;
+	const dispatch: AppDispatch = useDispatch();
+
+	const handleAddToCart = () => {
+		const newCartItem: CartItemType = {
+			addIngredients: [],
+			removeIngredients: [],
+			pizzaId: id,
+			name,
+			quantity: 1,
+			unitPrice,
+			totalPrice: unitPrice * 1,
+		};
+
+		dispatch(cartAddItem(newCartItem));
+	};
 
 	return (
 		<li className='flex gap-4 py-2'>
@@ -25,7 +44,14 @@ function MenuItem({ pizza }: { pizza: MenuDataType }) {
 						<p className='text-sm font-medium uppercase text-stone-500'>Sold out</p>
 					)}
 
-					<Button type='small'>Add to cart</Button>
+					{!soldOut && (
+						<Button
+							type='small'
+							onClick={handleAddToCart}
+						>
+							Add to cart
+						</Button>
+					)}
 				</div>
 			</div>
 		</li>
