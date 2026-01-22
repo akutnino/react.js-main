@@ -1,5 +1,6 @@
 import type { CartReducerActionType } from '../../types/stores/actions/cart-types.ts';
 import type {
+	CartArrayType,
 	CartInitialStateType,
 	CartItemType,
 	CartType,
@@ -53,9 +54,15 @@ function cartReducer(
 				totalPrice: updatedItemTotalPrice,
 			};
 
+			const updatedCart: CartArrayType = [...currentState.cart]
+				.map((item) =>
+					item.pizzaId === updatedCartItem.pizzaId ? updatedCartItem : item
+				)
+				.filter((item) => item.quantity !== 0);
+
 			return {
 				...currentState,
-				cart: [...currentState.cart, updatedCartItem],
+				cart: updatedCart.length === 0 ? null : updatedCart,
 			};
 		}
 		case cartTypes.CART_DECREASE_ITEM_QUANTITY: {
@@ -73,8 +80,15 @@ function cartReducer(
 				totalPrice: updatedItemTotalPrice,
 			};
 
+			const updatedCart: CartArrayType = [...currentState.cart]
+				.map((item) =>
+					item.pizzaId === updatedCartItem.pizzaId ? updatedCartItem : item
+				)
+				.filter((item) => item.quantity !== 0);
+
 			return {
-				cart: [...currentState.cart, updatedCartItem],
+				...currentState,
+				cart: updatedCart.length === 0 ? null : updatedCart,
 			};
 		}
 		case cartTypes.CART_CLEAR: {
