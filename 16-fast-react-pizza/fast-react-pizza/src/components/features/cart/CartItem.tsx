@@ -5,6 +5,7 @@ import type { CartItemType } from '../../../types/stores/reducers/cart-types.ts'
 import type { AppDispatch } from '../../../types/stores/types.ts';
 
 import Button from '../../common/Button.tsx';
+import CartItemQuantityUpdate from './CartItemQuantityUpdate.tsx';
 
 function CartItem({ item }: { item: CartItemType }) {
 	const { name, quantity, totalPrice, pizzaId } = item;
@@ -21,6 +22,12 @@ function CartItem({ item }: { item: CartItemType }) {
 			</p>
 			<div className='flex items-center justify-between sm:gap-6'>
 				<p className='text-sm font-bold'>{formatCurrency(totalPrice)}</p>
+
+				<CartItemQuantityUpdate
+					pizzaId={pizzaId}
+					quantity={quantity}
+				/>
+
 				<Button
 					type='small'
 					onClick={handleDeleteItem}
