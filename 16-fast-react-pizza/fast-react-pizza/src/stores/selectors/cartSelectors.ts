@@ -16,4 +16,17 @@ const getTotalCartPrice = (store: AppState): number => {
 	return store.cart.cart.reduce((acc, curr: CartItemType) => acc + curr.totalPrice, 0);
 };
 
-export { selectCart, getTotalCartQuantity, getTotalCartPrice };
+const getCartItemQuantityById = (pizzaID: number) => {
+	return (store: AppState): number => {
+		if (store.cart.cart === null) return 0;
+
+		const item: CartItemType | undefined = store.cart.cart.find(
+			(item) => item.pizzaId === pizzaID
+		);
+
+		if (item === undefined) return 0;
+		return item.quantity;
+	};
+};
+
+export { selectCart, getTotalCartQuantity, getTotalCartPrice, getCartItemQuantityById };
