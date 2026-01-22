@@ -1,14 +1,18 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../../../types/stores/types.ts';
 import type { MenuDataType } from '../../../types/stores/reducers/menu-types.ts';
 import type { CartItemType } from '../../../types/stores/reducers/cart-types.ts';
 import { formatCurrency } from '../../../utilities/formatCurrency.ts';
-import { cartAddItem } from '../../../stores/actions/cartActions.ts';
+import { cartAddItem, cartDeleteItem } from '../../../stores/actions/cartActions.ts';
+import { getCartItemQuantityById } from '../../../stores/selectors/cartSelectors.ts';
 
 import Button from '../../common/Button.tsx';
 
 function MenuItem({ pizza }: { pizza: MenuDataType }) {
 	const { name, unitPrice, ingredients, soldOut, imageUrl, id } = pizza;
+	const cartItemQuantity: number = useSelector(getCartItemQuantityById(id));
+	const isInCart: boolean = cartItemQuantity > 0;
+
 	const dispatch: AppDispatch = useDispatch();
 
 	const handleAddToCart = () => {
@@ -23,6 +27,10 @@ function MenuItem({ pizza }: { pizza: MenuDataType }) {
 		};
 
 		dispatch(cartAddItem(newCartItem));
+	};
+
+	const handleDeleteItem = () => {
+		dispatch(cartDeleteItem(id));
 	};
 
 	return (
@@ -44,7 +52,16 @@ function MenuItem({ pizza }: { pizza: MenuDataType }) {
 						<p className='text-sm font-medium uppercase text-stone-500'>Sold out</p>
 					)}
 
-					{!soldOut && (
+					{isInCart && (
+						<Button
+							type='small'
+							onClick={handleDeleteItem}
+						>
+							Delete
+						</Button>
+					)}
+
+					{!soldOut && !isInCart && (
 						<Button
 							type='small'
 							onClick={handleAddToCart}
