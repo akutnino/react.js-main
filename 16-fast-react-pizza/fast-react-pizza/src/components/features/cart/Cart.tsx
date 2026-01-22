@@ -1,76 +1,59 @@
-import { Link } from 'react-router';
+import { Link, Navigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../stores/selectors/userSelectors.ts';
+import { selectCart } from '../../../stores/selectors/cartSelectors.ts';
 import type { UserInitialStateType } from '../../../types/stores/reducers/user-types.ts';
+import type { CartInitialStateType } from '../../../types/stores/reducers/cart-types.ts';
 
 import CartItem from './CartItem.tsx';
 import Button from '../../common/Button.tsx';
 
-const fakeCart = [
-	{
-		addIngredients: [],
-		removeIngredients: [],
-		pizzaId: 12,
-		name: 'Mediterranean',
-		quantity: 2,
-		unitPrice: 16,
-		totalPrice: 32,
-	},
-	{
-		addIngredients: [],
-		removeIngredients: [],
-		pizzaId: 6,
-		name: 'Vegetale',
-		quantity: 1,
-		unitPrice: 13,
-		totalPrice: 13,
-	},
-	{
-		addIngredients: [],
-		removeIngredients: [],
-		pizzaId: 11,
-		name: 'Spinach and Mushroom',
-		quantity: 1,
-		unitPrice: 15,
-		totalPrice: 15,
-	},
-];
-
 function Cart() {
 	const { username }: UserInitialStateType = useSelector(selectUser);
-	const cart = fakeCart;
+	const { cart }: CartInitialStateType = useSelector(selectCart);
 
 	return (
-		<div className='px-4 py-3'>
-			<Link
-				className='text-sm text-blue-500 hover:text-blue-600 hover:underline'
-				to='/menu'
-			>
-				&larr; Back to menu
-			</Link>
+		<>
+			{cart !== null && (
+				<div className='px-4 py-3'>
+					<Link
+						className='text-sm text-blue-500 hover:text-blue-600 hover:underline'
+						to='/menu'
+					>
+						&larr; Back to menu
+					</Link>
 
-			<h2 className='mt-7 text-xl font-semibold'>Your cart, {username}</h2>
+					<h2 className='mt-7 text-xl font-semibold'>Your cart, {username}</h2>
 
-			<ul className='mt-3 divide-y divide-stone-200 border-b'>
-				{cart.map((item) => (
-					<CartItem
-						item={item}
-						key={item.pizzaId}
-					/>
-				))}
-			</ul>
+					<ul className='mt-3 divide-y divide-stone-200 border-b'>
+						{cart.map((item) => (
+							<CartItem
+								item={item}
+								key={item.pizzaId}
+							/>
+						))}
+					</ul>
 
-			<div className='mt-6 space-x-2'>
-				<Button
-					to='/order/new'
-					type='primary'
-				>
-					Order pizzas
-				</Button>
+					<div className='mt-6 space-x-2'>
+						<Button
+							to='/order/new'
+							type='primary'
+						>
+							Order pizzas
+						</Button>
 
-				<Button type='secondary'>Clear cart</Button>
-			</div>
-		</div>
+						<Button type='secondary'>Clear cart</Button>
+					</div>
+				</div>
+			)}
+
+			{cart === null && (
+				<Navigate
+					to={'/menu'}
+					replace={true}
+				/>
+			)}
+		</>
 	);
 }
 
