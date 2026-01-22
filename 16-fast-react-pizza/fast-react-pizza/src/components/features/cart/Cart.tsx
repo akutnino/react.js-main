@@ -1,16 +1,24 @@
-import { Link, Navigate } from 'react-router';
-import { useSelector } from 'react-redux';
+import { Link } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../../stores/selectors/userSelectors.ts';
 import { selectCart } from '../../../stores/selectors/cartSelectors.ts';
+import { clearCart } from '../../../stores/actions/cartActions.ts';
 import type { UserInitialStateType } from '../../../types/stores/reducers/user-types.ts';
 import type { CartInitialStateType } from '../../../types/stores/reducers/cart-types.ts';
+import type { AppDispatch } from '../../../types/stores/types.ts';
 
 import CartItem from './CartItem.tsx';
 import Button from '../../common/Button.tsx';
+import EmptyCart from './EmptyCart.tsx';
 
 function Cart() {
 	const { username }: UserInitialStateType = useSelector(selectUser);
 	const { cart }: CartInitialStateType = useSelector(selectCart);
+	const dispatch: AppDispatch = useDispatch();
+
+	const handleClearCart = () => {
+		dispatch(clearCart());
+	};
 
 	return (
 		<>
@@ -42,17 +50,17 @@ function Cart() {
 							Order pizzas
 						</Button>
 
-						<Button type='secondary'>Clear cart</Button>
+						<Button
+							type='secondary'
+							onClick={handleClearCart}
+						>
+							Clear cart
+						</Button>
 					</div>
 				</div>
 			)}
 
-			{cart === null && (
-				<Navigate
-					to={'/menu'}
-					replace={true}
-				/>
-			)}
+			{cart === null && <EmptyCart />}
 		</>
 	);
 }
