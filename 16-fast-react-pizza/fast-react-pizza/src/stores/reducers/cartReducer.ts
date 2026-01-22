@@ -7,35 +7,7 @@ import type {
 import { cartTypes } from '../_constants/cartTypes.ts';
 
 const CART_INITIAL_STATE: CartInitialStateType = {
-	cart: [
-		{
-			addIngredients: [],
-			removeIngredients: [],
-			pizzaId: 12,
-			name: 'Mediterranean',
-			quantity: 2,
-			unitPrice: 16,
-			totalPrice: 32,
-		},
-		{
-			addIngredients: [],
-			removeIngredients: [],
-			pizzaId: 6,
-			name: 'Vegetale',
-			quantity: 1,
-			unitPrice: 13,
-			totalPrice: 13,
-		},
-		{
-			addIngredients: [],
-			removeIngredients: [],
-			pizzaId: 11,
-			name: 'Spinach and Mushroom',
-			quantity: 1,
-			unitPrice: 15,
-			totalPrice: 15,
-		},
-	],
+	cart: null,
 };
 
 function cartReducer(
@@ -44,7 +16,7 @@ function cartReducer(
 ): CartInitialStateType {
 	switch (action.type) {
 		case cartTypes.CART_ADD_ITEM: {
-			if (currentState.cart === null) return { ...currentState };
+			if (currentState.cart === null) return { ...currentState, cart: [action.payload] };
 
 			return {
 				...currentState,
