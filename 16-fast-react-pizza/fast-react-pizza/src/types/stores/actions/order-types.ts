@@ -51,6 +51,6 @@ export type CreateOrderObjectType = {
 	customer: string;
 	phone: string;
 	address: string;
-	withPriority: boolean;
+	priority: boolean;
 	cart: CartType;
 };
