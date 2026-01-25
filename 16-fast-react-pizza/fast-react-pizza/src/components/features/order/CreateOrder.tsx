@@ -2,51 +2,30 @@ import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
 import { createOrderData } from '../../../stores/actions/orderActions.ts';
+import { updatedUsername } from '../../../stores/actions/userActions.ts';
+import { clearCart } from '../../../stores/actions/cartActions.ts';
 import { selectOrder } from '../../../stores/selectors/orderSelectors.ts';
 import { selectUser } from '../../../stores/selectors/userSelectors.ts';
+import {
+	getTotalCartPrice,
+	selectCart,
+} from '../../../stores/selectors/cartSelectors.ts';
+import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 import type { AppDispatch } from '../../../types/stores/types.ts';
 import type { CreateOrderObjectType } from '../../../types/stores/actions/order-types.ts';
 import type { OrderInitialStateType } from '../../../types/stores/reducers/order-types.ts';
 import type { UserInitialStateType } from '../../../types/stores/reducers/user-types.ts';
+import type { CartInitialStateType } from '../../../types/stores/reducers/cart-types.ts';
 
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string): boolean => /(^(\+)(\d){12}$)|(^\d{11}$)/.test(str);
 
-const fakeCart = [
-	{
-		addIngredients: [],
-		removeIngredients: [],
-		pizzaId: 12,
-		name: 'Mediterranean',
-		quantity: 2,
-		unitPrice: 16,
-		totalPrice: 32,
-	},
-	{
-		addIngredients: [],
-		removeIngredients: [],
-		pizzaId: 6,
-		name: 'Vegetale',
-		quantity: 1,
-		unitPrice: 13,
-		totalPrice: 13,
-	},
-	{
-		addIngredients: [],
-		removeIngredients: [],
-		pizzaId: 11,
-		name: 'Spinach and Mushroom',
-		quantity: 1,
-		unitPrice: 15,
-		totalPrice: 15,
-	},
-];
-
 function CreateOrder() {
 	const { isLoading, order }: OrderInitialStateType = useSelector(selectOrder);
 	const { username }: UserInitialStateType = useSelector(selectUser);
+	const { cart }: CartInitialStateType = useSelector(selectCart);
 
 	const [firstName, setFirstName] = useState<string>(() => username || '');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
@@ -56,9 +35,15 @@ function CreateOrder() {
 
 	const dispatch: AppDispatch = useDispatch();
 
+	const totalCartPrice: number = useSelector(getTotalCartPrice);
+	const PRIORITY_PRICE: number = 0.2;
+	const totalPrice: number = withPriority
+		? totalCartPrice + totalCartPrice * PRIORITY_PRICE
+		: totalCartPrice;
+
+	const userHasNotOrdered: boolean = !isLoading && cart === null;
+	const userOrdering: boolean = !isLoading && cart !== null;
 	const userHasOrdered: boolean = !isLoading && order !== null;
-	const userHasNotOrdered: boolean = !isLoading && order === null;
-	const cart = fakeCart;
 
 	const handleFirstNameInput = (event: ChangeEvent<HTMLInputElement>) => {
 		setFirstName(event.currentTarget.value);
@@ -87,8 +72,8 @@ function CreateOrder() {
 		setAddress(event.currentTarget.value);
 	};
 
-	const handleCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
-		setWithPriority(event.target.checked);
+	const handleCheckbox = () => {
+		setWithPriority((currentState) => !currentState);
 	};
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -101,11 +86,13 @@ function CreateOrder() {
 			customer: firstName,
 			phone: phoneNumber,
 			address,
-			withPriority,
+			priority: withPriority,
 			cart,
 		};
 
+		if (!username) dispatch(updatedUsername(firstName));
 		dispatch(createOrderData(newOrder));
+		dispatch(clearCart());
 		setFirstName('');
 		setPhoneNumber('');
 		setPhoneNumberError('');
@@ -117,7 +104,7 @@ function CreateOrder() {
 		<>
 			{isLoading && <LoadingIndicator />}
 
-			{userHasNotOrdered && (
+			{userOrdering && (
 				<div className='px-4 py-6'>
 					<h2 className='mb-8 text-xl font-semibold'>Ready to order? Let's go!</h2>
 
@@ -186,21 +173,25 @@ function CreateOrder() {
 						</div>
 
 						<div>
-							<input
-								type='hidden'
-								name='cart'
-								value={JSON.stringify(cart)}
-							/>
 							<button
 								className='inline-block text-sm rounded-full bg-yellow-400 font-semibold uppercase tracking-wide text-stone-800 transition-colors duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed px-4 py-3 md:px-6 md:py-4'
 								type='submit'
 								disabled={Boolean(phoneNumberError)}
 							>
-								{isLoading ? 'Placing order....' : 'Order now'}
+								{isLoading
+									? 'Placing order....'
+									: `Order now ${formatCurrency(totalPrice)}`}
 							</button>
 						</div>
 					</form>
 				</div>
+			)}
+
+			{userHasNotOrdered && (
+				<Navigate
+					to={`/menu`}
+					replace={true}
+				/>
 			)}
 
 			{userHasOrdered && (
