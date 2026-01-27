@@ -1,7 +1,7 @@
 function LoadingIndicator() {
 	return (
 		<div className='loadingContainer'>
-			<div className='loader' />;
+			<div className='loader' />
 		</div>
 	);
 }
