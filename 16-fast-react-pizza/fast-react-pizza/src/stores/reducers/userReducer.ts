@@ -4,6 +4,10 @@ import { userTypes } from '../_constants/userTypes.ts';
 
 const USER_INITIAL_STATE: UserInitialStateType = {
 	username: null,
+	isLoading: false,
+	position: null,
+	address: null,
+	errorMessage: null,
 };
 
 function userReducer(
@@ -15,6 +19,30 @@ function userReducer(
 			return {
 				...currentState,
 				username: action.payload,
+			};
+		}
+		case userTypes.USER_FETCH_ADDRESS: {
+			return {
+				...currentState,
+				isLoading: true,
+				errorMessage: null,
+			};
+		}
+		case userTypes.USER_FETCH_ADDRESS_SUCCESS: {
+			return {
+				...currentState,
+				isLoading: false,
+				address: action.payload.address,
+				position: action.payload.position,
+			};
+		}
+		case userTypes.USER_FETCH_ADDRESS_ERROR: {
+			return {
+				...currentState,
+				isLoading: false,
+				position: null,
+				address: null,
+				errorMessage: action.payload,
 			};
 		}
 		default: {
