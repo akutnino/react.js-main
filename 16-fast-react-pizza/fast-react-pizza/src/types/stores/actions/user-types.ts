@@ -1,6 +1,8 @@
 import type { userTypes } from '../../../stores/_constants/userTypes.ts';
 import type { UserPositionStateType } from '../reducers/user-types.ts';
 
+export type ErrorCallbackType = (reason?: GeolocationPositionError) => void;
+
 export type UserAddressObjectType = {
 	position: UserPositionStateType;
 	address: string;
