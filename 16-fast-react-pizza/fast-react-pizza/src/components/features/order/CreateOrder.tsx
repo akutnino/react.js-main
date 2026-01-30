@@ -1,36 +1,47 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent, type MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
+
 import { createOrderData } from '../../../stores/actions/orderActions.ts';
-import { updatedUsername } from '../../../stores/actions/userActions.ts';
 import { clearCart } from '../../../stores/actions/cartActions.ts';
+import {
+	fetchUserAddress,
+	updatedUsername,
+} from '../../../stores/actions/userActions.ts';
+
 import { selectOrder } from '../../../stores/selectors/orderSelectors.ts';
 import { selectUser } from '../../../stores/selectors/userSelectors.ts';
 import {
 	getTotalCartPrice,
 	selectCart,
 } from '../../../stores/selectors/cartSelectors.ts';
-import { formatCurrency } from '../../../utilities/formatCurrency.ts';
-import type { AppDispatch } from '../../../types/stores/types.ts';
+
 import type { CreateOrderObjectType } from '../../../types/stores/actions/order-types.ts';
 import type { OrderInitialStateType } from '../../../types/stores/reducers/order-types.ts';
 import type { UserInitialStateType } from '../../../types/stores/reducers/user-types.ts';
 import type { CartInitialStateType } from '../../../types/stores/reducers/cart-types.ts';
+import type { AppDispatch } from '../../../types/stores/types.ts';
+import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';
+import Button from '../../common/Button.tsx';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string): boolean => /(^(\+)(\d){12}$)|(^\d{11}$)/.test(str);
 
 function CreateOrder() {
 	const { isLoading, order }: OrderInitialStateType = useSelector(selectOrder);
-	const { username }: UserInitialStateType = useSelector(selectUser);
 	const { cart }: CartInitialStateType = useSelector(selectCart);
+	const {
+		username,
+		address: fetchedAddress,
+		isLoading: isLoadingAddress,
+	}: UserInitialStateType = useSelector(selectUser);
 
 	const [firstName, setFirstName] = useState<string>(() => username || '');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
 	const [phoneNumberError, setPhoneNumberError] = useState<string>('');
-	const [address, setAddress] = useState<string>('');
+	const [address, setAddress] = useState<string>(() => fetchedAddress || '');
 	const [withPriority, setWithPriority] = useState<boolean>(false);
 
 	const dispatch: AppDispatch = useDispatch();
@@ -70,6 +81,13 @@ function CreateOrder() {
 
 	const handleAddressInput = (event: ChangeEvent<HTMLInputElement>) => {
 		setAddress(event.currentTarget.value);
+	};
+
+	const handleGetUserAddress = async (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+
+		const newfetchedAddress: unknown = await dispatch(fetchUserAddress());
+		if (typeof newfetchedAddress === 'string') setAddress(newfetchedAddress);
 	};
 
 	const handleCheckbox = () => {
@@ -141,7 +159,7 @@ function CreateOrder() {
 							</div>
 						</div>
 
-						<div className='mb-5 flex flex-col gap-2 sm:flex-row sm:items-center'>
+						<div className='relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center'>
 							<label className='sm:basis-40'>Address</label>
 							<div className='grow'>
 								<input
@@ -149,10 +167,23 @@ function CreateOrder() {
 									type='text'
 									name='address'
 									value={address}
+									disabled={isLoadingAddress}
 									onChange={handleAddressInput}
 									required
 								/>
 							</div>
+
+							{!address && (
+								<span className='absolute right-1.5'>
+									<Button
+										type='small'
+										disabled={isLoadingAddress}
+										onClick={handleGetUserAddress}
+									>
+										Get Position
+									</Button>
+								</span>
+							)}
 						</div>
 
 						<div className='mb-12 flex items-center gap-5'>
@@ -176,7 +207,7 @@ function CreateOrder() {
 							<button
 								className='inline-block text-sm rounded-full bg-yellow-400 font-semibold uppercase tracking-wide text-stone-800 transition-colors duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed px-4 py-3 md:px-6 md:py-4'
 								type='submit'
-								disabled={Boolean(phoneNumberError)}
+								disabled={Boolean(phoneNumberError) || isLoadingAddress}
 							>
 								{isLoading
 									? 'Placing order....'
