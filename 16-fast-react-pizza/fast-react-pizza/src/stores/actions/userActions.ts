@@ -1,4 +1,5 @@
 import type {
+	ErrorCallbackType,
 	UserAddressObjectType,
 	UserFetchAddressResponseType,
 	UserUpdateUsernameActionType,
@@ -15,20 +16,20 @@ export function updatedUsername(newUsername: string): UserUpdateUsernameActionTy
 }
 
 export function fetchUserAddress(): AsyncThunkAction {
-	const ThunkMiddleware: AsyncThunkAction = async (dispatch) => {
+	const ThunkMiddleware: AsyncThunkAction = async (dispatch, getState) => {
 		try {
 			dispatch({ type: userTypes.USER_FETCH_ADDRESS });
 
-			const userGeolocationPosition: GeolocationPosition = await new Promise(
-				(resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject)
+			const errorCallback: ErrorCallbackType = () => {
+				dispatch({
+					type: userTypes.USER_FETCH_ADDRESS_ERROR,
+					payload: 'Hardware Device Location Access Denied',
+				});
+			};
+
+			const userGeolocationPosition: GeolocationPosition = await new Promise((resolve) =>
+				navigator.geolocation.getCurrentPosition(resolve, errorCallback)
 			);
-
-			const permissionStatus: PermissionStatus = await navigator.permissions.query({
-				name: 'geolocation',
-			});
-
-			// if (permissionStatus.state === 'denied') throw new Error('Hardware Device Location Access Denied');
-			if (permissionStatus.state === 'denied') console.log('Hardware Device Location Access Denied'); //prettier-ignore
 
 			const userPosition: UserPositionStateType = {
 				latitude: `${userGeolocationPosition.coords.latitude}`,
@@ -60,6 +61,8 @@ export function fetchUserAddress(): AsyncThunkAction {
 				type: userTypes.USER_FETCH_ADDRESS_SUCCESS,
 				payload: userAddressObject,
 			});
+
+			return getState().user.address;
 		} catch (error) {
 			if (error instanceof Error) {
 				dispatch({
