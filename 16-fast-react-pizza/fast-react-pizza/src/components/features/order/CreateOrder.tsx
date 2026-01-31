@@ -134,6 +134,7 @@ function CreateOrder() {
 								type='text'
 								name='customer'
 								value={firstName}
+								placeholder='FirstName'
 								onChange={handleFirstNameInput}
 								required
 							/>
@@ -147,6 +148,7 @@ function CreateOrder() {
 									type='tel'
 									name='phone'
 									value={phoneNumber}
+									placeholder='Phone Number'
 									onChange={handlePhoneNumberInput}
 									required
 								/>
@@ -167,6 +169,7 @@ function CreateOrder() {
 									type='text'
 									name='address'
 									value={address}
+									placeholder='Address'
 									disabled={isLoadingAddress}
 									onChange={handleAddressInput}
 									required
