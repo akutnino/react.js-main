@@ -27,6 +27,7 @@ function Error() {
 			{isError && <p>{errorMessage}</p>}
 
 			<button
+				type='button'
 				className='text-sm text-blue-500 hover:text-blue-600 hover:underline'
 				onClick={handleBack}
 			>

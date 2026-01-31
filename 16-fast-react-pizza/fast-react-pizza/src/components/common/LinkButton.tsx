@@ -8,6 +8,7 @@ function LinkButton({ children, to }: { children: ReactNode; to: string }) {
 	if (to === '-1')
 		return (
 			<button
+				type='button'
 				className={className}
 				onClick={() => navigate(-1)}
 			>
