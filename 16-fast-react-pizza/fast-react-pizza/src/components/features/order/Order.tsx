@@ -6,7 +6,9 @@ import { calcMinutesLeft } from '../../../utilities/calcMinutesLeft.ts';
 import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 import { formatDate } from '../../../utilities/formatDate.ts';
 import { selectOrder } from '../../../stores/selectors/orderSelectors.ts';
+import { selectMenu } from '../../../stores/selectors/menuSelectors.ts';
 import type { OrderInitialStateType } from '../../../types/stores/reducers/order-types.ts';
+import type { MenuInitialStateType } from '../../../types/stores/reducers/menu-types.ts';
 
 import Error from '../../common/Error.tsx';
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';
@@ -14,6 +16,7 @@ import OrderItem from './OrderItem.tsx';
 
 function Order() {
 	const { errorMessage, isLoading, order }: OrderInitialStateType = useSelector(selectOrder); // prettier-ignore
+	const { menu }: MenuInitialStateType = useSelector(selectMenu);
 
 	const isError: boolean = !isLoading && errorMessage !== null;
 	const isOrderLoaded: boolean = !isLoading && !isError;
@@ -55,6 +58,9 @@ function Order() {
 							<OrderItem
 								item={item}
 								key={item.pizzaId}
+								ingredients={
+									menu?.find((menuItem) => menuItem.id === item.pizzaId)?.ingredients
+								}
 							/>
 						))}
 					</ul>
