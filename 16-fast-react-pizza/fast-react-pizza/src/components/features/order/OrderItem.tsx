@@ -3,7 +3,13 @@ import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 
 // const props = { item, isLoadingIngredients, ingredients };
 
-function OrderItem({ item }: { item: CartItemType }) {
+function OrderItem({
+	item,
+	ingredients,
+}: {
+	item: CartItemType;
+	ingredients: string[] | undefined;
+}) {
 	const { quantity, name, totalPrice } = item;
 
 	return (
@@ -14,6 +20,9 @@ function OrderItem({ item }: { item: CartItemType }) {
 				</p>
 				<p className='font-bold'>{formatCurrency(totalPrice)}</p>
 			</div>
+			<p className='text-sm capitalize italic text-stone-500'>
+				{ingredients?.join(', ')}
+			</p>
 		</li>
 	);
 }
