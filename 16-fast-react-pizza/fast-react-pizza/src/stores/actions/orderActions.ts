@@ -4,6 +4,7 @@ import type {
 	OrderClearErrorActionType,
 	OrderResetStateActionType,
 } from '../../types/stores/actions/order-types.ts';
+import type { OrderType } from '../../types/stores/reducers/order-types.ts';
 import type { AsyncThunkAction } from '../../types/stores/types.ts';
 import { orderTypes } from '../_constants/orderTypes.ts';
 
@@ -86,7 +87,7 @@ export function createOrderData(newOrder: CreateOrderObjectType): AsyncThunkActi
 	return ThunkMiddleWare;
 }
 
-export function updateOrderData(orderID: string, updateObj: string): AsyncThunkAction {
+export function updateOrderData(orderID: string, updateObj: OrderType): AsyncThunkAction {
 	const ThunkMiddleWare: AsyncThunkAction = async (dispatch) => {
 		try {
 			dispatch({
@@ -106,8 +107,12 @@ export function updateOrderData(orderID: string, updateObj: string): AsyncThunkA
 			const response: Response = await fetch(fetchURL, fetchOptions);
 			if (!response.ok) throw new Error('Order Update Failed');
 
+			const data: FetchOrderDataResponseType = await response.json();
+			if (data.status !== 'success') throw new Error(`Status Not Successful: ${data.status}`); // prettier-ignore
+
 			dispatch({
 				type: orderTypes.ORDER_UPDATE,
+				payload: data,
 			});
 		} catch (error) {
 			if (error instanceof Error) {
