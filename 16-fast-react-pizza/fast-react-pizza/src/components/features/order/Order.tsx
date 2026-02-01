@@ -1,25 +1,43 @@
 // Test ID: IIDSAT, CQE92U
 // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { calcMinutesLeft } from '../../../utilities/calcMinutesLeft.ts';
 import { formatCurrency } from '../../../utilities/formatCurrency.ts';
 import { formatDate } from '../../../utilities/formatDate.ts';
 import { selectOrder } from '../../../stores/selectors/orderSelectors.ts';
 import { selectMenu } from '../../../stores/selectors/menuSelectors.ts';
-import type { OrderInitialStateType } from '../../../types/stores/reducers/order-types.ts';
+import { updateOrderData } from '../../../stores/actions/orderActions.ts';
+import type { AppDispatch } from '../../../types/stores/types.ts';
+import type {
+	OrderInitialStateType,
+	OrderType,
+} from '../../../types/stores/reducers/order-types.ts';
 import type { MenuInitialStateType } from '../../../types/stores/reducers/menu-types.ts';
 
 import Error from '../../common/Error.tsx';
 import LoadingIndicator from '../../common/LoadingIndicator.tsx';
 import OrderItem from './OrderItem.tsx';
+import Button from '../../common/Button.tsx';
 
 function Order() {
 	const { errorMessage, isLoading, order }: OrderInitialStateType = useSelector(selectOrder); // prettier-ignore
 	const { menu }: MenuInitialStateType = useSelector(selectMenu);
+	const dispatch: AppDispatch = useDispatch();
 
 	const isError: boolean = !isLoading && errorMessage !== null;
 	const isOrderLoaded: boolean = !isLoading && !isError;
+
+	const handleUpdateOrder = () => {
+		if (order?.id === undefined) return;
+
+		const updatedOrder: OrderType = {
+			...order,
+			priority: true,
+		};
+
+		dispatch(updateOrderData(order.id, updatedOrder));
+	};
 
 	return (
 		<>
@@ -78,6 +96,15 @@ function Order() {
 							To pay on delivery: {formatCurrency(order.orderPrice + order.priorityPrice)}
 						</p>
 					</div>
+
+					{!order.priority && (
+						<Button
+							type='primary'
+							onClick={handleUpdateOrder}
+						>
+							Make Priority
+						</Button>
+					)}
 				</div>
 			)}
 
