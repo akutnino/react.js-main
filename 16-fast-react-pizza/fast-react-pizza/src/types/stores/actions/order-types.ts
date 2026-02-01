@@ -23,6 +23,7 @@ export type CreateOrderSuccessActionType = {
 
 export type UpdateOrderSuccessActionType = {
 	type: typeof orderTypes.ORDER_UPDATE;
+	payload: FetchOrderDataResponseType;
 };
 
 export type OrderFetchErrorActionType = {
