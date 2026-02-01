@@ -37,6 +37,7 @@ function orderReducer(
 		case orderTypes.ORDER_UPDATE: {
 			return {
 				...currentState,
+				order: action.payload.data,
 				isLoading: false,
 			};
 		}
